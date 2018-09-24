@@ -1,0 +1,15 @@
+*.pdf
+*.xls
+*.xlsx
+*.doc
+*.docx
+
+/biblio
+/CPI_AFD docs
+/project/graphs
+
+#latex files
+*.aux
+*.log
+*.ou
+*.synctex.gz
