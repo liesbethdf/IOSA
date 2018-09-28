@@ -1,0 +1,469 @@
+\documentclass[12pt,english]{article}
+\usepackage[T1]{fontenc}
+%\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[french]{babel}
+%\usepackage{pdfpages}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.2cm,bmargin=2.2cm,lmargin=2.2cm,rmargin=2.2cm}
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{babel}
+\usepackage{varioref}
+\usepackage{float}
+%\usepackage[caption = false]{subfig}
+\usepackage{amstext}
+\usepackage{amsmath, amsthm} 
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amssymb,graphics,psfrag}
+%\usepackage{dsfont}
+\usepackage{hyperref}
+\usepackage{gensymb}
+\usepackage{graphicx}
+%\usepackage{subfig}
+\usepackage{setspace}
+%\usepackage{subcaption,siunitx,booktabs}
+\usepackage{booktabs}
+%\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pdflscape}
+\usepackage{adjustbox}
+\usepackage{esint}
+%\onehalfspacing
+\usepackage{cite}
+\usepackage{natbib}
+\usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[dvipsnames,table]{xcolor}
+\hypersetup{colorlinks=true,
+			linkcolor=black,
+			citecolor=Blue}
+%\usepackage{tikz}
+%\usetikzlibrary{positioning}
+
+\newcommand{\mli}[1]{\mathit{#1}}
+
+
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage{babel}
+% \usepackage[version=3]{mhchem}
+ 
+\usepackage[textsize=small,textwidth=2cm,shadow]{todonotes}
+\usepackage[]{todonotes}
+\newcommand\lies[2][]{\todo[color=orange!50,#1]{ldf: #2}}
+\newcommand\li[1]{\lies[inline]{#1}}
+%\newcommand\etienne[2][]{\todo[color=yellow!50,#1]{es: #2}}
+%\newcommand\es[1]{\etienne[inline]{#1}}
+%\newcommand\antonin[2][]{\todo[color=green!50,#1]{ap: #2}}
+%\newcommand\ap[1]{\antonin[inline]{#1}}
+%\newcommand\rb[1]{\textcolor{green!80!black}{#1}}
+%\newcommand\ru[1]{\textcolor{green!80!black}{\sout{#1}}}
+
+
+%\title{Effect on employment from a low-carbon transition on South Africa} %On the non-neutrality of climate impacts and policies \ \\ \Large Working paper, not for distribution.
+
+%\author{Liesbeth De Fossé}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Introduction}
+
+This study seeks to analyze from a macroeconomic perspective the effect on the South African economy of a global transition to a low-carbon economy. The study focuses on the transition risk --- i.e. the risk arising from the adoption of an economic apparatus that would make up a low-carbon economy on a world-wide scale --- due to external sources, outside of the influence of South African decision-makers. A low-carbon transition of the South African economy is not considered here. In this aspect the present report follows the approach taken by the Climate Policy Initiative (CPI) who conducted an analysis of the external transition risk faced by South Africa taking a micro-economic, sectoral, approach. At times when judged necessary, risk is in CPI's analysis evaluated at the level of specific assets : for example, because for the coal-mining sector the effect of coal-export demand on the profitability of coal mines depends on the type of contracts each mine has already concluded at the present moment, a min-per-mine analysis is made. 
+
+The present report differs from CPI's in that it approaches the issue from the opposite side of the scale at which the economy can be viewed. Conducting a macro analysis %of the same issue 
+offers a different and complementary point of view on the conclusions obtained from the micro-analysis. To allow for maximum comparability between the results obtained from both studies, while the toolboxes used are radically different, the scenarios analyzed with the toolboxes are as much as possible the same. 
+
+Two scenarios are compared : a business as usual (BAU) scenario where current economic policy choices are assumed to hold for the period covered by the study (2108-2035), %it is not assumed that the world economy will make any specific effort to develop a low-carbon socio-technological system, 
+and a 2 degrees (2DS) scenario where on the contrary choices are made resulting in the development of a low-carbon socio-technological system that allows to contain %The specific low-carbon scenario considered is one where the economic apparatus / adopts sociological and technological structure that allows 
+global warming with a 50\% chance within the limit of 2°C with respect to pre-industrial times.  
+
+
+
+\section{Method}
+
+The aim of the study is to measure the impact on employment of the changing international conditions in which the South African economy operates in the case of a low-carbon transition. For example, a 2° scenario worldwide implies demand for coal will decrease. The South African coal sector can thus be impacted, both through a changed (lowered) export price as well as through lower export volume. When the demand and the profitability of a sector, in this case the mining sector, are expected to decrease, employment in the sector will follow the sector's trend.
+
+%The method here used to measure the impact on employment allows to include the direct impact on jobs lost in the sector expected to decrease, as well as the indirect impact. 
+
+The method here used provides a way to make an estimate, when demand to a sector changes --- for example following the above scenario, due to decreased exports or lower export prices --- of what the impact on the whole economy  will be. Indeed, not only the sector that directly faces the changed conditions is impacted, but also the sectors from which this first sector uses inputs. In their turn, this latter set of sectors use inputs, and thus the changed demand they face impacts the sectors from whom they use inputs, and so forth. The initially changed export demand thus generates a change in the volume of production, and also in the price they face and their profitability, of a whole number of industrial sectors. The impact on employment will thus not be limited to the industrial sector directly concerned, but will spread to a certain extent throughout the economy. For every scenario, both the amount of jobs directly and indirectly generated by an industry's productive activity are estimated.
+
+%any sector uses inputs from a number of other sectors. Thus a direct demand increase to any of the sectors will generate an increase in demand to a number of other sectors, which in turn will generate a demand increase to still more other sectors. Since the data show that South Africa imports goods of many different kinds, spanning the whole economy, of all types of industrial classification, the question arises whether an increase in demand to a sector will be provided by additional domestic production or by importing the good\footnote{The increase in demand of a good could theoretically be obtained by exporting less, which seems however unlikely.}. The answer to this question is important because demand supplied through domestic production generates domestic jobs, whereas demand supplied through imports generates foreign jobs.
+
+The information needed to perform such an analysis is provided by input output tables (IOT). These tables (figure \ref{IOTschematic}), provide information on how the output from each of the sectors is used (rows) and on what inputs each sector uses from the other sectors (columns). The accounting equations represented in the table, with in addition employment data per sector, can be used to estimate the number of jobs directly and indirectly generated by a given sector's activity, jobs in that particular and other sectors. The table can then be used as the basis for creating a straightforward model to make estimates of how future developments in a sector's activity impact the direct and indirect jobs the sector's activity generates.
+
+
+%%%%%%%%%%%%
+
+The methodology used for the analysis on the macro-level is based on the input-output table (IOT) of the South African economy. The IOT is a quantitative representation of the economy as a whole showing the interdependencies between sectors. These interdependencies can be described in two ways, both ways based on the same fact : the goods produced by every industrial sector are used on the one hand for final uses, such as electrical appliances bought by households or ... government, and on the other hand used as inputs by other sectors. Examples of the latter are primary commodities such as coal or metal ores that are transformed into final products, but also products that are already transformed such as aluminium \ldots{} steel etc. This fact is described in the IOT firstly 1) by showing how the production/output of an industrial sector is used throughout the economy --- as inputs for a number of other sectors and as final goods by Households, Government, and how much is exported. Consequently, 2) the IOT also shows what inputs every sector uses produced by the same and other sectors. This latter fact can also be described by saying that the IOT shows how one sectors activity creates demand, and how much of it, to other sectors. Indeed, making cars out of steel generates economic activity and jobs in the steel sector. 
+
+The point that is important in the context of this study %of a comparison of a world-scale low carbon transition with a scenario where the world does not make such a choice, %for the study at hand 
+is that when for example the South African coal sector faces different demand for export purposes under both scenarios, the differential impact on the economy is not limited to the coal sector but extends to the sectors that sell intermediate inputs to the coal sector. The macroeconomic picture provided by the IOT allows to systematically evaluate the impact of the external scenarios throughout the economy, taking into account how each sector depends on others for its revenue. %the supply chains. 
+
+The CPI study also looks into the impact on the value chain in which the primary affected sector is situated. For example, the demand for coal does not only impact the corresponding part of the mining sector, but also the actor, Transnet, providing the transport by rail of the coal to power ports, from where the coal is exported. However, the advantage of the present study is that it evaluated these indirect impacts in a systematic manner.
+
+The methodology can be summarized as follows. The same price and volume trajectories for key export goods %impacted by a 2DS, 
+evaluated on a micro-level by CPI, are evaluated on the macro level with the IO-model. The IO-model yields the difference in the impact of these export scenarios at the level of the economy as a whole between the BAU and 2DS scenarios. A distinction is made between the direct and the indirect impact, the former due to different final (export) demand and the latter being the impact due to the consequently different intermediate demands. These impacts will be estimated both in terms of loss or gain in GDP or growth, and in terms of loss of jobs. Indeed, a key aspect of evaluating the impact of export scenarios on the economy is not only to evaluate the lost revenue, but also to evaluate which economic actors bear this cost. CPI makes a detailed analysis of how the costs are born between stakeholders (firms, the government), ... from a financial point of view. In addition, the IO analysis allows for an evaluation of the impact on employment of the lost revenue. 
+
+%The impact on employment is assessed of the external threats, as identified by CPI, facing South Africa under a 2DS, from a macroeconomic standpoint. 
+
+%The effect on employment (and global cost to the economy) assuming the baseline scenario, which is IEA's New Policies Scenario (NPS), is compared with CPI's 2DS scenario. The 2DS is an adaptation of the IEA's SDS. 
+
+
+
+\subsection{IOT analysis}
+
+The accounting equation embodied in the rows of the IOT table hold that for every sector $i$, its total output $y_i$ is given by : $y_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $b_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten to show the amount of goods available to be used in the domestic economy :  $y_i - x_i + m_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i$. This last equation tells us that exports are not available for use in the domestic economy, that imports \emph{en revanche} are, and that domestic production that is not exported, together with imports, are used for the purposes listed on the right hand side. %uses made of the composite good $i$ are either intermediate consumption $u_i$, consumption $c_i$, consumption by government $g_i$ or investment $i_i$
+However, the equation does not provide information on what share of imports of good $i$ is used for consumption versus investment, or alternatively, what share of intermediate goods $b_{ij}$ is supplied through domestic production or is imported. The same remarks can be made for all the other uses. %These five uses, or demands, are either supplied through domestic production or through importation of products $m_i$ of sector $i$. Total domestic production $y_i$ is either exported $x_i$ or used within the domestic economy $y_i-x_i$, for the four uses mentioned. Thus, goods for consumption can be either domestically produced or imported : $c_i = c_i^d +c_i^m$. The same is true for investment, government expenditure and intermediate goods. 
+
+In the context of the intended analysis, this distinction is important. Indeed, when a sector uses imported goods for its activity, the use of intermediate goods does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated, indirectly, through the interlocking dependencies between industrial sectors. %in other sectors are sustained through the activity of the "initial" sector. 
+
+We here implicitly assume that only domestic production is exported. However, for reasons of simplicity and also because imported goods are in today's globalized economy often used as intermediate consumption to produce a final good that might in itself be exported again, we will slightly change the above also assume that a share of exports is imported. 
+%(We suppose that the imported goods are not exported. This assumption is not neutral and thus not necessarily hold for all sectors, given the aggregation level of the SA IO table. For example, for the sector Motor vehicles ($I32$), a substantial share, $32\%$ of the value of the sector's inputs are from within the same sector. Additionally, $25\%$ of total output is exported and $76\%$ of total input is imported (+ imports are larger than total intermediate inputs). This suggests that there is both imports of finished vehicles, since import is larger than intermediate use in this category. Additionally, given the high value of imports, it suggests that there is import of parts which get assembled in SA.)
+
+
+To take into account that the use of imported goods does not give rise to domestic jobs, ideally a separate IOT for imported goods is needed. This table is not available for the South African economy at the 50 sector level\lies{OECD includes SA in its multi-country IOT. Should check. Could deduce IOT for imports from there, even if higher aggregation.}. %The best answer to this question would be based on detailed microdata on types of goods used/produced per sector and imported/exported. 
+In absence of such a table, %Working with the aggregated data on the macro-level, 
+the fast solution to this problem is to suppose that for every type of use $\{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$, %where $j$ spans both the industrial sectors as final uses, such as consumption by households and government, exports, etc., 
+that is made of the total available goods for domestic uses as well as for export $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
+\begin{align}
+%s_i = \frac{m_i}{y_i - x_i + m_i}
+s_i &= \frac{m_i}{y_i + m_i} \\
+w_i^m &= s_i \, w_i
+\end{align}
+where $w_i$ stands for all the possible uses of $y_i + m_i$ : $w_i \in \{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$, and $w_i^m$ stands for all the possible uses of imported products : $w_i \in \{b_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment and inventory building :
+\begin{equation}
+m_i = \sum b_{ij}^m + c_i^m + i_i^m + g_i^m \label{useImports}
+\end{equation}
+
+
+
+%Thus, starting from the uses = resources identity expressed in the input-output table, we proceed in the following manner to determine to what extent a demand increase in one sector generates employment domestically versus outside of the country.
+
+
+By hypothesis, the shares of imported goods to the total domestic use of the same type of good is taken as constant over each of its different uses	 :
+
+\begin{equation}
+u_i^m + c_i^m + i_i^m + g_i^m = s_i (u_i + c_i + i_i + g_i) \label{constant}
+\end{equation}
+
+
+Combining the last two equations \ref{constant} and \ref{useImports} we get that :
+\begin{equation}
+%s_i = \frac{m_i}{y_i - x_i + m_i} \label{share}
+s^m_i = \frac{m_i}{y_i + m_i} \label{share}
+\end{equation}
+
+In matrix notation we get :
+
+\begin{equation}
+y + m = (A^d + A^m ) y + c^d + g^d + i^d + inv^d + x^d +  c^m + g^m + i^m + inv^m + x^m \label{allUSes}
+\end{equation}
+
+Denoting $S^m$ the diagonal matrix of the shares $s_i$ and 0 elsewhere, then by hypothesis :
+\begin{align}
+m &= A^m  y +  c^m + g^m + i^m + inv^m + x^m \label{importsUses} \\
+A^m &= S^m \, A \\
+c^m &= S^m \, c \\
+g^m &= S^m \, g \\
+i^m &= S^m \, i \\
+inv^m &= S^m \, inv \\
+x^m &= S^m \, x 
+\end{align}
+
+Denoting $\mathbb{I}$ the identity matrix and combining \ref{allUSes} and \ref{importsUses}, we get :
+\begin{equation}
+y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (c + g + i + inv + x)  \label{IO1}
+\end{equation}
+where the first term on the right hand side is intermediate domestic demand and the second term final domestic demand. Or also :
+\begin{equation}
+y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (c + g + i + inv + x)  \label{IO2}
+\end{equation}
+
+The employment content $ec_i$ of sector $i$, defined as the number of direct and indirect jobs created through one unit of output of sector $i$. To calculate the employment content of all sectors, define the $n \times n$ matrix $EC$ where $ec_{ij}$  is the number of jobs of sector $j$ created because of demand to sector $i$. Direct employment in sector $j$ is then defined as $ec_{jj}$ and indirect employment as $\sum_{i, i\neq j} ec_{ij}$. The total employment content $ec_j$ of sector $j$ is given by $\sum_i ec_{ij}$. The employment content matrix $EC$ is calculated using the diagonal matrix $E$ where $e_{ii}$ is the amount of employees of sector $i$ per unit of its output, and in addition the domestic leontief inverse matrix $LI^d$. The elements $li_{ij}^d$ of the leontief inverse $LI^d$ say how much sector $i$ needs to produce such that sector $j$ can produce one unit of final domestic demand. (Assuming that a share of intermediate and final uses is supplied through imports.)
+
+\begin{align}
+%	Y	 &= LI^d \, (I - S)\, (C + G + I + INV + X) \\
+	ECT	 &= E\, LI^d \, (\mathbb{I} - S^m)\, (C + G + I + INV + X) \label{IO3} \\ 
+	LI^d &= (\mathbb{I} - (\mathbb{I}-S^m)\, A)^{-1} \label{leontiefInverse_d}
+\end{align}
+
+The employment content is then defined as the number of jobs created through a single unit of final demand, thus by setting $C + G + I + INV + X=\mathbb{I}$, where $\mathbb{I}$ is the identity matrix. 
+\begin{equation}
+	EC	= E\, LI^d \, S^d \label{EC} \\ 
+\end{equation}
+where $S^d = \mathbb{I} - S^m$ contains the shares of domestic output in total supply of goods, i.e. supply through imports and through domestic production, available for domestic use and for exports. In the above equation, $E$ and $S^d$ are diagonal matrices with 0's off-diagonal.
+
+
+The above equation allows us to calculate the employment content of each of the sectors. Next, following QQ, EC is decomposed to understand what generates the differences in employment content between sectors. 
+
+Employment per unit of output is decomposed as :
+\begin{align}
+	E &= \frac{\mli{VA^d}}{Y} \, \frac{\mli{VA}^{HT}}{\mli{VA}^d} \, \frac{\mli{COMP}}{\mli{VA^{HT}}} \, \frac{\mli{NPE}}{\mli{COMP}}   \label{decompE} \\ 
+	&= \frac{\mli{VA^d}}{Y} \, T \, L \, N \\
+	T &= \\
+	L &= \\
+	N &= 
+\end{align}
+where $\mli{VA^d}$ is, $\mli{VA}^{HT}$, $\mli{COMP}$,$T$, $L$, $N$ and are all diagonal matrices with 0's off-diagonal.
+
+The domestic leontief inverse is decomposed into the total leontief inverse and factors that reflect the import rates of intermediate inputs : 
+\begin{equation}
+	LI^d = \mli{LI} \odot \mli{MI} \label{decompLId}
+\end{equation}
+where $\odot$ designates the element wise Hadamard multiplication of matrices.
+
+Combining \ref{EC}, \ref{decompE} and \ref{decompLId}, brings us close to the final decomposition that will be used :
+
+\begin{equation}
+EC	= \frac{\mli{VA}^d}{Y} \, T \, L \, N \, \mli{LI} \odot \mli{MI} \, S^d,   \label{decompEC1} \\ 
+\end{equation}
+Again, note that the matrices with possibly non-zero elements off-diagonal are $EC$, $LI$ and $MI$. Next QQ sets :
+
+$$ V = \frac{\mli{VA}^d}{Y} \mli{LI}$$ 
+
+such that :
+\begin{equation}
+EC	= T \, L \, N \, V \odot \mli{MI} \, S^d,   \label{decompEC1} \\ 
+\end{equation}
+which can equivalently be written as :
+
+\begin{equation}
+EC	= \bar{T} \odot \bar{L} \odot \bar{N} \odot V \odot \mli{MI} \odot \bar{\bar{S^d}},   \label{decompEC2} \\ 
+\end{equation}
+
+where the operation denoted by the single bar $\bar{\ }$ is right multiplication with $\mathbb{J}$ the $n\times n$ matrix with all ones, $\bar{T} = T \, \mathbb{J}$, and the operation denoted by the double bar $\bar{\bar{\ }}$ is left multiplication with $\mathbb{J}$, $\bar{\bar{S^d}} = \mathbb{J} \, S^d$. 
+
+\section{Data}
+
+The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. They are however useful in some instances because they are prepared (aggregation, seasonal adjustments) differently. 
+
+\subsection{Datasources}
+
+\subsubsection{IOT}	
+
+The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. 
+
+\subsubsection{Employment data}
+Data on employment are gathered by the South African Statistics Agency through two types of channels. The Quarterly Employment Survey is conducted with enterprises \citep{QES2018}. The Quarterly Labour Force Survey is a survey taken from households from individuals aged 15 years and over and, contrary to the former, includes the agricultural sector, self-employed workers whose businesses are unincorporated, unpaid family workers, and private household workers among the employed \citep{QLFS2018}.
+
+The QES offers employment numbers for the all sectors, excluding agriculture and private households, at a level of detail of 91 sectors. 
+
+
+Quarterly employment statistics are gathered based on sample surveys from enterprises. The survey is taken in all sectors, except for SIC 1, Agriculture, hunting, forestry and fishing, the informal business sector and domestic services. The employment data offer a detail of sectors.
+
+The employment data for the mining sector are disaggregated into gold and non-gold. To get numbers for the same disaggregation as the IOT table, SIC 21 coal, 23-24 gold and metals, 25 other, data are used from document Statistics SA, Report No. 20-01-02 (2015) Mining industry, 2015. In the report, both direct employees of the mining industry are included, as employees through labour brokers, of subcontractors and capital employees\lies{what are those?}. The total thus obtained in the report is 490146, versus 459271 in the quarterly employment series 2009-2018. Also, the proportion working for the gold mines SIC 23 is different. In the quarterly series, 21\% of people in the mining sector work for gold, versus 25\% according to the survey.
+
+To obtain an estimate for the number of people working in SIC 21, 23+24 and 25, the non-gold share of the quarterly series is disaggregated according to the shares of the mining report. 
+
+%The conversion between SIC and ISIC rev.3 https://www.statssa.gov.za/additional_services/sic/descrip6.htm
+%https://www.statssa.gov.za/additional_services/sic/preface.htm
+
+Employment data are also available from the OECD. 
+
+\subsubsection{Scenarios}
+
+\subsection{Statistics}
+
+\begin{landscape}
+	\thispagestyle{empty}
+	\begin{figure}[!ht]
+		%\centering
+		\vspace{-30pt}\hspace{-36pt}\includegraphics[width=1.5\textwidth]{../graphs/Uses_Resources_percent_2014.pdf}
+		\caption{\label{Uses_Resources_percent_2014}For a disaggregation of the economy into 50 sectors, the graph shows how each sector obtains its resources, through domestic production (Output, in light blue) or through Imports (in dark blue) in the right vertical bar. The left bar shows the use made of the resources : Exports (red), Consumption which represents both consumption by households and by government, Capital formation, which includes Fixed capital formation and changes in inventories (very pale blue and light orange) and Intermediatie consumption (orange). The value of each type of use and resource is in million Rand. The figures are for the year 2014. Data source : IO tables from Stats SA.}
+	\end{figure}	
+\end{landscape}
+
+
+\begin{landscape}
+	\thispagestyle{empty}
+	\begin{figure}[!ht]
+		%\centering
+		\vspace{-30pt}\hspace{-36pt}\includegraphics[width=1.5\textwidth]{../graphs/Uses_Resources_abs_2014.pdf}
+		\caption{\label{Uses_Resources_abs_2014}For a disaggregation of the economy into 50 sectors, the graph shows how each sector obtains its resources, through domestic production (Output, in light blue) or through Imports (in dark blue) in the right vertical bar. The left bar shows the use made of the resources : Exports (red), Consumption which represents both consumption by households and by government, Capital formation, which includes Fixed capital formation and changes in inventories (very pale blue and light orange) and Intermediatie consumption (orange). The value of each type of use and resource is in million Rand. The figures are for the year 2014. Data source : IO tables from Stats SA.}
+	\end{figure}	
+\end{landscape}
+
+
+
+
+
+\section{Results}
+
+The impact on the South African economy is assessed if the world adopts a transformation of the economy compatible with a xx\% chance of keeping the raise of the average global temperature under 2°C. This impact is explored in detail by CPI taking a microeconomic approach. CPI identified the key sectors that would be impacted by a global 2DS scenario and analyzed for each of the main actors/firms making up those sectors the impact an external 2DS would have on them. 
+
+The development of a low-carbon economy on a worldwide scale, has implications for the quantities of fossil fuels used and, the demand for fossil fuels, specifically for coal, and for the demand for certain metals, etc. Thus, the nations that are providers, through export, of the primary commodities of which demand would be impacted by a low-carbon world-economy, will see there revenues impacted. 
+
+This report proposes an analysis of the impacts of the adoption of a low-carbon  world-scale development of the economy on the South African economy from a macroeconomic point of view. This analysis complements the sector-, firm- and asset-level analysis conducted by CPI. The purpose of this complementary analysis is to evaluate whether the conclusions reached via two distinct methods are qualitatively similar. The two methods can in short be juxtaposed as follows : both on the micro and the macro level, the impact of changes to external conditions (export prices, export demand volumes) to which the SA economy is impacted is simulated/evaluated. For the goods exported by SA and identified as undergoing a significant change in demand in case of a low carbon trajectory followed by the world economy, CPI used scenarios for volume and price on the global markets under a 2DS and a BAU scenario. In the case of the micro analysis, the impact of these scenarios is evaluated on the economy on a sector, firm, and/or asset based level. The impacts on the individual units are then aggregated to obtain a figure representing the impact on the whole economy. The macro analysis follows the opposite route : the impact on the South African economy of the alternative demand scenarios for the main SA export goods that would be impacted by a world-scale low-carbon transition %for goods traded on the global market 
+is evaluated on the level of the economy as a whole, from the macro economic point of view. From this economy-wide point of view, an effort is then made to pinpoint the observed effects on the macro-level to specific economic units (subsectors, firms). The two approaches are in a certain sense situated on the opposite side of the spectrum of how the economy can be described. 
+
+\subsection{Statistics of the data used / macro description of the South African economy}
+
+\subsection{Methodology}
+
+The methodology used for the analysis on the macro-level is based on the input-output table (IOT) of the South African economy. The IOT is a quantitative representation of the economy as a whole showing the interdependencies between sectors. These interdependencies can be described in two ways, both ways based on the same fact : the goods produced by every industrial sector are used on the one hand for final uses, such as electrical appliances bought by households or ... government, and on the other hand used as inputs by other sectors. Examples of the latter are primary commodities such as coal or metal ores that are transformed into final products, but also products that are already transformed such as aluminium \ldots{} steel etc. This fact is described in the IOT firstly 1) by showing how the production/output of an industrial sector is used throughout the economy --- as inputs for a number of other sectors and as final goods by Households, Government, and how much is exported. Consequently, 2) the IOT also shows what inputs every sector uses produced by the same and other sectors. This latter fact can also be described by saying that the IOT shows how one sectors activity creates demand, and how much of it, to other sectors. Indeed, making cars out of steel generates economic activity and jobs in the steel sector. 
+
+The point that is important in the context of this study %of a comparison of a world-scale low carbon transition with a scenario where the world does not make such a choice, %for the study at hand 
+is that when for example the South African coal sector faces different demand for export purposes under both scenarios, the differential impact on the economy is not limited to the coal sector but extends to the sectors that sell intermediate inputs to the coal sector. The macroeconomic picture provided by the IOT allows to systematically evaluate the impact of the external scenarios throughout the economy, taking into account how each sector depends on others for its revenue. %the supply chains. 
+
+The CPI study also looks into the impact on the value chain in which the primary affected sector is situated. For example, the demand for coal does not only impact the corresponding part of the mining sector, but also the actor, Transnet, providing the transport by rail of the coal to power ports, from where the coal is exported. However, the advantage of the present study is that it evaluated these indirect impacts in a systematic manner.
+
+The methodology can be summarized as follows. The same price and volume trajectories for key export goods %impacted by a 2DS, 
+evaluated on a micro-level by CPI, are evaluated on the macro level with the IO-model. The IO-model yields the difference in the impact of these export scenarios at the level of the economy as a whole between the BAU and 2DS scenarios. A distinction is made between the direct and the indirect impact, the former due to different final (export) demand and the latter being the impact due to the consequently different intermediate demands. These impacts will be estimated both in terms of loss or gain in GDP or growth, and in terms of loss of jobs. Indeed, a key aspect of evaluating the impact of export scenarios on the economy is not only to evaluate the lost revenue, but also to evaluate which economic actors bear this cost. CPI makes a detailed analysis of how the costs are born between stakeholders (firms, the government), ... from a financial point of view. In addition, the IO analysis allows for an evaluation of the impact on employment of the lost revenue. 
+
+%The impact on employment is assessed of the external threats, as identified by CPI, facing South Africa under a 2DS, from a macroeconomic standpoint. 
+
+%The effect on employment (and global cost to the economy) assuming the baseline scenario, which is IEA's New Policies Scenario (NPS), is compared with CPI's 2DS scenario. The 2DS is an adaptation of the IEA's SDS. 
+
+
+
+
+\subsection{Decomposition employment content}
+Figure \ref{Decomposition_direct_indirect_absolute} shows the total employment content --- the number of persons employed to generate 1 million rand of final output --- for each of the 91 sectors, decomposed into jobs that are directly generated within the concerned sector ("Direct" in red), and jobs that are situated in other sectors but that are generated because of demand stemming from the concerned sector for intermediate products ("Indirect" in blue).
+
+Zooming in on the mining industry, the coal sector (coal and lignite 21) generates as much jobs through indirect demand per unit of output as mining of metal ores (23-24), but generates double that amount of jobs through demand for intermediate products. 
+
+In figures \ref{Decomposition_PQ} and \ref{Decomposition_direct_indirect_avg}, the difference between the employment content for each sector and the average employment content over the economy is visualized. In addition, the EC is decomposed into its direct and indirect components, and how those relate to the average number of jobs directly and indirectly generated. 
+
+Mining of coal and lignite (21), generates slightly more jobs per unit of final demand than the country average, but primarily through direct creation of jobs. The number of indirectly created jobs is smaller than the country average. This means that 1 less unit of output in the mining industry impacts the rest of the economy less through second order effects than 1 less unit of final good spread out throughout the whole economy. %suggests that the reduction of activity in the mining industry has a might have a limited impact on the rest of the economy. 
+Half of coal mining's cost of intermediate inputs goes to the transport sector for the transport of coal. 
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../graphs/ECdecomposition-avg-PQ_2014.pdf}
+	\caption{\footnotesize \label{Decomposition_PQ}The horizontal bars show for each sector a decomposition of the employment content into five factors, compared to the average composition of the employment content over the whole economy, excluding SIC 01/ISIC P Private households with employed persons. The factors give an indication of the sources of the differences in employment content. The components of a horizontal bar situated to the left/right of the O mark are smaller/bigger than the average. The interpretation of each of the five components is as follows : 1) when Wages is bigger than the average, this means that wages are smaller in this sector than the average wage throughout the economy, 2) when Labour share is bigger than the average, the sector's labour share is bigger than the average, 3) when Taxes is bigger than the economy's average, the tax burden on the sector is smaller than the average, 4) when Local final demand is smaller than the average, thus on the left of the 0, then local demand + exports are relatively smaller and imports are relatively bigger, 5) when Intermediate imports is situated on the left, then the importation of intermediate inputs is higher than the economy's average.}
+\end{figure}	
+
+\begin{figure}[!ht]
+	\centering
+	\thispagestyle{empty}
+		\includegraphics[width=\textwidth]{../graphs/ECdecomposition-avg-direct-indirect_2014.pdf}
+	\caption{\label{Decomposition_direct_indirect_avg}}
+\end{figure}	
+
+
+
+\begin{figure}[!ht]
+	\centering
+	\thispagestyle{empty}
+		\includegraphics[width=\textwidth]{../graphs/ECdecomposition-direct-indirect_2014.pdf}
+	\caption{\label{Decomposition_direct_indirect_absolute} The length of the horizontal bars shows the employment content in absolute terms for the South african economy decomposed into 91 sectors. The employment content is measured as the number of jobs created, throughout the economy, per million rand of final demand. Total employment content is decomposed into direct jobs, created within each sector, and indirectly generated jobs, due to demand for intermediate input to other sectors. The dotted blue and gray lines indicate the average indirect and total employment content.}
+\end{figure}	
+
+
+\subsection{External threats : coal}
+
+One of the clear external factors faced by the South African economy under a business as usual versus under a 2DS scenario, is the difference in global demand for coal both scenarios imply. CPI models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Additionally, the price on the global market is expected to be lower under 2DS. 
+
+\subsubsection{Coal mining within the South African economy}
+
+At the beginning of the period 2010-2017, the mining sector (SIC 2) represents about 8\% of GDP, contributing about half a percentage point less to GDP towards the end of the period \citep{P0441StatSA2018Q2} (measured in constant 2010 prices). 
+
+Within the mining sector, coal mining (SIC 21, Coal and lignite) contributed 24.4\% in 2012 and 28.1\% in 2015 to the sector's total income \citep{mining2015}. The primary source of income of the coal mining industry is from exports, 55.5\%, followed closely by 41.3\% of sales to 	industries who use coal as inputs. Products of the coal mining industry are almost solely obtained through domestic production, only 0.4\% of the coal used in the economy is imported (table \ref{Mining2104_UR} and figure \ref{Uses_Resources_percent_2014}).
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{rc|cl}
+		\hline
+		& Uses & Resources  \\ 
+		\hline
+		Exports & 55.5\% & &\\ 
+		Intermediary inputs &  41.3\%  & 99.6\% &  Domestic production\\ 
+		Inventories &  2.4\% & 0.4\% & Imports    \\ 
+		Consumption & 0.8\% &  &\\ 
+		\hline
+	\end{tabular}
+	\caption{\label{Mining2104_UR}Sector \emph{Coal and lignite}, SIC 21. The right hand column, Resources, shows how the sector's commodity available in the economy is obtained. The left hand column, Uses, shows how the sector's commodity is used domestically throughout the economy and how much is exported. The data are for the year 2014. Source, \cite{IOT2014}.}
+\end{table} 
+
+Hence, the export of coal contributes about 1.2\% to GDP, which means that movements in coal exports impact GDP significantly. Additionally, coal inputs represent a cost of roughly 0,9\% of GDP to the South African economy in the form of intermediary inputs. The coal that is not exported is mainly used for electricity production (57 \%). This electricity is in turn used by all sectors, in a rather evenly distributed manner. Electricity costs on average xx \% $\pm$ xx\% of output. Thus, in the case, as CPI analysis shows, the domestic price of coal increases due to the loss of cross-subsidies from exports, the possible resulting increase of the price of electricity will impact the entire industry. Households spend about 2.5\% of total expenditures on electricity\footnote{All these data are for the year 2014, obtained from the 2014 input-output table \citep{IOT2014}}. However, depending on how the increase of the cost of electricity propagates throughout the economy --- either the profitability of industries is impacted and/or the cost increase is transferred in the price of commodities --- households might bear more of the increased cost of coal then what is suggested by their direct electricity consumption.
+
+\input{../tables/SectorDescription/edited/4_Coal-and-lignite_IIusedBy.tex}
+
+\input{../tables/SectorDescription/edited/33_Electricity,-gas-and-water_IIusedBy.tex}
+
+The above describes how different coal export demand scenarios can have an effect on the economy as a whole because coal is used as an input, directly by some industries and indirectly by many through electricity use. The second channel through which different export scenarios impact the economy is due to the demand addressed to other sectors by the coal sector. Table \ref{} evaluates this effect in terms of the sector's employment content, defined as the number of jobs created --- throughout the economy --- by 1 million Rand of final demand addressed to the coal industry. For the coal sector, final demand is for 94.5\% made up of exports\footnote{Figure obtained from table \ref{Mining2104_UR}.}. 
+
+%\input{../tables/Ind4_E_VA_2014.tex}
+\input{../tables/Ind4_E_VA_2014_50Exp.tex}
+
+The total employment content of the mining sector is lower than the economy's average, as can be seen in figure \ref{Decomposition_direct_indirect_avg}. This means that for 1 Rand of final demand addressed to the mining industry, less jobs are generated throughout the economy than when the same value of demand is distributed evenly over all sectors. On average in the economy, 2.48 jobs are created for 1 mR of final demand (local demand + exports) whereas in coal mining, 1.58 jobs are sustained throughout the economy. %by 1 mR of final demand addressed to the sector, by the sector's activity, of which. 
+The direct employment content, which is the jobs generated within the coal sector, equals 0.72. The remaining share is the indirect employment content and equals 0.86. This is the number of jobs generated in other sectors by the export of coal. Table \ref{} shows that 68\% of these indirectly created jobs are situated in three sectors : Transport (33\%), Trade (23\%) and Computer activities (13\%). 
+
+The Transport sector is thus, after coal mining itself, the first sector impacted by different coal export scenarios. 
+
+% Look at what percentage of jobs comes from coal.
+
+%The economic activity generated by the demand for final goods addressed to the coal mining sector, which is primarily export goods, generated by the sector's use of intermediate inputs, is situated in descending order in terms of the number of jobs created, in the Transport sector (SIC 74-71) with 0.27 jobs (per 1 mR final demand addressed to the mining sector), 0,19 to the Trade sector, 0,11 to Computer activities; 0,026 of Financial intermediation and 0,05 jobs divided equally over sectors 354-359, Structural metal and General Machinery.
+
+\subsubsection{Scenario comparison}
+As an example, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 50\%. Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
+
+
+% latex table generated in R 3.4.4 by xtable 1.8-3 package
+% Tue Sep 25 17:12:36 2018
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lp{20pt}lcc}
+		%\toprule
+		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Demand scenarios}   \\ 
+		\multicolumn{3}{c}{} & 2014 & 2014 with 50\% less export \\ 
+		\midrule
+		Jobs in the coal industry,	& \multicolumn{2}{l}{total}  & 82146 & 53899 \\ 
+									& \multicolumn{2}{l}{due to direct demand}  & 48490 & 25581 \\ 
+
+									& \multicolumn{2}{l}{due to other sectors}  & 33656 & 28318 \\ 
+									& 	 & Electricity, gas and water & \,\ 7580  & \,\ 7489 \\ 
+									&    & Metal ores& \,\ 4540  & \,\ 2273 \\ 
+									&    & Construction& \,\ 2456  & \,\ 2453  \\ 														
+									&    & Coke oven manufacture& \,\ 2360  & \,\ 2026   \\ 
+									&    & Other community activities& \,\ 1560  & \,\ 1560   \\ 
+									&    & Basic iron and steel & \,\ 1530  &  \,\ \,\ 769  \\
+									&    & Trade & \,\ 1530  & \,\ 1094  \\ 
+									&    & Food & \,\ 1276  & \,\ 1229 \\  
+									&    & Real estate activities & \,\ 1227  & \,\ 1219 \\
+									&    & Transport & \,\ 1165  & \,\ \, 930 \\  
+		\midrule
+		\multicolumn{3}{l}{Jobs in other sectors, due to the coal sector}  & 57542 &  30357 \\ 
+							 		& 						 & Transport & 18667 &  \ \,9848 \\ 
+							 		& 						 & Trade & 13200 &  \ \,6964 \\ 
+		\bottomrule
+	\end{tabular}
+	\caption{}
+\end{table}
+
+
+%table
+
+%The reason behind it is that the labour share is lower than on average in the economy and wages are higher than the average. Local demand for the output of the mining sectors 21, 23-24 is higher than the economy's average. 
+
+
+
+\citep{LandTransp2014}
+
+\citep{P7000_2013}
+
+
+\subsection{External threats : oil}
+
+Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the price $20\%$ lower. 
+
+
+\subsection{External threats : metals}
+
+The mining of metal ores generates 1.89 jobs throughout the economy per mR of final demand. 
+
+% SA.bib
+\newpage
+\bibliography{SA}
+\bibliographystyle{apalike}
+\clearpage
+
+
+\end{document}

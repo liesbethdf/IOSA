@@ -1,23 +1,3 @@
-sep = .Platform$file.sep
-
-dir.PROJECT <- normalizePath("..")
-dir.DATA    <- paste(dir.PROJECT, "data", sep=sep)
-dir.PLOTS   <- paste(dir.PROJECT, "graphs", sep=sep)
-#dir.create(dir.OUTPUT, recursive=TRUE, showWarnings = FALSE)
-
-library("ggplot2")
-library("dplyr")
-library("tidyr")
-library("RColorBrewer")
-
-#library("XLConnect")
-library("cellranger")
-library("readxl")
-library("xtable")
-library("matlib")
-install.packages("rJava")
-install.packages("XLConnectJars")
-install.packages("XLConnect")
 
 ############################################
 ############ Import IOT STAT SA

@@ -28,7 +28,7 @@ df.plot$Imports     <- abs(df.plot$Imports)
 df.plot$`Capital formation`   <- df.plot$Capital.formation + df.plot$Changes.in.inventories
 df.plot$Consumption <- df.plot$Household + df.plot$General.Government
 df.plot$SIC         <- df.NE.50I$SIC.code
-df.plot$Industry.code <- paste(df.plot$Description, df.plot$SIC,sep = " ")
+df.plot$Industry.code <- paste(df.plot$SIC, df.plot$Description, sep = " ")
 
 #colnames(df.plot)[which(names(df.plot) == "Total.Industry")] <- "Intermediate inputs"
 colnames(df.plot)[colnames(df.plot) == "Total.Industry"] <- "Intermediate inputs"
@@ -62,8 +62,6 @@ Ind <- df.plot$Industry.code
 
 col <- c("#B2182B","#D1E5F0","#FDDBC7","#EF8A62","#2166AC","#67A9CF")
 
-
-
 p <- df.plot[df.plot$Industry.code==Ind,] %>% ggplot(aes(x=side, y=Value, fill=Aggregate)) +
                                           geom_bar(stat="identity") +
                                           ylab("million Rand") +
@@ -71,25 +69,28 @@ p <- df.plot[df.plot$Industry.code==Ind,] %>% ggplot(aes(x=side, y=Value, fill=A
                                           facet_wrap( ~ Industry.code, ncol=10, scales="free") +
                                           theme(legend.position="bottom") +
                                           theme(axis.title.x=element_blank(), axis.ticks.x=element_blank()) +
-                                          #scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9", "#E69F00", "#999999"))
-                                          #scale_fill_brewer(palette="PuOr")
+                                          guides(fill = guide_legend(nrow = 1)) +
+                                          labs(fill="Aggregate :") +
                                           scale_fill_manual(values=col)
 
 print(p)
 
-p <- df.plot[df.plot$Industry==Ind,] %>% ggplot(aes(x=side, y=Value, fill=Aggregate)) +
-  geom_bar(stat="identity") +
-  ylab("million Rand") +
-  #xlab("") +
-  facet_wrap( ~ Industry, ncol=10) +
-  theme(legend.position="bottom") +
-  theme(axis.title.x=element_blank(), axis.ticks.x=element_blank()) +
-  #scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9", "#E69F00", "#999999"))
-  scale_fill_brewer(palette="BrBG")
+setwd(dir.PLOTS)
+fileName.graph <- paste("Uses_Resources_percent",yearHere, sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=44, height=28, units="cm", dpi=300)
+
+
+p <- df.plot[df.plot$Industry.code==Ind,] %>% ggplot(aes(x=side, y=Value, fill=Aggregate)) +
+                                          geom_bar(stat="identity") +
+                                          ylab("million Rand") +
+                                          facet_wrap( ~ Industry.code, ncol=10, scales="fixed") +
+                                          theme(legend.position="bottom") +
+                                          theme(axis.title.x=element_blank(), axis.ticks.x=element_blank()) +
+                                          guides(fill = guide_legend(nrow = 1)) +
+                                          labs(fill="Aggregate :") +
+                                          scale_fill_manual(values=col)
 
 print(p)
 
-
-setwd(dir.PLOTS)
-fileName.graph <- paste("Uses_Resources",yearHere, sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=36, height=28, units="cm", dpi=300)
+fileName.graph <- paste("Uses_Resources_abs",yearHere, sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=44, height=28, units="cm", dpi=300)

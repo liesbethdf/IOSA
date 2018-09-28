@@ -33,8 +33,8 @@ demand <- df.IOT2014$Exports[1:50] +
           df.IOT2014$Capital.formation[1:50] + 
           df.IOT2014$Changes.in.inventories[1:50]
 
-#employment.per.production <- df.NumberEmployees.50I$`201406`/df.IOT2014$Output[1:50]
-employment.per.production <- df.NumberEmployees.50I.QLFS$`201406`/df.IOT2014$Output[1:50]
+#employment.per.production <- df.NE.50I$`201406`/df.IOT2014$Output[1:50]
+employment.per.production <- df.NE.50I.QLFS$`201406`/df.IOT2014$Output[1:50]
 
 #employment.content.direct.indirect <- round(diag(employment.per.production) %*% LI.d,3)
 employment.content.direct.indirect <- diag(employment.per.production) %*% LI.d %*% diag(s.d)
@@ -48,7 +48,7 @@ employment.content.direct   <- (diag(employment.content.direct.indirect))
 VA    <- df.IOT2014[df.IOT2014$Description=="Gross value added",3:52] + df.IOT2014[df.IOT2014$Description=="Net taxes on products",3:52]
 VA.HT <- df.IOT2014[df.IOT2014$Description=="Gross value added",3:52] - df.IOT2014[df.IOT2014$Description=="Other taxes less subsidies",3:52]
 COMP  <- df.IOT2014[df.IOT2014$Description=="Compensation of employees",3:52]
-NE    <- df.NumberEmployees.50I$`201406`
+NE    <- df.NE.50I$`201406`
 
 T     <- diag(VA.HT/VA)
 L     <- diag(COMP/VA.HT)
@@ -118,9 +118,10 @@ MI.dist <-  w * log(k * MI/MI.m)
 
 Order     <- df.IOT2014$Order[1:50]
 Industry  <- df.NE.50I$Industry.description
+SIC       <- df.NE.50I$SIC.code
 
 df.results                    <-  data.frame(Industry)
-df.results$SIC                <-  df.NumberEmployees.50I$SIC.code
+df.results$SIC                <-  df.NE.50I$SIC.code
 df.results$Order              <-  Order
 df.results$ec                 <-  colSums(employment.content.direct.indirect)
 df.results$ec.direct          <-  employment.content.direct
@@ -136,8 +137,8 @@ df.results$ec.dev.decomp.MI   <-  colSums(MI.dist)
 df.results.ec.matrix            <- data.frame(employment.content.direct.indirect)
 colnames(df.results.ec.matrix)  <- Order
 rownames(df.results.ec.matrix)  <- Order
-df.results.ec.matrix$Industry   <- df.NumberEmployees.50I$Industry.description
-df.results.ec.matrix$SIC        <- df.NumberEmployees.50I$SIC.code
+df.results.ec.matrix$Industry   <- df.NE.50I$Industry.description
+df.results.ec.matrix$SIC        <- df.NE.50I$SIC.code
 df.results.ec.matrix            <- df.results.ec.matrix[,c("Industry","SIC",Order)]
 
 results <- list(df.results,df.results.ec.matrix)
@@ -194,13 +195,16 @@ levels(df.plot$Decomposition) <- c("Direct","Indirect")
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   geom_bar(stat="identity") +
-                  ylab(paste0("Employment content against average, ",yearHere)) +
+                  ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
                   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   coord_flip() +
                   labs(fill="Decomposition :") +
-                  theme(legend.position="bottom")
+                  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
+                  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
+                  scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
+                    theme(legend.position="bottom")
 print(p)
 
 setwd(dir.PLOTS)
