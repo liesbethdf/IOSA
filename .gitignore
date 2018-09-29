@@ -11,13 +11,11 @@
 /CPI_AFD docs
 /project/graphs
 
-
 #file to exclude
 TODO
 
 #file excluded because too large
-*/IOTS_21092018175401685_importcontentExport.csv
-
+/project/data/oecd/IOTS_21092018175401685_importcontentExport.csv
 
 #Rstudio files
 
