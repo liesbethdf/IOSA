@@ -130,72 +130,89 @@ These impact will be estimated both in terms of loss or gain in GDP or growth, a
 
 \subsection{IOT analysis}
 
-The accounting equation embodied in the rows of the IOT table hold that for every sector $i$, its total output $y_i$ is given by : $y_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $b_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten to show the amount of goods available to be used in the domestic economy :  $y_i - x_i + m_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i$. This last equation tells us that exports are not available for use in the domestic economy, that imports \emph{en revanche} are, and that domestic production that is not exported, together with imports, are used for the purposes listed on the right hand side. %uses made of the composite good $i$ are either intermediate consumption $u_i$, consumption $c_i$, consumption by government $g_i$ or investment $i_i$
-However, the equation does not provide information on what share of imports of good $i$ is used for consumption versus investment, or alternatively, what share of intermediate goods $b_{ij}$ is supplied through domestic production or is imported. The same remarks can be made for all the other uses. %These five uses, or demands, are either supplied through domestic production or through importation of products $m_i$ of sector $i$. Total domestic production $y_i$ is either exported $x_i$ or used within the domestic economy $y_i-x_i$, for the four uses mentioned. Thus, goods for consumption can be either domestically produced or imported : $c_i = c_i^d +c_i^m$. The same is true for investment, government expenditure and intermediate goods. 
+The accounting equation embodied in the rows of the IOT table hold that for every sector $i$, its total output $y_i$ is given by : $y_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $b_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten to show the amount of goods that pass through and are available (at some point) to be used in the domestic economy :  
+\begin{equation}
+y_i + m_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i \label{IOT}
+\end{equation}
+%Indeed, all goods domestically produced $y_i$ and imported $m_i$ are at some point available within the domestic economy. 
+A share of these goods is consumed domestically, for final or intermediary purposes, and the remaining share is exported and a source of revenue. However, the equation does not provide information on what share of consumption by households of good $i$ stems from domestic production $c_i^d$ versus from imports $c_i^m = c_i - c_i^d$. The same is true for the other uses on the right-hand side of equation \ref{IOT}. %Note that the possibility is left open that a share of imports is re-exported.
 
-In the context of the intended analysis, this distinction is important. Indeed, when a sector uses imported goods for its activity, the use of intermediate goods does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated, indirectly, through the interlocking dependencies between industrial sectors. %in other sectors are sustained through the activity of the "initial" sector. 
+In the context of the intended analysis, the distinction between the uses made of imports and domestic production is important. Indeed, when a sector uses imported goods for its activity, the use of intermediate goods does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated and value available domestically is created, indirectly, through the interlocking dependencies between industrial sectors. %in other sectors are sustained through the activity of the "initial" sector. 
 
-We here implicitly assume that only domestic production is exported. However, for reasons of simplicity and also because imported goods are in today's globalized economy often used as intermediate consumption to produce a final good that might in itself be exported again, we will slightly change the above also assume that a share of exports is imported. 
+%We here implicitly assume that only domestic production is exported. 
 %(We suppose that the imported goods are not exported. This assumption is not neutral and thus not necessarily hold for all sectors, given the aggregation level of the SA IO table. For example, for the sector Motor vehicles ($I32$), a substantial share, $32\%$ of the value of the sector's inputs are from within the same sector. Additionally, $25\%$ of total output is exported and $76\%$ of total input is imported (+ imports are larger than total intermediate inputs). This suggests that there is both imports of finished vehicles, since import is larger than intermediate use in this category. Additionally, given the high value of imports, it suggests that there is import of parts which get assembled in SA.)
 
 
-To take into account that the use of imported goods does not give rise to domestic jobs, ideally a separate IOT for imported goods is needed. This table is not available for the South African economy at the 50 sector level\lies{OECD includes SA in its multi-country IOT. Should check. Could deduce IOT for imports from there, even if higher aggregation.}. %The best answer to this question would be based on detailed microdata on types of goods used/produced per sector and imported/exported. 
-In absence of such a table, %Working with the aggregated data on the macro-level, 
-the fast solution to this problem is to suppose that for every type of use $\{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$, %where $j$ spans both the industrial sectors as final uses, such as consumption by households and government, exports, etc., 
-that is made of the total available goods for domestic uses as well as for export $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
+To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the goods hence made available might create economic activity by making possible a production process), separate IOTs for domestically produced and imported goods are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}.
+In absence of such a table, the fast solution to this problem is to suppose that for every type of use $u_i$, $u_i \in \{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ that is made of %the total available goods for domestic uses as well as for export 
+the available goods $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
 \begin{align}
-%s_i = \frac{m_i}{y_i - x_i + m_i}
 s_i &= \frac{m_i}{y_i + m_i} \\
-w_i^m &= s_i \, w_i
+u_i^m &= s_i^m \, u_i \label{shareM} \\
+u_i^d &= (1-s_i) \, u_i
 \end{align}
-where $w_i$ stands for all the possible uses of $y_i + m_i$ : $w_i \in \{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$, and $w_i^m$ stands for all the possible uses of imported products : $w_i \in \{b_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment and inventory building :
+where $u_i^m$ and $u_i^d$ stand for all the possible uses made of respectively imported and domestic products : $u_i^m \in \{b_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{b_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment, inventory building and exports :
 \begin{equation}
-m_i = \sum b_{ij}^m + c_i^m + i_i^m + g_i^m \label{useImports}
+m_i = \sum b_{ij}^m + c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{useImports}
+\end{equation}
+
+That a share of imports is exported is part assumed for reasons of simplicity and part because in today's globalized economy imports are also used as intermediate consumption to produce a final good that might in itself be exported again.
+
+%The simplifying hypothesis that the shares $s_i$ are constant over each of its different uses yields :
+%
+%\begin{equation}
+%u_i^m + c_i^m + i_i^m + g_i^m = s_i (u_i + c_i + i_i + g_i) \label{constant}
+%\end{equation}
+
+%Combining the last two equations \ref{constant} and \ref{useImports} we get that :
+%\begin{equation}
+%%s_i = \frac{m_i}{y_i - x_i + m_i} \label{share}
+%s^m_i = \frac{m_i}{y_i + m_i} \label{share}
+%\end{equation}
+
+Combining equations \ref{IOT}-\ref{shareM} we get :
+
+\begin{equation}
+y_i + m_i = b_{ij}^d + b_{ij}^m + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
+\end{equation}
+
+Denoting %$a_{ij}=b_{ij}/y_i$ the amount of inputs from sector $j$, sector $i$ uses to produce 1 unit of output, 
+$a_{ij}^d=b_{ij}^d/y_i$ the amount of domestically produced inputs of good $j$ used by sector $i$ to produce one unit of output, and $a_{ij}^m=b_{ij}^m/y_i$ the amount of imported inputs of good $j$ used per unit of output from sector $i$, we get :
+
+\begin{equation}
+y_i + m_i = (a_{ij}^d + a_{ij}^m)\, y_i + c_i^d + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
+\end{equation}
+
+In matrix notation, with $Y$, $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $X^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors denoted with small letters, with 0's off-diagonal and $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import and total Leontief matrices of coefficients $a_{ij}^d, a_{ij}^m, a_{ij}$ :
+
+\begin{equation}
+Y + M = (A^d + A^m ) Y + C^d + G^d + I^d + INV^d + X^d +  C^m + G^m + I^m + INV^m + X^m \label{allUsesmatrix}
+\end{equation}
+
+Using that $M = A^m\, Y  +  C^m + G^m + I^m + INV^m + X^m$ :
+
+\begin{equation}
+Y = A^d  Y + C^d + G^d + I^d + INV^d + X^d \label{allUSesDom}
 \end{equation}
 
 
 
-%Thus, starting from the uses = resources identity expressed in the input-output table, we proceed in the following manner to determine to what extent a demand increase in one sector generates employment domestically versus outside of the country.
-
-
-By hypothesis, the shares of imported goods to the total domestic use of the same type of good is taken as constant over each of its different uses	 :
-
-\begin{equation}
-u_i^m + c_i^m + i_i^m + g_i^m = s_i (u_i + c_i + i_i + g_i) \label{constant}
-\end{equation}
-
-
-Combining the last two equations \ref{constant} and \ref{useImports} we get that :
-\begin{equation}
-%s_i = \frac{m_i}{y_i - x_i + m_i} \label{share}
-s^m_i = \frac{m_i}{y_i + m_i} \label{share}
-\end{equation}
-
-In matrix notation we get :
-
-\begin{equation}
-y + m = (A^d + A^m ) y + c^d + g^d + i^d + inv^d + x^d +  c^m + g^m + i^m + inv^m + x^m \label{allUSes}
-\end{equation}
-
-Denoting $S^m$ the diagonal matrix of the shares $s_i$ and 0 elsewhere, then by hypothesis :
+In the absence of seperate IOTs for domestic production and imports, denoting $S^m$ the diagonal matrix of the shares $s_i^m$ and 0's off-diagonal, then the following hypothesis is used to make an IO model based on the total IOT :
 \begin{align}
 m &= A^m  y +  c^m + g^m + i^m + inv^m + x^m \label{importsUses} \\
 A^m &= S^m \, A \\
-c^m &= S^m \, c \\
-g^m &= S^m \, g \\
-i^m &= S^m \, i \\
-inv^m &= S^m \, inv \\
-x^m &= S^m \, x 
+C^m &= S^m \, C \\
+G^m &= S^m \, G \\
+I^m &= S^m \, I \\
+INV^m &= S^m \, INV \\
+X^m &= S^m \, X 
 \end{align}
 
 Denoting $\mathbb{I}$ the identity matrix and combining \ref{allUSes} and \ref{importsUses}, we get :
 \begin{equation}
-y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (c + g + i + inv + x)  \label{IO1}
+Y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (C + G + I + INV + X)  \label{IO1}
 \end{equation}
-where the first term on the right hand side is intermediate domestic demand and the second term final domestic demand. Or also :
-\begin{equation}
-y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (c + g + i + inv + x)  \label{IO2}
-\end{equation}
+where the first term on the right hand side is intermediate domestic demand and the second term final domestic demand.
 
 The employment content $ec_i$ of sector $i$, defined as the number of direct and indirect jobs created through one unit of output of sector $i$. To calculate the employment content of all sectors, define the $n \times n$ matrix $EC$ where $ec_{ij}$  is the number of jobs of sector $j$ created because of demand to sector $i$. Direct employment in sector $j$ is then defined as $ec_{jj}$ and indirect employment as $\sum_{i, i\neq j} ec_{ij}$. The total employment content $ec_j$ of sector $j$ is given by $\sum_i ec_{ij}$. The employment content matrix $EC$ is calculated using the diagonal matrix $E$ where $e_{ii}$ is the amount of employees of sector $i$ per unit of its output, and in addition the domestic leontief inverse matrix $LI^d$. The elements $li_{ij}^d$ of the leontief inverse $LI^d$ say how much sector $i$ needs to produce such that sector $j$ can produce one unit of final domestic demand. (Assuming that a share of intermediate and final uses is supplied through imports.)
 
@@ -253,34 +270,55 @@ where the operation denoted by the single bar $\bar{\ }$ is right multiplication
 
 \section{Data}
 
-The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. They are however useful in some instances because they are prepared (aggregation, seasonal adjustments) differently. 
+The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. The latter offer additional information because of the treatments data underwent (aggregation, seasonal adjustment). %and because the data for South Africa have been put in relation to data  are however useful in some instances because they offer access to different types of pre-treatments . 
 
 \subsection{Datasources}
 
 \subsubsection{IOT}	
 
-The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. 
+The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. However, no table is available that specifies uses of imports versus uses of domestic production. Such a table is provided by the OECD, at a detail of 35 sectors ; the most recent one is for 2011 at the time of writing.
 
 \subsubsection{Employment data}
-Data on employment are gathered by the South African Statistics Agency through two types of channels. The Quarterly Employment Survey is conducted with enterprises \citep{QES2018}. The Quarterly Labour Force Survey is a survey taken from households from individuals aged 15 years and over and, contrary to the former, includes the agricultural sector, self-employed workers whose businesses are unincorporated, unpaid family workers, and private household workers among the employed \citep{QLFS2018}.
+For the present study employment data are needed of the same sectoral aggregation as the 50-sector IOT. These are not readily available but are constructed on the basis of two types of employment data and in addition more detailed data for certain sectors, all collected by and available from Stat SA.
+ 
+Data on employment are gathered by the South African statistics agency through two types of channels. The Quarterly Employment Survey is conducted with enterprises \citep{QES2018}. The Quarterly Labour Force Survey is a survey taken from households from individuals aged 15 years and over. Contrary to the former, the data thus obtained cover also the agricultural sector, self-employed workers whose businesses are unincorporated, unpaid family workers, and private household workers among the employed \citep{QLFS2018}.
 
-The QES offers employment numbers for the all sectors, excluding agriculture and private households, at a level of detail of 91 sectors. 
+The QES offers employment numbers for the all sectors, excluding agriculture and private households, at a level of detail of 91 sectors. The QLFS offers data at a disaggregation of the economy of 10 sectors. Thus, while the QLFS covers more types of workers, the QES is more detailed.
 
+The IOT, although on average less detailed than the employment data sourced from the QES, offers for a few sectors a different or more detailed disaggregation than the 91 sectors used by the former. This is the case for "Agriculture" (SIC 1), the "Mining and quarrying" sector (SIC 2), and for "Coke oven products; petroleum refineries; processing of nuclear fuel" (SIC 33). To obtain estimates compatible with the IOT, assumptions and additional data are used. Also, to obtain final numbers, the choice is made to include all types of workers, self-employed workers whose businesses are unincorporated, unpaid family workers, and private household workers. %i.e. to suppose total employment as given by the QLFS.
+ 
+The last assumption implies that the final data set results in the same numbers when aggregated to the 10 sectors of QLFS. Thus, to obtain data for agriculture, the QLFS estimate is used, disaggregated to Agriculture (SIC 11), Forestry (SIC 12), Fishing (SIC 13) according to their shares in output for the year 2014. 
 
-Quarterly employment statistics are gathered based on sample surveys from enterprises. The survey is taken in all sectors, except for SIC 1, Agriculture, hunting, forestry and fishing, the informal business sector and domestic services. The employment data offer a detail of sectors.
-
-The employment data for the mining sector are disaggregated into gold and non-gold. To get numbers for the same disaggregation as the IOT table, SIC 21 coal, 23-24 gold and metals, 25 other, data are used from document Statistics SA, Report No. 20-01-02 (2015) Mining industry, 2015. In the report, both direct employees of the mining industry are included, as employees through labour brokers, of subcontractors and capital employees\lies{what are those?}. The total thus obtained in the report is 490146, versus 459271 in the quarterly employment series 2009-2018. Also, the proportion working for the gold mines SIC 23 is different. In the quarterly series, 21\% of people in the mining sector work for gold, versus 25\% according to the survey.
-
+The employment data for the mining sector are disaggregated into gold and non-gold in the QES. To get numbers for the same disaggregation as the IOT table (SIC 21 coal, 23-24 gold and metals, 25 other), data are used from the 2015 report from Stat SA on the Mining industry \citep{mining2015}. In the report, both direct employees of the mining industry are included, as employees through labour brokers, of subcontractors and capital employees\lies{what are those?}, for xx subsectors of the mining industry. %The total thus obtained in the report is 490146, versus 459271 in the quarterly employment series 2009-2018. Also, the proportion working for the gold mines SIC 23 is different. In the quarterly series, 21\% of people in the mining sector work for gold, versus 25\% according to the survey.
 To obtain an estimate for the number of people working in SIC 21, 23+24 and 25, the non-gold share of the quarterly series is disaggregated according to the shares of the mining report. 
+
+To obtain the disaggregation of sector 33 as in the IOT, it is assumed that shares of workers employed in each subsector are equal to the shares of output.
+
+Finally, after the QES data are aggregated into 50 sectors, volume adjustments are made based on the QLFS numbers.
 
 %The conversion between SIC and ISIC rev.3 https://www.statssa.gov.za/additional_services/sic/descrip6.htm
 %https://www.statssa.gov.za/additional_services/sic/preface.htm
 
-Employment data are also available from the OECD. 
+Employment data are also available from the OECD at a level of 7 sectors. These allow to make a final check of the obtained data (figure \ref{ComparisonOECD-STATSA-Empldata_2014}). The main difference found is between sectors ISIC rev.3 G-I and L-P. G-I covers Wholesale and Retail trade and L-P service activities among which Private Households. 
 
-\subsubsection{Scenarios}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../graphs/ComparisonOECD-STATSA-Empldata_2014.pdf}
+	\caption{\label{ComparisonOECD-STATSA-Empldata_2014}.}
+\end{figure}
 
-\subsection{Statistics}
+
+%\subsubsection{Scenarios}
+
+\
+
+%\section{Results}
+\section{Statistics of the data used / macro description of the South African economy}
+
+\subsection{Descriptive statistics}
+
+\subsubsection{Uses and resources}
+
 
 \begin{landscape}
 	\thispagestyle{empty}
@@ -301,11 +339,7 @@ Employment data are also available from the OECD.
 	\end{figure}	
 \end{landscape}
 
-
-
-
-
-\section{Results}
+\subsubsection{Employment}
 
 The impact on the South African economy is assessed if the world adopts a transformation of the economy compatible with a xx\% chance of keeping the raise of the average global temperature under 2°C. This impact is explored in detail by CPI taking a microeconomic approach. CPI identified the key sectors that would be impacted by a global 2DS scenario and analyzed for each of the main actors/firms making up those sectors the impact an external 2DS would have on them. 
 
@@ -313,24 +347,6 @@ The development of a low-carbon economy on a worldwide scale, has implications f
 
 This report proposes an analysis of the impacts of the adoption of a low-carbon  world-scale development of the economy on the South African economy from a macroeconomic point of view. This analysis complements the sector-, firm- and asset-level analysis conducted by CPI. The purpose of this complementary analysis is to evaluate whether the conclusions reached via two distinct methods are qualitatively similar. The two methods can in short be juxtaposed as follows : both on the micro and the macro level, the impact of changes to external conditions (export prices, export demand volumes) to which the SA economy is impacted is simulated/evaluated. For the goods exported by SA and identified as undergoing a significant change in demand in case of a low carbon trajectory followed by the world economy, CPI used scenarios for volume and price on the global markets under a 2DS and a BAU scenario. In the case of the micro analysis, the impact of these scenarios is evaluated on the economy on a sector, firm, and/or asset based level. The impacts on the individual units are then aggregated to obtain a figure representing the impact on the whole economy. The macro analysis follows the opposite route : the impact on the South African economy of the alternative demand scenarios for the main SA export goods that would be impacted by a world-scale low-carbon transition %for goods traded on the global market 
 is evaluated on the level of the economy as a whole, from the macro economic point of view. From this economy-wide point of view, an effort is then made to pinpoint the observed effects on the macro-level to specific economic units (subsectors, firms). The two approaches are in a certain sense situated on the opposite side of the spectrum of how the economy can be described. 
-
-\subsection{Statistics of the data used / macro description of the South African economy}
-
-\subsection{Methodology}
-
-The methodology used for the analysis on the macro-level is based on the input-output table (IOT) of the South African economy. The IOT is a quantitative representation of the economy as a whole showing the interdependencies between sectors. These interdependencies can be described in two ways, both ways based on the same fact : the goods produced by every industrial sector are used on the one hand for final uses, such as electrical appliances bought by households or ... government, and on the other hand used as inputs by other sectors. Examples of the latter are primary commodities such as coal or metal ores that are transformed into final products, but also products that are already transformed such as aluminium \ldots{} steel etc. This fact is described in the IOT firstly 1) by showing how the production/output of an industrial sector is used throughout the economy --- as inputs for a number of other sectors and as final goods by Households, Government, and how much is exported. Consequently, 2) the IOT also shows what inputs every sector uses produced by the same and other sectors. This latter fact can also be described by saying that the IOT shows how one sectors activity creates demand, and how much of it, to other sectors. Indeed, making cars out of steel generates economic activity and jobs in the steel sector. 
-
-The point that is important in the context of this study %of a comparison of a world-scale low carbon transition with a scenario where the world does not make such a choice, %for the study at hand 
-is that when for example the South African coal sector faces different demand for export purposes under both scenarios, the differential impact on the economy is not limited to the coal sector but extends to the sectors that sell intermediate inputs to the coal sector. The macroeconomic picture provided by the IOT allows to systematically evaluate the impact of the external scenarios throughout the economy, taking into account how each sector depends on others for its revenue. %the supply chains. 
-
-The CPI study also looks into the impact on the value chain in which the primary affected sector is situated. For example, the demand for coal does not only impact the corresponding part of the mining sector, but also the actor, Transnet, providing the transport by rail of the coal to power ports, from where the coal is exported. However, the advantage of the present study is that it evaluated these indirect impacts in a systematic manner.
-
-The methodology can be summarized as follows. The same price and volume trajectories for key export goods %impacted by a 2DS, 
-evaluated on a micro-level by CPI, are evaluated on the macro level with the IO-model. The IO-model yields the difference in the impact of these export scenarios at the level of the economy as a whole between the BAU and 2DS scenarios. A distinction is made between the direct and the indirect impact, the former due to different final (export) demand and the latter being the impact due to the consequently different intermediate demands. These impacts will be estimated both in terms of loss or gain in GDP or growth, and in terms of loss of jobs. Indeed, a key aspect of evaluating the impact of export scenarios on the economy is not only to evaluate the lost revenue, but also to evaluate which economic actors bear this cost. CPI makes a detailed analysis of how the costs are born between stakeholders (firms, the government), ... from a financial point of view. In addition, the IO analysis allows for an evaluation of the impact on employment of the lost revenue. 
-
-%The impact on employment is assessed of the external threats, as identified by CPI, facing South Africa under a 2DS, from a macroeconomic standpoint. 
-
-%The effect on employment (and global cost to the economy) assuming the baseline scenario, which is IEA's New Policies Scenario (NPS), is compared with CPI's 2DS scenario. The 2DS is an adaptation of the IEA's SDS. 
 
 
 
@@ -368,6 +384,7 @@ Half of coal mining's cost of intermediate inputs goes to the transport sector f
 	\caption{\label{Decomposition_direct_indirect_absolute} The length of the horizontal bars shows the employment content in absolute terms for the South african economy decomposed into 91 sectors. The employment content is measured as the number of jobs created, throughout the economy, per million rand of final demand. Total employment content is decomposed into direct jobs, created within each sector, and indirectly generated jobs, due to demand for intermediate input to other sectors. The dotted blue and gray lines indicate the average indirect and total employment content.}
 \end{figure}	
 
+\section{Prospective analysis}
 
 \subsection{External threats : coal}
 
