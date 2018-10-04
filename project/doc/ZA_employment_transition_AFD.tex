@@ -400,7 +400,7 @@ For example,
 
 \subsection{External threats : coal}
 
-One of the clear external factors faced by the South African economy under a business as usual versus under a 2DS scenario, is the difference in global demand for coal both scenarios imply. CPI models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Additionally, the price on the global market is expected to be lower under 2DS. 
+A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal both scenarios imply. CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Additionally, the price on the global market is expected to be lower under 2DS. 
 
 \subsubsection{Coal mining within the South African economy}
 
@@ -496,7 +496,57 @@ As an example, a comparison is made between the South African economy in the yea
 
 \subsubsection{Electricity}
 
-Estimation of the 
+%To evaluate the effect of an increase of the price of coal on the price of electricity, 
+
+\subsubsection{Adapting IOT for different weight of coal in generation mix}
+To evaluate the effect of a lower share of coal in the generation mix in 2DS versus BAU, a corresponding Leontief matrix needs to be constructed. To construct the corresponding matrix, first the technical coefficients that reflect the generation mix need to be identified. Secondly, a quantitative estimate has to be made on how the coefficients evolve to reflect different generation mixes.
+
+The technical coefficients that catch the generation mix are found in the column of sector SIC 41, Electricity, gas and water of the matrix, which contains the inputs necessary to generate electricity. As shown in table \ref{SIC41composition}, sector SIC 41 contains also the manufacture of gas and steam ad hot water supply ; however electricity generation is the biggest share of activity (xx\% ?). The relevant entries are listed in table \ref{GenerationMixcoefficients}. The main aspect under investigation of the generation mix is a reduced share of coal. Thus, if less coal is used to generate 1 unit of electricity, a hypothesis has to be made on what other production technology would replace coal. %In order to avoid making heuristic assumptions on this issue, 
+It is assumed that all the other production technologies take up the slack in equal parts, proportional to the share they provide as reflected in the IOT for the year 2014. Thus, the technical coefficients of sector SIC 41 that reflect the generation mix are divided in three groups : the ones that are necessary for coal production and the ones that are necessary for one of the other technologies. The coefficients that are not in table \ref{GenerationMixcoefficients} are implicitly assumed to be independent of through what generation technology 1 unit of electricity is produced. In other words, the amount spent by sector SIC 41, as specified in the 2014 IOT table, for example on computer activities (SIC 86\&88), is determined by the total amount of $MWh$ of electricity produced in 2014, and not by what share was produced by the burning of coal.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lclc}
+		\toprule
+		%\midrule
+		\multicolumn{2}{l}{Input, SIC code}	& Technology used for  &  \% cost (2014) \\ 
+		\midrule
+		Coal and lignite & 21 &  Coal &  16.6    \\
+		Electricity, gas and water & 41 & Coal, other & 5.2     \\
+		Generation &41111 & Other &     \\
+		Gas &412 & Other &     \\
+		 &remaining & Coal, other &     \\
+		Transport &71 \& 74 &  Coal  &   2.4   \\
+		Coke oven manufacture & 331 \& 332 & Coal &  1.6 \\
+		Nuclear fuel & 333 \& 334 & Other & 0.1   \\
+		Other mining &  25 & Other &   0.06 \\
+%		 &    &    \\
+		\bottomrule
+	\end{tabular}
+	\caption{\label{GenerationMixcoefficients}The technical coefficients of the Leontief matrix that capture the generation mix. Eskom's Primary energy cost breakdown 2014, million Rand. Source : \href{http://www.eskom.co.za/IR2015/Documents/EskomIR2015single.pdf}{Integrated report}, \citep{Eskom2014AR}.}
+\end{table}
+
+ 
+
+Given A the matrix with the technical coefficients for the South African economy. 
+
+To evaluate the effect of a lower share of coal in the generation mix in 2DS versus BAU, it is necessary to know what the relative cost is of generating electricity from coal versus from other inputs. This can be estimated using the decomposition of the primary energy cost as given by Eskom's 2014 annual report \citep{Eskom2014AR}, given in table \ref{EskomPrimaryEnergy}. 
+
+Given Z the IO matrix of inter-industry sales in current prices of the SA economy. The technical coefficients for the electricity sector reflect the particular generation mix of the year for which the matrix is made. To evaluate the effect on the economy of a slightly different generation mix, with the same production of electricity in $MWh$, with possibly different prices, we need to know which of the IO entries will be affected and determine for the relevant coefficients their volume / price ratio. We need to know, when 10\% less coal is used for electricity generation, what coefficients need to increase, and by what percentage, to generate the same final $MWh$. Identifying the relevant coefficients is a question of identifying the place and role of each of the inputs in the production process. Once this is established, to determine by what percentage they need to increase, for the coefficients that represent primary energy inputs that can be interpreted to correspond to the data given in table \ref{EskomPrimaryEnergy}, an estimate is made as follows : .
+
+we want to know, the relative price of generating electricity with coal versus all the other sources. To this end, to  
+
+Denoting Z the $n\times n$ IO matrix of inter-industry sales in current (2014) prices $p^{2014}_i$, with elements $z^{2014}_{ij} = p_i \, q_{ij}$ and $x$ the vector of final output per sector with elements $p_i^{2104} \, x_i$, where $x_i$ is the output, in quantity of goods of sector $i$.  
+
+we want to estimate a new matrix 
+
+
+
+ This can be estimated by identifying the cost of the primary energy inputs in the IOT table, combined with 
+
+Assuming that electricity will be produced with less coal and more other inputs translates itself in the IOT model in a change in the relevant technical coefficients of the Leontief matrix. 
+
+
 
 \begin{table}[ht]
 	\centering
@@ -507,7 +557,8 @@ Estimation of the
 		\midrule
 		4 & Electricity, gas and water supply & 221 633 & & 100 \\ 
 		41 & Electricity, gas, steam and hot water supply &163 081& & 73.6 \\ 
-		411 & Production, collection and distribution of electricity &  & 139 506 & 62.9\\ 
+		411 & Production, collection and distribution of electricity &  &  &  \\ 
+		 & Eskom &  & 147 691 & 66.6 \\ 
 		 41111 & Generation 	  	  	&& & \\
  		41112 & Distribution of purchased electric energy only 	&&  	&  	  	\\
 		41113 & Generation and/or distribution for own use & 8 454& & 3.8\\
@@ -516,8 +567,31 @@ Estimation of the
 		42 & Collection, purification and distribution of water & 58 552 & &26.4 \\ 
 		\bottomrule
 	\end{tabular}
-	\caption{The composition of sector SIC 41, Electricity, gas, steam and hot water supply. Output and revenue are in million Rand. The estimates are based on 2014 data. The estimate for the value for subsector 41113 is based on how much sector 41 uses from itself, as obtained from the IOT. Sources : \href{http://www.statssa.gov.za/additional_services/sic/mdvdvmg4.htm}{Stat SA website, SIC 41 description}, (*) 2014 IOT in current prices \citep{IOT2014}, (**) \href{http://www.eskom.co.za/OurCompany/MediaRoom/Documents/IRpresentation2014.pdf}{Annual results Eskom, 2014}.}
+	\caption{\label{SIC41composition}The composition of sector SIC 41, Electricity, gas, steam and hot water supply. Output and revenue are in million Rand. The estimates are based on 2014 data. The estimate for the value for subsector 41113 is based on how much sector 41 uses from itself, as stated in the IOT. Sources : \href{http://www.statssa.gov.za/additional_services/sic/mdvdvmg4.htm}{Stat SA website, SIC 41 description}, (*) 2014 IOT in current prices \citep{IOT2014}, (**) \href{http://www.eskom.co.za/IR2015/Documents/EskomIR2015single.pdf}{Integrated report}, \citep{Eskom2014AR}.}
 \end{table}
+
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lrrl}
+		\toprule
+		%\midrule
+		Primary energy source	& Cost, mR  & Cost, \% & IOT  \\ 
+		\midrule
+		Coal and gas & 51 554   &  61.8   & Input I4 to I33 \\
+		Nuclear  fuel &  530  &   0.6  & Input I17 to I33\\
+		OGCT fuel & 9 546   &   11.4   & Input I33 to I33  \\
+		Electricity  imports & 3 679   &  4.4  & I33 Import\\
+		IPPs &  9 453  &  11.3  & Input I33 to I33\\
+		Environmental levy & 8353 &   10.0   & Taxes \\
+		Other &  310  &  0.4  & Input I4 to I33(?)\\
+		\bottomrule
+	\end{tabular}
+	\caption{\label{EskomPrimaryEnergy}Eskom's Primary energy cost breakdown 2014, million Rand. Source : \href{http://www.eskom.co.za/IR2015/Documents/EskomIR2015single.pdf}{Integrated report}, \citep{Eskom2014AR}.}
+\end{table}
+
+
+
 
 \subsection{External threats : oil}
 
