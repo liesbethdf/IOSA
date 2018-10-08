@@ -483,3 +483,4 @@ df.NE.50I.QLFS[df.NE.50I.QLFS$SIC.code %in% sectorset, -c(1,2,3)] <-
   scaler * df.NE.50I.QLFS[df.NE.50I.QLFS$SIC.code %in% sectorset, -c(1,2,3)]
 
 #Private households
+setwd(dir.ANALYSIS)

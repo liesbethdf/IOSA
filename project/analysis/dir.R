@@ -2,6 +2,7 @@
 sep = .Platform$file.sep
 
 dir.PROJECT   <- normalizePath("..")
+dir.ANALYSIS  <- paste(dir.PROJECT, "analysis", sep=sep) 
 dir.DATA      <- paste(dir.PROJECT, "data", sep=sep)
 dir.PLOTS     <- paste(dir.PROJECT, "graphs", sep=sep)
 dir.TABLES    <- paste(dir.PROJECT, "tables", sep=sep)

@@ -132,7 +132,7 @@ These impact will be estimated both in terms of loss or gain in GDP or growth, a
 
 
 
-\subsection{IOT analysis}
+\subsection{Input-output demand-pull model}
 
 The accounting equation embodied in the rows of the IOT table hold that for every sector $i$, its total output $y_i$ is given by : $y_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $b_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten to show the amount of goods that pass through and are available (at some point) to be used in the domestic economy :  
 \begin{equation}
@@ -218,6 +218,8 @@ Y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (C + G + I + INV + X)  \la
 \end{equation}
 where the first term on the right hand side is intermediate domestic demand and the second term final domestic demand.
 
+\subsection{Employment content}
+
 The employment content $ec_i$ of sector $i$, defined as the number of direct and indirect jobs created through one unit of output of sector $i$. To calculate the employment content of all sectors, define the $n \times n$ matrix $EC$ where $ec_{ij}$  is the number of jobs of sector $j$ created because of demand to sector $i$. Direct employment in sector $j$ is then defined as $ec_{jj}$ and indirect employment as $\sum_{i, i\neq j} ec_{ij}$. The total employment content $ec_j$ of sector $j$ is given by $\sum_i ec_{ij}$. The employment content matrix $EC$ is calculated using the diagonal matrix $E$ where $e_{ii}$ is the amount of employees of sector $i$ per unit of its output, and in addition the domestic leontief inverse matrix $LI^d$. The elements $li_{ij}^d$ of the leontief inverse $LI^d$ say how much sector $i$ needs to produce such that sector $j$ can produce one unit of final domestic demand. (Assuming that a share of intermediate and final uses is supplied through imports.)
 
 \begin{align}
@@ -272,6 +274,36 @@ EC	= \bar{T} \odot \bar{L} \odot \bar{N} \odot V \odot \mli{MI} \odot \bar{\bar{
 
 where the operation denoted by the single bar $\bar{\ }$ is right multiplication with $\mathbb{J}$ the $n\times n$ matrix with all ones, $\bar{T} = T \, \mathbb{J}$, and the operation denoted by the double bar $\bar{\bar{\ }}$ is left multiplication with $\mathbb{J}$, $\bar{\bar{S^d}} = \mathbb{J} \, S^d$. 
 
+\subsection{Cost-push model}
+
+The input-output table can also be used to determine, when the price of an input $i$ changes with respect to a base scenario, what the impact would be on the prices of all the other sectors, assuming that the increased cost is fully transferred to buyers. This implies that the profitability of each sector is not impacted and that they still use the same quantities of all inputs. 
+
+Given a reference IOT measured in value, then for the base scenario, prices $p_i$ for all sectors $i$ can be fixed at 1, such that that the IOT in quantities has the same numerical values as the one in value. For the base scenario, the vector of all prices is written as $\boldsymbol{p}$ (and is thus a vector of all 1's).
+
+If $Z$ is the inter-industry matrix (in quantity) of size $n\times n$ with all sectors, then we denote $Z^{-i}$ the inter-industry matrix of size $n-1 \times n-1$ where the row of inputs from sector $i$ to other sectors and the columns of uses of $i$ are omitted. Denoting the $1 \times n-1$ row of inputs of sector $i$ to other sectors except for to itself as $(inp^{-i}_i)^T$, the accounting equations that follow from the first $n$ columns of the IOT then read :
+
+\begin{equation}
+(p^{-i})^T \, Y^{-i} = (p^{-i})^T Z^{-i} + (inp^{-i}_i)^T + (gva^{-i})^T + (t^{-i})^T \label{cost-push1}
+%(y^{-i})^T =  Z^{-i} + (inp^{-i}_i)^T + (gva^{-i})^T + (t^{-i})^T
+\end{equation}
+
+where $Y^{-1}$ is the diagonal $n-1 \times n-1$ matrix of output, measured in quantities, and $(p^{-1})^T$, $(gva^{-1})^T$  and $(t^{-1})^T$ are the $1 \times n-1$ row-vectors of respectively prices, gross value added a net taxes on products. Right-multiplying equation \ref{cost-push1} with the diagonal matrix with the inverse of total output measured in quantities on the diagonal and 0's elsewhere, $\underline{Y}^{-i}$,we get :
+\begin{equation}
+(p^{-i})^T  = (p^{-i})^T A^{-i} + \Big((inp^{-i}_i)^T + (gva^{-i})^T + (t^{-i})^T \Big)\, \underline{Y}^{-i} \label{cost-push2}
+\end{equation}
+and equivalently :
+\begin{equation}
+(p^{-i})^T  =  \Big((inp^{-i}_i)^T + (gva^{-i})^T + (t^{-i})^T \Big)\, \underline{Y}^{-i} \, (I - A^{-i})^{-1} \label{cost-push3}
+\end{equation}
+where the vector $p^{-i}$ contains all 1's.
+
+Consider an alternative scenario $A$ where the price of input $i$ changes by $\lambda\%$ for all sectors with respect to the base scenario, then the value of inputs $inp^{A^{-i}}_{i} = (1+\lambda/100)\, inp^{-i}_i$. The resulting prices in all the other sectors are given by :
+\begin{equation}
+(p^{A^{-i}})^T  =  \Big((inp^{A^{-i}}_i)^T + (gva^{-i})^T + (t^{-i})^T \Big)\, \underline{Y}^{-i} \, (I - A^{-i})^{-1} \label{cost-push-scen}
+\end{equation}
+
+This price increase can be interpreted as a measure for how the total cost of the price change is distributed over all sectors. In addition, the cost to final consumers can be determined. 
+
 \section{Data}
 
 The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. The latter offer additional information because of the treatments data underwent (aggregation, seasonal adjustment). %and because the data for South Africa have been put in relation to data  are however useful in some instances because they offer access to different types of pre-treatments . 
@@ -317,11 +349,11 @@ Employment data are also available from the OECD at a level of 7 sectors. These 
 \
 
 %\section{Results}
-\section{Descriptive statistics of the data used / macro description of the South African economy}
+%\section{Descriptive statistics of the data used / macro description of the South African economy}
 
-\subsection{Descriptive statistics}
+\section{Descriptive statistics}
 
-\subsubsection{Uses and resources}
+\subsection{Uses and resources}
 
 Figures \ref{Uses_Resources_percent_2014} and \ref{Uses_Resources_abs_2014} give a visual summary of the input-output table. For each of the 50 sectors of the IOT, they provide an overview of how goods are obtained --- imported versus domestically produced --- displayed in the right-hand columns and how they are used in the left-hand column. How imports and production are used is divided up between intermediate consumption, final uses such as consumption (by households and government) and building of the capital stock (accumulation of the fixed stock and inventories) and for export. Left- and right-hand columns necessarily have the same height because of equation \ref{IOT}. Figure \ref{Uses_Resources_percent_2014} shows per sector the share, dissimulating the information on the relative size of the different sectors. Figure \ref{Uses_Resources_abs_2014} retains this last information ; however, due to the large size of some service sectors, the distribution of uses and resources is somewhat lost for many.  
 
@@ -388,25 +420,18 @@ For example,
 	\caption{\label{Decomposition_direct_indirect_absolute} The length of the horizontal bars shows the employment content in absolute terms for the South african economy decomposed into 91 sectors. The employment content is measured as the number of jobs created, throughout the economy, per million rand of final demand. Total employment content is decomposed into direct jobs, created within each sector, and indirectly generated jobs, due to demand for intermediate input to other sectors. The dotted blue and gray lines indicate the average indirect and total employment content.}
 \end{figure}	
 
-\subsection{Key sectors within the South African economy}
+\subsection{Key sectors}
+The difference in direct and indirect effects generated by the 2DS versus the BAU scenarios will be estimated with the the aid of the most recent input-output table (2014). Throughout the analysis, it will be assumed that the inter-dependencies between the different sectors in the economy --- the value of input bought by sector $i$ from $j$ to produce 1 mR of output by $i$ --- are assumed to be as in the year 2014. %In a few (1 ?) cases,  
+
+In reality, this assumption does not hold. The 2014 IOT used is measured in value and its numbers might change both because of changes in the relative price of commodities and because over time sector's systems of production change, as reflected in and defined by the amount of inputs used per unit of output. For example, the cost of coal use for 1 $kWh$ of electricity can change on the one hand because the domestic price of coal changes, without changing the $kg$s used, or because solar panels replace coal.
+
+The scenario comparisons in section \ref{scenarioAnalysis} cover the period 2018-2035, over which both relative prices and systems of production will have changed, both under BAU as under 2DS assumptions. This study will not attempt to estimate how the IOT might change over the modeling period ; the assumption is that the 2014 IOT is a good approximation. In order to get picture of the information the 2014 IOT provides, the following subsections describe key sectors for transition scenarios, their place within the economy and how they are linked to other sectors. This will give a first idea of the dominant risks, via indirect effects, of the external transition scenarios. Information on the two types of transmission channels is set forth : how changes in one sector impact others because they use the former's commodity as input and secondly because it uses inputs from others. 
+
+
 \subsubsection{Coal}
-
-\subsubsection{Platinum metal group}
-
-\subsubsection{Oil}
-
-
-\section{Prospective analysis}
-
-\subsection{External threats : coal}
-
-A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal both scenarios imply. CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Additionally, the price on the global market is expected to be lower under 2DS. 
-
-\subsubsection{Coal mining within the South African economy}
-
 At the beginning of the period 2010-2017, the mining sector (SIC 2) represents about 8\% of GDP, contributing about half a percentage point less to GDP towards the end of the period \citep{P0441StatSA2018Q2} (measured in constant 2010 prices). 
 
-Within the mining sector, coal mining (SIC 21, Coal and lignite) contributed 24.4\% in 2012 and 28.1\% in 2015 to the sector's total income \citep{mining2015}. The primary source of income of the coal mining industry is from exports, 55.5\%, followed closely by 41.3\% of sales to 	industries who use coal as inputs. Products of the coal mining industry are almost solely obtained through domestic production, only 0.4\% of the coal used in the economy is imported (table \ref{Mining2104_UR} and figure \ref{Uses_Resources_percent_2014}).
+Within the mining sector, coal mining (SIC 21, Coal and lignite) contributed 24.4\% in 2012 and 28.1\% in 2015 to the sector's total income \citep{mining2015}. The primary source of income of the coal mining industry is exports, which represent 55.5\% of production. Most of the remaining share is sold to industries who use coal as inputs (41.3\%), notably for electricity production. Products of the coal mining industry are almost basically obtained through domestic production, only 0.4\% of the coal used in the economy is imported (table \ref{Mining2104_UR} and figure \ref{Uses_Resources_percent_2014}).
 
 \begin{table}[!h]
 	\centering
@@ -420,10 +445,16 @@ Within the mining sector, coal mining (SIC 21, Coal and lignite) contributed 24.
 		Consumption & 0.8\% &  &\\ 
 		\hline
 	\end{tabular}
-	\caption{\label{Mining2104_UR}Sector \emph{Coal and lignite}, SIC 21. The right hand column, Resources, shows how the sector's commodity available in the economy is obtained. The left hand column, Uses, shows how the sector's commodity is used domestically throughout the economy and how much is exported. The data are for the year 2014. Source, \cite{IOT2014}.}
+	\caption{\label{Mining2104_UR}Sector \emph{Coal and lignite}, SIC 21. The right hand column, Resources, shows how the total amount of the sector's commodity available to the South-African economy is obtained. The left hand column, Uses, shows how the sector's commodity is used domestically and how much is exported. The data are for the year 2014. Source, \cite{IOT2014}.}
 \end{table} 
 
-Hence, the export of coal contributes about 1.2\% to GDP, which means that movements in coal exports impact GDP significantly. Additionally, coal inputs represent a cost of roughly 0,9\% of GDP to the South African economy in the form of intermediary inputs. The coal that is not exported is mainly used for electricity production (57 \%). This electricity is in turn used by all sectors, in a rather evenly distributed manner. Electricity costs on average xx \% $\pm$ xx\% of output. Thus, in the case, as CPI analysis shows, the domestic price of coal increases due to the loss of cross-subsidies from exports, the possible resulting increase of the price of electricity will impact the entire industry. Households spend about 2.5\% of total expenditures on electricity\footnote{All these data are for the year 2014, obtained from the 2014 input-output table \citep{IOT2014}}. However, depending on how the increase of the cost of electricity propagates throughout the economy --- either the profitability of industries is impacted and/or the cost increase is transferred in the price of commodities --- households might bear more of the increased cost of coal then what is suggested by their direct electricity consumption.
+Hence, the export of coal directly contributed in 2014 about 1.2\% to GDP, with similar shares for more recent years (which are ?). This implies that movements in coal exports impact GDP significantly. 
+
+Furthermore, CPI analysis hypothesizes that the domestic price of coal might increase due to the loss of cross-subsidies from exports. This price increase represents a cost that can spread throughout the whole economy if the increase in the domestic coal-price is transferred to the price of electricity. Indeed, coal inputs represent a cost of roughly 0,9\% of GDP to the South African economy in the form of intermediary inputs, of which more than half (57 \%) is used for electricity production. %Thus, movements in the domestic coal-price can get transferred to the whole economy via the electricity price.
+Figure \ref{ElecPiechart} shows that all sectors, including households, spend rather similar shares of expenses on electricity.% in a rather evenly distributed manner. 
+Electricity costs on average xx \% $\pm$ xx\% of output (of costs / ?). %Thus, in the case, as CPI analysis shows, the domestic price of coal increases due to the loss of cross-subsidies from exports, the 
+A possible increase of the price of electricity will thus impact the entire industry. Households spend about 2.5\% of total expenditures on electricity\footnote{All mentioned figures are for the year 2014, obtained from the 2014 input-output table \citep{IOT2014}}. However, % depending on how the increase of the cost of electricity propagates throughout the economy --- either the profitability of industries is impacted and/or the cost increase is transferred in the price of commodities --- 
+final consumers and notably households might bear more of the increased cost of coal if the cost is transferred to final consumption goods then what is suggested by their direct electricity consumption.
 
 \input{../tables/SectorDescription/edited/4_Coal-and-lignite_IIusedBy.tex}
 
@@ -444,6 +475,53 @@ The Transport sector is thus, after coal mining itself, the first sector impacte
 %The economic activity generated by the demand for final goods addressed to the coal mining sector, which is primarily export goods, generated by the sector's use of intermediate inputs, is situated in descending order in terms of the number of jobs created, in the Transport sector (SIC 74-71) with 0.27 jobs (per 1 mR final demand addressed to the mining sector), 0,19 to the Trade sector, 0,11 to Computer activities; 0,026 of Financial intermediation and 0,05 jobs divided equally over sectors 354-359, Structural metal and General Machinery.
 
 \subsubsection{Scenario comparison}
+As an example, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 50\%. Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
+
+
+% latex table generated in R 3.4.4 by xtable 1.8-3 package
+% Tue Sep 25 17:12:36 2018
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lp{20pt}lcc}
+		%\toprule
+		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Demand scenarios}   \\ 
+		\multicolumn{3}{c}{} & 2014 & 2014 with 50\% less export \\ 
+		\midrule
+		Jobs in the coal industry,	& \multicolumn{2}{l}{total}  & 82146 & 53899 \\ 
+		& \multicolumn{2}{l}{due to direct demand}  & 48490 & 25581 \\ 
+		
+		& \multicolumn{2}{l}{due to other sectors}  & 33656 & 28318 \\ 
+		& 	 & Electricity, gas and water & \,\ 7580  & \,\ 7489 \\ 
+		&    & Metal ores& \,\ 4540  & \,\ 2273 \\ 
+		&    & Construction& \,\ 2456  & \,\ 2453  \\ 														
+		&    & Coke oven manufacture& \,\ 2360  & \,\ 2026   \\ 
+		&    & Other community activities& \,\ 1560  & \,\ 1560   \\ 
+		&    & Basic iron and steel & \,\ 1530  &  \,\ \,\ 769  \\
+		&    & Trade & \,\ 1530  & \,\ 1094  \\ 
+		&    & Food & \,\ 1276  & \,\ 1229 \\  
+		&    & Real estate activities & \,\ 1227  & \,\ 1219 \\
+		&    & Transport & \,\ 1165  & \,\ \, 930 \\  
+		\midrule
+		\multicolumn{3}{l}{Jobs in other sectors, due to the coal sector}  & 57542 &  30357 \\ 
+		& 						 & Transport & 18667 &  \ \,9848 \\ 
+		& 						 & Trade & 13200 &  \ \,6964 \\ 
+		\bottomrule
+	\end{tabular}
+	\caption{}
+\end{table}
+
+\subsubsection{Platinum metal group}
+
+\subsubsection{Oil}
+
+
+\section{Prospective analysis}
+
+\subsection{Coal}
+
+A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal under both scenarios. CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Moreover, the price on the global market is expected to be lower under 2DS. 
+
+\subsubsection{Volume choc on export}
 As an example, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 50\%. Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
 
 
@@ -491,10 +569,10 @@ As an example, a comparison is made between the South African economy in the yea
 \citep{P7000_2013}
 
 
-\subsubsection{CPI scenario analysis}
+\subsubsection{Domestic price choc}
 
 
-\subsubsection{Electricity}
+\subsubsection{Change in the electricity generation-mix}
 
 %To evaluate the effect of an increase of the price of coal on the price of electricity, 
 
@@ -502,7 +580,7 @@ As an example, a comparison is made between the South African economy in the yea
 To evaluate the effect of a lower share of coal in the generation mix in 2DS versus BAU, a corresponding Leontief matrix needs to be constructed. To construct the corresponding matrix, first the technical coefficients that reflect the generation mix need to be identified. Secondly, a quantitative estimate has to be made on how the coefficients evolve to reflect different generation mixes.
 
 The technical coefficients that catch the generation mix are found in the column of sector SIC 41, Electricity, gas and water of the matrix, which contains the inputs necessary to generate electricity. As shown in table \ref{SIC41composition}, sector SIC 41 contains also the manufacture of gas and steam ad hot water supply ; however electricity generation is the biggest share of activity (xx\% ?). The relevant entries are listed in table \ref{GenerationMixcoefficients}. The main aspect under investigation of the generation mix is a reduced share of coal. Thus, if less coal is used to generate 1 unit of electricity, a hypothesis has to be made on what other production technology would replace coal. %In order to avoid making heuristic assumptions on this issue, 
-It is assumed that all the other production technologies take up the slack in equal parts, proportional to the share they provide as reflected in the IOT for the year 2014. Thus, the technical coefficients of sector SIC 41 that reflect the generation mix are divided in three groups : the ones that are necessary for coal production and the ones that are necessary for one of the other technologies. The coefficients that are not in table \ref{GenerationMixcoefficients} are implicitly assumed to be independent of through what generation technology 1 unit of electricity is produced. In other words, the amount spent by sector SIC 41, as specified in the 2014 IOT table, for example on computer activities (SIC 86\&88), is determined by the total amount of $MWh$ of electricity produced in 2014, and not by what share was produced by the burning of coal.
+It is assumed that all the other production technologies take up the slack in equal parts, proportional to the share they provide as reflected in the IOT for the year 2014. Thus, the technical coefficients of sector SIC 41 that reflect the generation mix are divided in three groups : the ones that are necessary for coal production and the ones that are necessary for one of the other technologies. The coefficients that are not in table \ref{GenerationMixcoefficients} are implicitly assumed to be independent of through what generation technology 1 unit of electricity is produced. In other words, the amount spent by sector SIC 41, as specified in the 2014 IOT table, for example on computer activities (SIC 86\&88), is determined by the total amount of $MWh$ of electricity produced in 2014, and not by what share was produced with coal. The input of the Electricity, gas and water supply to itself contains subsectors --- listed in table \ref{SIC41composition} --- who's shares in total cost are assumed independent of technology, such as the distribution of electricity (SIC 41111), and shares that are assumed proportional to the primary energy inputs used for generation through non-coal technologies, such as Gas and Generation. The latter subsector reflects both electricity produced by IPP's as well as by coal-fired plants as by the Koeberg nuclear station or any other of Eskom's generation plants. For simplicity, we will assume the input of SIC 41 to itslef independent of generation mix. 
 
 \begin{table}[ht]
 	\centering
@@ -512,10 +590,9 @@ It is assumed that all the other production technologies take up the slack in eq
 		\multicolumn{2}{l}{Input, SIC code}	& Technology used for  &  \% cost (2014) \\ 
 		\midrule
 		Coal and lignite & 21 &  Coal &  16.6    \\
-		Electricity, gas and water & 41 & Coal, other & 5.2     \\
-		Generation &41111 & Other &     \\
+	 	Electricity, gas and water & 41 &  & 5.2     \\
+	%	Generation &41111 & Other &     \\
 		Gas &412 & Other &     \\
-		 &remaining & Coal, other &     \\
 		Transport &71 \& 74 &  Coal  &   2.4   \\
 		Coke oven manufacture & 331 \& 332 & Coal &  1.6 \\
 		Nuclear fuel & 333 \& 334 & Other & 0.1   \\
@@ -523,7 +600,7 @@ It is assumed that all the other production technologies take up the slack in eq
 %		 &    &    \\
 		\bottomrule
 	\end{tabular}
-	\caption{\label{GenerationMixcoefficients}The technical coefficients of the Leontief matrix that capture the generation mix. Eskom's Primary energy cost breakdown 2014, million Rand. Source : \href{http://www.eskom.co.za/IR2015/Documents/EskomIR2015single.pdf}{Integrated report}, \citep{Eskom2014AR}.}
+	\caption{\label{GenerationMixcoefficients}The technical coefficients of the Leontief matrix that capture the generation mix. From left to right, the columns specify from what sectors inputs are used by sector 41 (Description and SIC code), whether they are used for generating electricity by coal plants are any other generation technology, and what share of total output the input represents. As a reference, intermediate inputs represent 39\% and employee compensation 17\% of output. Source : \cite{IOT2014}.}
 \end{table}
 
  
@@ -593,12 +670,12 @@ Assuming that electricity will be produced with less coal and more other inputs 
 
 
 
-\subsection{External threats : oil}
+\subsection{Oil}
 
 Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the price $20\%$ lower. 
 
 
-\subsection{External threats : metals}
+\subsection{Platinum group metals}
 
 The mining of metal ores generates 1.89 jobs throughout the economy per mR of final demand. 
 

@@ -2,21 +2,22 @@
 ############################################
 ############ Check Leontief inverse ; ok, same as provided by SA Stat
 ############################################
+n     <- 50
 
-s.d   <- df.IOT2014$Output[1:50]/(df.IOT2014$Output[1:50] + abs(df.IOT2014$Imports[1:50]))
-s.m   <- abs(df.IOT2014$Imports[1:50])/(df.IOT2014$Output[1:50] + abs(df.IOT2014$Imports[1:50]))  
+s.d   <- df.IOT2014$Output[1:n]/(df.IOT2014$Output[1:n] + abs(df.IOT2014$Imports[1:n]))        # share domestic
+s.m   <- abs(df.IOT2014$Imports[1:n])/(df.IOT2014$Output[1:n] + abs(df.IOT2014$Imports[1:n]))  # share imported
 
-B     <- as.matrix(df.IOT2014[1:50,3:52])  
-B.d   <- as.matrix(diag(s.d)) %*% as.matrix(df.IOT2014[1:50,3:52])
-B.m   <- as.matrix(diag(s.m)) %*% as.matrix(df.IOT2014[1:50,3:52])
+Z     <- as.matrix(df.IOT2014[1:n,(1:n)+2])  
+Z.d   <- as.matrix(diag(s.d)) %*% as.matrix(df.IOT2014[1:n,(1:n)+2])
+Z.m   <- as.matrix(diag(s.m)) %*% as.matrix(df.IOT2014[1:n,(1:n)+2])
 
-A     <- t(t(B)/df.IOT2014$Output[1:50])
-A.d   <- t(t(B.d)/df.IOT2014$Output[1:50])
-A.m   <- t(t(B.m)/df.IOT2014$Output[1:50])
+A     <- t(t(Z)/df.IOT2014$Output[1:n])
+A.d   <- t(t(Z.d)/df.IOT2014$Output[1:n])
+A.m   <- t(t(Z.m)/df.IOT2014$Output[1:n])
 
-L     <- diag(x = 1, nrow=50, ncol = 50) - A
-L.d   <- diag(x = 1, nrow=50, ncol = 50) - A.d
-L.m   <- diag(x = 1, nrow=50, ncol = 50) - A.m
+L     <- diag(x = 1, nrow=n, ncol = n) - A
+L.d   <- diag(x = 1, nrow=n, ncol = n) - A.d
+L.m   <- diag(x = 1, nrow=n, ncol = n) - A.m
 
 LI  <- inv(as.matrix(L))
 LI.d  <- inv(as.matrix(L.d))
@@ -26,15 +27,15 @@ LI.m  <- inv(as.matrix(L.m))
 ############ Contenu en emploie / employment content
 ############################################
 
-demand <- df.IOT2014$Exports[1:50] + 
-          #df.IOT2014$Imports[1:50] + 
-          df.IOT2014$Household[1:50] + 
-          df.IOT2014$General.Government[1:50] + 
-          df.IOT2014$Capital.formation[1:50] + 
-          df.IOT2014$Changes.in.inventories[1:50]
+demand <- df.IOT2014$Exports[1:n] + 
+          #df.IOT2014$Imports[1:n] + 
+          df.IOT2014$Household[1:n] + 
+          df.IOT2014$General.Government[1:n] + 
+          df.IOT2014$Capital.formation[1:n] + 
+          df.IOT2014$Changes.in.inventories[1:n]
 
-#employment.per.production <- df.NE.50I$`201406`/df.IOT2014$Output[1:50]
-employment.per.production <- df.NE.50I.QLFS$`201406`/df.IOT2014$Output[1:50]
+#employment.per.production <- df.NE.nI$`201406`/df.IOT2014$Output[1:n]
+employment.per.production <- df.NE.nI.QLFS$`201406`/df.IOT2014$Output[1:n]
 
 #employment.content.direct.indirect <- round(diag(employment.per.production) %*% LI.d,3)
 employment.content.direct.indirect <- diag(employment.per.production) %*% LI.d %*% diag(s.d)
@@ -45,10 +46,10 @@ employment.content.direct   <- (diag(employment.content.direct.indirect))
 
 ############ Decomposition employment content
 
-VA    <- df.IOT2014[df.IOT2014$Description=="Gross value added",3:52] + df.IOT2014[df.IOT2014$Description=="Net taxes on products",3:52]
-VA.HT <- df.IOT2014[df.IOT2014$Description=="Gross value added",3:52] - df.IOT2014[df.IOT2014$Description=="Other taxes less subsidies",3:52]
-COMP  <- df.IOT2014[df.IOT2014$Description=="Compensation of employees",3:52]
-NE    <- df.NE.50I$`201406`
+VA    <- df.IOT2014[df.IOT2014$Description=="Gross value added",(1:n)+2] + df.IOT2014[df.IOT2014$Description=="Net taxes on products",(1:n)+2]
+VA.HT <- df.IOT2014[df.IOT2014$Description=="Gross value added",(1:n)+2] - df.IOT2014[df.IOT2014$Description=="Other taxes less subsidies",(1:n)+2]
+COMP  <- df.IOT2014[df.IOT2014$Description=="Compensation of employees",(1:n)+2]
+NE    <- df.NE.nI$`201406`
 
 T     <- diag(VA.HT/VA)
 L     <- diag(COMP/VA.HT)
@@ -59,10 +60,10 @@ V     <- diag(VA/df.IOT2014$Output) %*% LI
 
 #TestCompE <- T %*% L %*% N %*% V * MI %*% MF
 
-Tbar     <- matrix(rep(as.numeric(VA.HT/VA),50),nrow=50)
-Lbar     <- matrix(rep(as.numeric(COMP/VA.HT),50),nrow=50)
-Nbar     <- matrix(rep(as.numeric(NE/COMP),50),nrow=50)
-MFbar    <- t(matrix(rep(s.d,50),nrow=50)) 
+Tbar     <- matrix(rep(as.numeric(VA.HT/VA),n),nrow=n)
+Lbar     <- matrix(rep(as.numeric(COMP/VA.HT),n),nrow=n)
+Nbar     <- matrix(rep(as.numeric(NE/COMP),n),nrow=n)
+MFbar    <- t(matrix(rep(s.d,n),nrow=n)) 
 MIbar    <- MI
 Vbar     <- V
 
@@ -72,17 +73,17 @@ TestCompE.bar <- Tbar * Lbar * Nbar * Vbar * MIbar * MFbar
 
 ## Average over the economy
 
-s.d.m   <-  abs(sum(df.IOT2014$Output[1:50]))/sum(df.IOT2014$Output[1:50] + abs(df.IOT2014$Imports[1:50]))  
+s.d.m   <-  abs(sum(df.IOT2014$Output[1:n]))/sum(df.IOT2014$Output[1:n] + abs(df.IOT2014$Imports[1:n]))  
 T.m     <-  sum(VA.HT)/sum(VA)
 L.m     <-  sum(COMP)/sum(VA.HT)
 N.m     <-  sum(NE)/sum(COMP)
 #MF.m    <-  diag(s.d.m)
 MI.m.diag   <-  sum(diag(LI.d))/sum(diag(LI))
 MI.m.ofdiag <-  sum(LI.d - diag(diag(LI.d)))/sum(LI - diag(diag(LI)))
-MI.m        <-  diag(MI.m.diag, nrow=50) + matrix(MI.m.ofdiag, nrow=50, ncol=50) - diag(MI.m.ofdiag, nrow=50)
-V.m.diag    <-  sum(VA)/sum(df.IOT2014$Output[1:50]) * mean(diag(LI))
-V.m.ofdiag  <-  sum(VA)/sum(df.IOT2014$Output[1:50]) * sum(LI - diag(diag(LI)))/(dim(LI)[1]^2 - dim(LI)[1])
-V.m         <-  diag(V.m.diag, nrow=50) + matrix(V.m.ofdiag, nrow=50, ncol=50) - diag(V.m.ofdiag, nrow=50)
+MI.m        <-  diag(MI.m.diag, nrow=n) + matrix(MI.m.ofdiag, nrow=n, ncol=n) - diag(MI.m.ofdiag, nrow=n)
+V.m.diag    <-  sum(VA)/sum(df.IOT2014$Output[1:n]) * mean(diag(LI))
+V.m.ofdiag  <-  sum(VA)/sum(df.IOT2014$Output[1:n]) * sum(LI - diag(diag(LI)))/(dim(LI)[1]^2 - dim(LI)[1])
+V.m         <-  diag(V.m.diag, nrow=n) + matrix(V.m.ofdiag, nrow=n, ncol=n) - diag(V.m.ofdiag, nrow=n)
 
 employment.content.m.matrix  <- MI.m*V.m * T.m * L.m * N.m * s.d.m
 employment.content.m  <- colSums(employment.content.m.matrix)
@@ -116,12 +117,12 @@ MI.dist <-  w * log(k * MI/MI.m)
 #Check 
 #round(colSums(Tbar * Lbar * Nbar * Vbar * MIbar * MFbar - employment.content.m.matrix),5) == round(colSums(T.dist) + colSums(L.dist) + colSums(N.dist) + colSums(MF.dist) + colSums(MI.dist),5)
 
-Order     <- df.IOT2014$Order[1:50]
-Industry  <- df.NE.50I$Industry.description
-SIC       <- df.NE.50I$SIC.code
+Order     <- df.IOT2014$Order[1:n]
+Industry  <- df.NE.nI$Industry.description
+SIC       <- df.NE.nI$SIC.code
 
 df.results                    <-  data.frame(Industry)
-df.results$SIC                <-  df.NE.50I$SIC.code
+df.results$SIC                <-  df.NE.nI$SIC.code
 df.results$Order              <-  Order
 df.results$ec                 <-  colSums(employment.content.direct.indirect)
 df.results$ec.direct          <-  employment.content.direct
@@ -137,8 +138,8 @@ df.results$ec.dev.decomp.MI   <-  colSums(MI.dist)
 df.results.ec.matrix            <- data.frame(employment.content.direct.indirect)
 colnames(df.results.ec.matrix)  <- Order
 rownames(df.results.ec.matrix)  <- Order
-df.results.ec.matrix$Industry   <- df.NE.50I$Industry.description
-df.results.ec.matrix$SIC        <- df.NE.50I$SIC.code
+df.results.ec.matrix$Industry   <- df.NE.nI$Industry.description
+df.results.ec.matrix$SIC        <- df.NE.nI$SIC.code
 df.results.ec.matrix            <- df.results.ec.matrix[,c("Industry","SIC",Order)]
 
 results <- list(df.results,df.results.ec.matrix)

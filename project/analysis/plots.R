@@ -1,9 +1,9 @@
 
 
-df.NumberEmployees[df.NumberEmployees$Industry.description=="TOTAL",colnames(df.NumberEmployees)=="SIC.code"] <- "TOTAL"
+df.NE[df.NE$Industry.description=="TOTAL",colnames(df.NE)=="SIC.code"] <- "TOTAL"
 
-df.plot <- df.NumberEmployees[df.NumberEmployees$SIC.code %in% c("2","3","4","5","6","7","8","9"),]
-# df.plot <- df.NumberEmployees[df.NumberEmployees$SIC.code %in% c("2","3","4","5","6","7","8","9","TOTAL"),]
+df.plot <- df.NE[df.NE$SIC.code %in% c("2","3","4","5","6","7","8","9"),]
+# df.plot <- df.NE[df.NE$SIC.code %in% c("2","3","4","5","6","7","8","9","TOTAL"),]
 
 df.plot.temp <- df.plot %>% gather(Time, Value, -Industry.description, -SIC.code, -var)
 df.plot.temp$Industry.description <- as.factor(df.plot.temp$Industry.description)
