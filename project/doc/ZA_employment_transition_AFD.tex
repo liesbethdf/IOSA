@@ -130,93 +130,93 @@ These impact will be estimated both in terms of loss or gain in GDP or growth, a
 %The impact on employment is assessed of the external threats, as identified by CPI, facing South Africa under a 2DS, from a macroeconomic standpoint. 
 %The effect on employment (and global cost to the economy) assuming the baseline scenario, which is IEA's New Policies Scenario (NPS), is compared with CPI's 2DS scenario. The 2DS is an adaptation of the IEA's SDS. 
 
-
+\clearpage
 
 \subsection{Input-output demand-pull model}
 
-The accounting equation embodied in the rows of the IOT table hold that for every sector $i$, its total output $y_i$ is given by : $y_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $b_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten to show the amount of goods that pass through and are available (at some point) to be used in the domestic economy :  
+The accounting equations embodied in the rows of the IOT hold that for every sector $i$ ($i \in \{1,\ldots,n\}$), its total output $y_i$ is given by : $y_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $z_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten as equation \ref{IOT} to show, on the left-hand side, how the total amount of goods available to be used by the domestic economy is obtained, and on the right-hand side how the goods are used :  
 \begin{equation}
-y_i + m_i = \sum_j b_{ij} + c_i + g_i + i_i + inv_i + x_i \label{IOT}
+y_i + m_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + x_i \label{IOT}
 \end{equation}
 %Indeed, all goods domestically produced $y_i$ and imported $m_i$ are at some point available within the domestic economy. 
-A share of these goods is consumed domestically, for final or intermediary purposes, and the remaining share is exported and a source of revenue. However, the equation does not provide information on what share of consumption by households of good $i$ stems from domestic production $c_i^d$ versus from imports $c_i^m = c_i - c_i^d$. The same is true for the other uses on the right-hand side of equation \ref{IOT}. %Note that the possibility is left open that a share of imports is re-exported.
+The goods obtained through domestic production and imports are consumed domestically, for intermediary ($z_{ij}$) or final  purposes ($c_i$, $g_i$, $i_i$, $inv_i$) and the remaining share is exported and a source of revenue. However, the equation does not provide information on what share of consumption by households of good $i$ stems from domestic production $c_i^d$ versus from imports $c_i^m = c_i - c_i^d$. The same is true for the other uses $u_i$, $u_i \in \{z_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ on the right-hand side of eqn. \ref{IOT}. %Note that the possibility is left open that a share of imports is re-exported.
 
-In the context of the intended analysis, the distinction between the uses made of imports and domestic production is important. Indeed, when a sector uses imported goods for its activity, the use of intermediate goods does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated and value available domestically is created, indirectly, through the interlocking dependencies between industrial sectors. %in other sectors are sustained through the activity of the "initial" sector. 
+For the intended analysis, the distinction between the uses made of imported versus domestically produced goods and services is important. Indeed, consumption of domestic output creates economic activity, and thus jobs and value, in the sector to which demand is addressed. In contrast, when for example an industry uses imported goods as intermediate inputs for its activity, this does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated and value available domestically is created, indirectly, through the interlocking dependencies between industrial sectors.
 
 %We here implicitly assume that only domestic production is exported. 
 %(We suppose that the imported goods are not exported. This assumption is not neutral and thus not necessarily hold for all sectors, given the aggregation level of the SA IO table. For example, for the sector Motor vehicles ($I32$), a substantial share, $32\%$ of the value of the sector's inputs are from within the same sector. Additionally, $25\%$ of total output is exported and $76\%$ of total input is imported (+ imports are larger than total intermediate inputs). This suggests that there is both imports of finished vehicles, since import is larger than intermediate use in this category. Additionally, given the high value of imports, it suggests that there is import of parts which get assembled in SA.)
 
+To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. Each of these specifies accounting equations \ref{useOutput} and \ref{useImports} that permit to decompose eqn. \ref{IOT} in eqn. \ref{allUSes}:
 
-To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the goods hence made available might create economic activity by making possible a production process), separate IOTs for domestically produced and imported goods are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}.
-In absence of such a table, the fast solution to this problem is to suppose that for every type of use $u_i$, $u_i \in \{b_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ that is made of %the total available goods for domestic uses as well as for export 
-the available goods $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
 \begin{align}
-s_i &= \frac{m_i}{y_i + m_i} \\
-u_i^m &= s_i^m \, u_i \label{shareM} \\
-u_i^d &= (1-s_i) \, u_i
+y_i &= \sum_j z_{ij}^d + c_i^d + g_i^d + i_i^d + inv_i^d + x_i^d \label{useOutput} \\
+m_i &= \sum_j z_{ij}^m + c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{useImports} \\
+y_i + m_i &= \sum_j (z_{ij}^d + z_{ij}^m) + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
 \end{align}
-where $u_i^m$ and $u_i^d$ stand for all the possible uses made of respectively imported and domestic products : $u_i^m \in \{b_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{b_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment, inventory building and exports :
+
+To study the impact of changes in export or domestic price changes of specific goods and services on the domestic economy, only the set of equations \ref{useOutput} is needed.
+
+Denoting %$a_{ij}=z_{ij}/y_i$ the amount of inputs from sector $j$, sector $i$ uses to produce 1 unit of output, 
+$a_{ij}^d=z_{ij}^d/y_i$ the amount of domestically produced inputs of good $j$ used by sector $i$ to produce one unit of output, %and $a_{ij}^m=z_{ij}^m/y_i$ the amount of imported inputs of good $j$ used per unit of output from sector $i$, 
+we get :
 \begin{equation}
-m_i = \sum b_{ij}^m + c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{useImports}
+y_i = \sum_j a_{ij}^d \, y_i + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d
 \end{equation}
 
-That a share of imports is exported is part assumed for reasons of simplicity and part because in today's globalized economy imports are also used as intermediate consumption to produce a final good that might in itself be exported again.
 
-%The simplifying hypothesis that the shares $s_i$ are constant over each of its different uses yields :
+In matrix notation, with $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $X^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors %denoted with small letters, 
+with 0's off-diagonal and with $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import and total Leontief matrices of coefficients $a_{ij}^d, a_{ij}^m, a_{ij}$, we get :
+
+%\begin{equation}
+%Y + M = (A^d + A^m ) Y + C^d + G^d + I^d + INV^d + X^d +  C^m + G^m + I^m + INV^m + X^m \label{allUsesmatrix}
+%\end{equation}
+%Using that $M = A^m\, Y  +  C^m + G^m + I^m + INV^m + X^m$ :
+
+\begin{equation}
+Y = A^d  Y + C^d + G^d + I^d + INV^d + X^d \label{useOutputsDom}
+\end{equation}
+
+In the absence of seperate IOTs for domestic production and imports, the fast solution is to suppose that for every type of use $u_i$, the share $s_{i}^d$ of domestic output within the total use is equal over all the types of uses made :
+\begin{align}
+s_i^d &= \frac{y_i}{y_i + m_i} \\
+u_i^d &= s_i^d \, u_i \label{shareM} \\
+u_i^m &= (1-s_i^d) \, u_i
+\end{align}
+where $u_i^d$ and $u_i^m$ stand for all the possible uses made of respectively domestic output and imported products : $u_i^m \in \{z_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{z_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. %(Note that there are $n+5$ )
+
+Going to back to matrix notation and denoting $S^d$ the diagonal matrix of the shares $s_i^d$ and 0's off-diagonal, then %the following hypothesis is used to make an IO model based on the total IOT 
+:
+\begin{align}
+A^d &= S^d \, A \\
+C^d &= S^d \, C \\
+G^d &= S^d \, G \\
+I^d &= S^d \, I \\
+INV^d &= S^d \, INV \\
+X^d &= S^d \, X 
+\end{align}
+
+Combining the above with eqn. \ref{useOutputsDom} and denoting $\mathbb{I}$ the identity matrix, we obtain the demand-driven input-output model that allows to determine for a given scenario of final demand $D = (C, G, I, INV, X )$, the output per sector needed :
+\begin{equation}
+%Y  = S^d \, A \, Y + S^d \, (C + G + I + INV + X)  \label{IO1} \\
+Y = (\mathbb{I} - S^d \, A)^{-1} \,  S^d \, (C + G + I + INV + X)  \label{IOdemand-driven}
+\end{equation}
+The elements $y_{ij}$ of the $n \times n$ matrix $Y$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
+
+%where the first term on the right hand side is intermediate demand and the second term final demand for domestic goods and services.
+
+
+%In absence of such a table, the fast solution to this problem is to suppose that for every type of use $u_i$, $u_i \in \{z_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ that is made of the available goods $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
+%\begin{align}
+%s_i &= \frac{m_i}{y_i + m_i} \\
+%u_i^m &= s_i^m \, u_i \label{shareM} \\
+%u_i^d &= (1-s_i) \, u_i
+%\end{align}
+%where $u_i^m$ and $u_i^d$ stand for all the possible uses made of respectively imported and domestic products : $u_i^m \in \{z_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{z_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment, inventory building and exports :
 %
-%\begin{equation}
-%u_i^m + c_i^m + i_i^m + g_i^m = s_i (u_i + c_i + i_i + g_i) \label{constant}
-%\end{equation}
-
-%Combining the last two equations \ref{constant} and \ref{useImports} we get that :
-%\begin{equation}
-%%s_i = \frac{m_i}{y_i - x_i + m_i} \label{share}
-%s^m_i = \frac{m_i}{y_i + m_i} \label{share}
-%\end{equation}
-
-Combining equations \ref{IOT}-\ref{shareM} we get :
-
-\begin{equation}
-y_i + m_i = b_{ij}^d + b_{ij}^m + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
-\end{equation}
-
-Denoting %$a_{ij}=b_{ij}/y_i$ the amount of inputs from sector $j$, sector $i$ uses to produce 1 unit of output, 
-$a_{ij}^d=b_{ij}^d/y_i$ the amount of domestically produced inputs of good $j$ used by sector $i$ to produce one unit of output, and $a_{ij}^m=b_{ij}^m/y_i$ the amount of imported inputs of good $j$ used per unit of output from sector $i$, we get :
-
-\begin{equation}
-y_i + m_i = (a_{ij}^d + a_{ij}^m)\, y_i + c_i^d + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
-\end{equation}
-
-In matrix notation, with $Y$, $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $X^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors denoted with small letters, with 0's off-diagonal and $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import and total Leontief matrices of coefficients $a_{ij}^d, a_{ij}^m, a_{ij}$ :
-
-\begin{equation}
-Y + M = (A^d + A^m ) Y + C^d + G^d + I^d + INV^d + X^d +  C^m + G^m + I^m + INV^m + X^m \label{allUsesmatrix}
-\end{equation}
-
-Using that $M = A^m\, Y  +  C^m + G^m + I^m + INV^m + X^m$ :
-
-\begin{equation}
-Y = A^d  Y + C^d + G^d + I^d + INV^d + X^d \label{allUSesDom}
-\end{equation}
+%That a share of imports is exported is part assumed for reasons of simplicity and part because in today's globalized economy imports are also used as intermediate consumption to produce a final good that might in itself be exported again.
 
 
 
-In the absence of seperate IOTs for domestic production and imports, denoting $S^m$ the diagonal matrix of the shares $s_i^m$ and 0's off-diagonal, then the following hypothesis is used to make an IO model based on the total IOT :
-\begin{align}
-m &= A^m  y +  c^m + g^m + i^m + inv^m + x^m \label{importsUses} \\
-A^m &= S^m \, A \\
-C^m &= S^m \, C \\
-G^m &= S^m \, G \\
-I^m &= S^m \, I \\
-INV^m &= S^m \, INV \\
-X^m &= S^m \, X 
-\end{align}
-
-Denoting $\mathbb{I}$ the identity matrix and combining \ref{allUSes} and \ref{importsUses}, we get :
-\begin{equation}
-Y  = (\mathbb{I} - S^m)\, A \, y + (\mathbb{I} - S)\, (C + G + I + INV + X)  \label{IO1}
-\end{equation}
-where the first term on the right hand side is intermediate domestic demand and the second term final domestic demand.
 
 \subsection{Employment content}
 
@@ -474,41 +474,6 @@ The Transport sector is thus, after coal mining itself, the first sector impacte
 
 %The economic activity generated by the demand for final goods addressed to the coal mining sector, which is primarily export goods, generated by the sector's use of intermediate inputs, is situated in descending order in terms of the number of jobs created, in the Transport sector (SIC 74-71) with 0.27 jobs (per 1 mR final demand addressed to the mining sector), 0,19 to the Trade sector, 0,11 to Computer activities; 0,026 of Financial intermediation and 0,05 jobs divided equally over sectors 354-359, Structural metal and General Machinery.
 
-\subsubsection{Scenario comparison}
-As an example, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 50\%. Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
-
-
-% latex table generated in R 3.4.4 by xtable 1.8-3 package
-% Tue Sep 25 17:12:36 2018
-\begin{table}[ht]
-	\centering
-	\begin{tabular}{lp{20pt}lcc}
-		%\toprule
-		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Demand scenarios}   \\ 
-		\multicolumn{3}{c}{} & 2014 & 2014 with 50\% less export \\ 
-		\midrule
-		Jobs in the coal industry,	& \multicolumn{2}{l}{total}  & 82146 & 53899 \\ 
-		& \multicolumn{2}{l}{due to direct demand}  & 48490 & 25581 \\ 
-		
-		& \multicolumn{2}{l}{due to other sectors}  & 33656 & 28318 \\ 
-		& 	 & Electricity, gas and water & \,\ 7580  & \,\ 7489 \\ 
-		&    & Metal ores& \,\ 4540  & \,\ 2273 \\ 
-		&    & Construction& \,\ 2456  & \,\ 2453  \\ 														
-		&    & Coke oven manufacture& \,\ 2360  & \,\ 2026   \\ 
-		&    & Other community activities& \,\ 1560  & \,\ 1560   \\ 
-		&    & Basic iron and steel & \,\ 1530  &  \,\ \,\ 769  \\
-		&    & Trade & \,\ 1530  & \,\ 1094  \\ 
-		&    & Food & \,\ 1276  & \,\ 1229 \\  
-		&    & Real estate activities & \,\ 1227  & \,\ 1219 \\
-		&    & Transport & \,\ 1165  & \,\ \, 930 \\  
-		\midrule
-		\multicolumn{3}{l}{Jobs in other sectors, due to the coal sector}  & 57542 &  30357 \\ 
-		& 						 & Transport & 18667 &  \ \,9848 \\ 
-		& 						 & Trade & 13200 &  \ \,6964 \\ 
-		\bottomrule
-	\end{tabular}
-	\caption{}
-\end{table}
 
 \subsubsection{Platinum metal group}
 
@@ -519,11 +484,9 @@ As an example, a comparison is made between the South African economy in the yea
 
 \subsection{Coal}
 
-A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal under both scenarios. CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume expected under BAU. Moreover, the price on the global market is expected to be lower under 2DS. 
+A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal under both scenarios. CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume under BAU, with considerably lower export demand on the long term. Moreover, the price on the global market is expected to be lower under 2DS. 
 
 \subsubsection{Volume choc on export}
-As an example, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 50\%. Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
-
 
 % latex table generated in R 3.4.4 by xtable 1.8-3 package
 % Tue Sep 25 17:12:36 2018
@@ -532,33 +495,39 @@ As an example, a comparison is made between the South African economy in the yea
 	\begin{tabular}{lp{20pt}lcc}
 		%\toprule
 		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Demand scenarios}   \\ 
-		\multicolumn{3}{c}{} & 2014 & 2014 with 50\% less export \\ 
+		\multicolumn{3}{c}{} & 2014 & 2014 with 90\% less export \\ 
 		\midrule
-		Jobs in the coal industry,	& \multicolumn{2}{l}{total}  & 82146 & 53899 \\ 
-									& \multicolumn{2}{l}{due to direct demand}  & 48490 & 25581 \\ 
-
-									& \multicolumn{2}{l}{due to other sectors}  & 33656 & 28318 \\ 
-									& 	 & Electricity, gas and water & \,\ 7580  & \,\ 7489 \\ 
-									&    & Metal ores& \,\ 4540  & \,\ 2273 \\ 
-									&    & Construction& \,\ 2456  & \,\ 2453  \\ 														
-									&    & Coke oven manufacture& \,\ 2360  & \,\ 2026   \\ 
-									&    & Other community activities& \,\ 1560  & \,\ 1560   \\ 
-									&    & Basic iron and steel & \,\ 1530  &  \,\ \,\ 769  \\
-									&    & Trade & \,\ 1530  & \,\ 1094  \\ 
-									&    & Food & \,\ 1276  & \,\ 1229 \\  
-									&    & Real estate activities & \,\ 1227  & \,\ 1219 \\
-									&    & Transport & \,\ 1165  & \,\ \, 930 \\  
+		Jobs in the coal industry,	& \multicolumn{2}{l}{total}  & 82146 & 39601 \\ 
+		& \multicolumn{2}{l}{due to direct demand}  & 48490 & \, 5945 \\ 
+		
+		& \multicolumn{2}{l}{due to other sectors}  & 33656 & 33656 \\ 
+		%				& 	 & Electricity, gas and water & \,\ 7580  & \,\ 7580 \\ 
+		%				&    & Metal ores& \,\ 4540  & \,\ 4540 \\ 
+		%				&    & Construction& \,\ 2456  & \,\ 2456  \\ 														
+		%				&    & Coke oven manufacture& \,\ 2360  & \,\ 2360   \\ 
+		%				&    & Other community activities& \,\ 1560  & \,\ 1560   \\ 
+		%				&    & Basic iron and steel & \,\ 1530  &  \,\ \,\ 769  \\
+		%				&    & Trade & \,\ 1530  & \,\ 1094  \\ 
+		%				&    & Food & \,\ 1276  & \,\ 1229 \\  
+		%				&    & Real estate activities & \,\ 1227  & \,\ 1219 \\
+		%				&    & Transport & \,\ 1165  & \,\ \, 930 \\  
 		\midrule
-		\multicolumn{3}{l}{Jobs in other sectors, due to the coal sector}  & 57542 &  30357 \\ 
-							 		& 						 & Transport & 18667 &  \ \,9848 \\ 
-							 		& 						 & Trade & 13200 &  \ \,6964 \\ 
+		\multicolumn{3}{l}{Jobs in other sectors, due to the coal sector}  & 57542 &  13000 \\ 
+		& 						 & Transport & 18667 &  \ \,2289 \\ 
+		& 						 & Trade & 13200 &  \  1618 \\ 
 		\bottomrule
 	\end{tabular}
-	\caption{}
+	\caption{Comparison of the impact of export demand on the number of jobs related to the activity in the coal mining sector (SIC 21). The percent difference in coal exports between the two scenarios is equal to that between BAU and 2DS in 2035 as projected by CPI. The BAU scenario is approximated by the South African economy as in the year 2014.}
 \end{table}
-
-
 %table
+
+CPI's projections for coal export are 90\% lower under 2DS than under BAU. They estimate that the coal sector, thanks to sustained local demand mainly from electricity production, can support about 30 000 jobs towards the end of the period under consideration.
+
+To make an estimate, using the macroeconomic picture of the economy provided by the IO-model, of the effect on employment of the difference in coal export demand in 2035 under 2DS versus BAU, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 90\%, following CPI's projections. %Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
+
+
+
+
 
 %The reason behind it is that the labour share is lower than on average in the economy and wages are higher than the average. Local demand for the output of the mining sectors 21, 23-24 is higher than the economy's average. 
 
@@ -580,7 +549,7 @@ As an example, a comparison is made between the South African economy in the yea
 To evaluate the effect of a lower share of coal in the generation mix in 2DS versus BAU, a corresponding Leontief matrix needs to be constructed. To construct the corresponding matrix, first the technical coefficients that reflect the generation mix need to be identified. Secondly, a quantitative estimate has to be made on how the coefficients evolve to reflect different generation mixes.
 
 The technical coefficients that catch the generation mix are found in the column of sector SIC 41, Electricity, gas and water of the matrix, which contains the inputs necessary to generate electricity. As shown in table \ref{SIC41composition}, sector SIC 41 contains also the manufacture of gas and steam ad hot water supply ; however electricity generation is the biggest share of activity (xx\% ?). The relevant entries are listed in table \ref{GenerationMixcoefficients}. The main aspect under investigation of the generation mix is a reduced share of coal. Thus, if less coal is used to generate 1 unit of electricity, a hypothesis has to be made on what other production technology would replace coal. %In order to avoid making heuristic assumptions on this issue, 
-It is assumed that all the other production technologies take up the slack in equal parts, proportional to the share they provide as reflected in the IOT for the year 2014. Thus, the technical coefficients of sector SIC 41 that reflect the generation mix are divided in three groups : the ones that are necessary for coal production and the ones that are necessary for one of the other technologies. The coefficients that are not in table \ref{GenerationMixcoefficients} are implicitly assumed to be independent of through what generation technology 1 unit of electricity is produced. In other words, the amount spent by sector SIC 41, as specified in the 2014 IOT table, for example on computer activities (SIC 86\&88), is determined by the total amount of $MWh$ of electricity produced in 2014, and not by what share was produced with coal. The input of the Electricity, gas and water supply to itself contains subsectors --- listed in table \ref{SIC41composition} --- who's shares in total cost are assumed independent of technology, such as the distribution of electricity (SIC 41111), and shares that are assumed proportional to the primary energy inputs used for generation through non-coal technologies, such as Gas and Generation. The latter subsector reflects both electricity produced by IPP's as well as by coal-fired plants as by the Koeberg nuclear station or any other of Eskom's generation plants. For simplicity, we will assume the input of SIC 41 to itslef independent of generation mix. 
+It is assumed that all the other production technologies take up the slack in equal parts, proportional to the share they provide as reflected in the IOT for the year 2014. Thus, the technical coefficients of sector SIC 41 that reflect the generation mix are divided in three groups : the ones that are necessary for coal production and the ones that are necessary for one of the other technologies. The coefficients that are not in table \ref{GenerationMixcoefficients} are implicitly assumed to be independent of through what generation technology 1 unit of electricity is produced. In other words, the amount spent by sector SIC 41, as specified in the 2014 IOT table, for example on computer activities (SIC 86\&88), is determined by the total amount of $MWh$ of electricity produced in 2014, and not by what share was produced with coal. The input of the Electricity, gas and water supply to itself contains subsectors --- listed in table \ref{SIC41composition} --- who's shares in total cost are assumed independent of technology, such as the distribution of electricity (SIC 41111), and shares that are assumed proportional to the primary energy inputs used for generation through non-coal technologies, such as Gas and Generation. The latter subsector reflects both electricity produced by IPP's as well as by coal-fired plants as by the Koeberg nuclear station or any other of Eskom's generation plants. For simplicity, we will assume the input of SIC 41 to itself independent of generation mix. 
 
 \begin{table}[ht]
 	\centering
@@ -589,14 +558,14 @@ It is assumed that all the other production technologies take up the slack in eq
 		%\midrule
 		\multicolumn{2}{l}{Input, SIC code}	& Technology used for  &  \% cost (2014) \\ 
 		\midrule
-		Coal and lignite & 21 &  Coal &  16.6    \\
-	 	Electricity, gas and water & 41 &  & 5.2     \\
+		Coal and lignite & 21 &  Coal &  42.2    \\
+	 	Electricity, gas and water & 41 &  & 13.2     \\
 	%	Generation &41111 & Other &     \\
 		Gas &412 & Other &     \\
-		Transport &71 \& 74 &  Coal  &   2.4   \\
-		Coke oven manufacture & 331 \& 332 & Coal &  1.6 \\
-		Nuclear fuel & 333 \& 334 & Other & 0.1   \\
-		Other mining &  25 & Other &   0.06 \\
+		Transport &71 \& 74 &  Coal  &   6.1   \\
+		Coke oven manufacture & 331 \& 332 & Coal &  4.0 \\
+		Nuclear fuel & 333 \& 334 & Other & 0.3   \\
+%		Other mining &  25 & Other &   0.2 \\
 %		 &    &    \\
 		\bottomrule
 	\end{tabular}
@@ -650,18 +619,18 @@ Assuming that electricity will be produced with less coal and more other inputs 
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{lrrl}
+	\begin{tabular}{lrrlr}
 		\toprule
 		%\midrule
-		Primary energy source	& Cost, mR  & Cost, \% & IOT  \\ 
+		Primary energy source	& Cost, mR  & Cost, \% & IOT  & IOT\\ 
 		\midrule
-		Coal and gas & 51 554   &  61.8   & Input I4 to I33 \\
-		Nuclear  fuel &  530  &   0.6  & Input I17 to I33\\
-		OGCT fuel & 9 546   &   11.4   & Input I33 to I33  \\
-		Electricity  imports & 3 679   &  4.4  & I33 Import\\
-		IPPs &  9 453  &  11.3  & Input I33 to I33\\
-		Environmental levy & 8353 &   10.0   & Taxes \\
-		Other &  310  &  0.4  & Input I4 to I33(?)\\
+		Coal and gas & 51 554   &  61.8   & Input I4 to I33 &\\
+		Nuclear  fuel &  530  &   0.6  & Input I17 to I33& \\
+		OGCT fuel & 9 546   &   11.4   & Input I33 to I33  & \\
+		Electricity  imports & 3 679   &  4.4  & I33 Import & \\
+		IPPs &  9 453  &  11.3  & Input I33 to I33 & \\
+		Environmental levy & 8353 &   10.0   & I33 Taxes & \\
+		Other &  310  &  0.4  & Input I4 to I33(?) 	& \\
 		\bottomrule
 	\end{tabular}
 	\caption{\label{EskomPrimaryEnergy}Eskom's Primary energy cost breakdown 2014, million Rand. Source : \href{http://www.eskom.co.za/IR2015/Documents/EskomIR2015single.pdf}{Integrated report}, \citep{Eskom2014AR}.}
