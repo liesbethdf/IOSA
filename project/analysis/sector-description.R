@@ -1,5 +1,4 @@
 
-
 ## Table with the top users of intermediate input
 
 Intermediate.Input.usedby <- function(sector, depth)

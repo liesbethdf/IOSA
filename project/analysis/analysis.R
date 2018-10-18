@@ -23,6 +23,10 @@ LI  <- inv(as.matrix(L))
 LI.d  <- inv(as.matrix(L.d))
 LI.m  <- inv(as.matrix(L.m))
 
+df.A.d  <- add.sectorNames(A.d)
+df.LI.d <- add.sectorNames(LI.d)
+df.Z.d  <- add.sectorNames(Z.d)
+
 ############################################
 ############ Contenu en emploie / employment content
 ############################################
@@ -35,10 +39,20 @@ demand <- df.IOT2014$Exports[1:n] +
           df.IOT2014$Changes.in.inventories[1:n]
 
 #employment.per.production <- df.NE.nI$`201406`/df.IOT2014$Output[1:n]
-employment.per.production <- df.NE.nI.QLFS$`201406`/df.IOT2014$Output[1:n]
+employment.per.production <- df.NE.50I.QLFS$`201406`/df.IOT2014$Output[1:n]
 
 #employment.content.direct.indirect <- round(diag(employment.per.production) %*% LI.d,3)
 employment.content.direct.indirect <- diag(employment.per.production) %*% LI.d %*% diag(s.d)
+
+df.ec.di <- data.frame(employment.content.direct.indirect)
+colnames(df.ec.di) <- sector.list
+rownames(df.ec.di) <- sector.list
+
+df.e.di <- data.frame(employment.content.direct.indirect %*% diag(demand))
+colnames(df.e.di) <- sector.list
+
+df.output.di <- LI.d %*% diag(s.d) %*% diag(demand)
+df.output.di <- add.sectorNames(df.output.di)
 
 employment.content.indirect <- colSums(employment.content.direct.indirect - diag(diag(employment.content.direct.indirect)))
 

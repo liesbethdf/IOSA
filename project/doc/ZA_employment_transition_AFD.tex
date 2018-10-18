@@ -45,6 +45,8 @@
 %\usepackage{tikz}
 %\usetikzlibrary{positioning}
 
+
+
 \newcommand{\mli}[1]{\mathit{#1}}
 
 
@@ -70,6 +72,8 @@
 %\author{Liesbeth De Fossé}
 
 \begin{document}
+\defcitealias{united2002isic}{ISIC rev. 3.1}
+\defcitealias{IOT2014}{StatSA, IOT 2014}
 
 \tableofcontents
 
@@ -501,15 +505,17 @@ In 2017, 85 \% of electricity was generated through coal-plants \citep{Eskom2017
 	\caption{\label{Elecvolume_2010_2018}The volume of electricity generated from 2010-2018. Source : \citep{P4141_201808}.}
 \end{figure}
 
-
 Since 2008, real electricity prices have risen drastically in South Africa (figure \ref{Eskom-electricity-prices}). Part of the price increases are due to the rising cost of coal and part to the necessity to raise cash for investment in new capacity. The steady rise of the price is seen as a factor in the decline of electricity demand over the period 2011-2015 (figure \ref{Elecvolume_2010_2018}). Several studies have investigated the effect of the price hikes on demand, on an aggregate and on a sectoral level, for industry and for consumers, see \cite{goliger2018electricity} for an overview.
 
 %It is against this backdrop that the additional source of increase in the generation cost of electricity under a 2DS --- the loss of cross-subsidies for the domestic coal-price because of reduced export --- has to be evaluated. 
 
 It is against this backdrop that the possible higher domestic coal-price under 2DS has to evaluated. Indeed, the loss of cross-subsidies for coal consumed domestically due to lower export-volumes under 2DS constitute an additional source of increase in the generation cost of electricity under a 2DS versus a BAU scenario.
 
-
 %\citep{inglesi2010forecasting}
+
+\paragraph{Household electricity demand}
+
+
 
 \subsubsection{Platinum metal group}
 
@@ -517,7 +523,23 @@ The mining of metal ores generates 1.89 jobs throughout the economy per mR of fi
 
 \subsubsection{Oil}
 
+The importation of crude oil falls under mining sector SIC 22, which is classified in the IOT under Other mining. The import figure of this sector corresponds to the import of crude oil. 
+
+Refinement of crude oil falls under SIC 332, which is in the IOT grouped with 331 (coke oven products) 
+
 \subsubsection{Global value chains}
+
+Under a 2DS scenario, supply chains are necessarily "greener". 
+
+How is South Africa's economy possibly exposed to the greening of global supply chains ? Is it risk for the economy ?
+- the most obvious factor is the risk posed to coal exports
+- what share of the SA economy is dependent on its inscription in global supply chains ? Are the economic activity and the jobs hence created under risk ? 
+- the importance generally of global supply chains might be affected if transportation cost increases because of the necessity to reduce emissions
+- companies might start to take into account the carbon content of supplies/intermediate inputs
+
+
+\citep{von2016energy}
+
 
 \section{Prospective analysis}
 
@@ -732,5 +754,98 @@ Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the pr
 \bibliographystyle{apalike}
 \clearpage
 
+\appendix
+
+\section{What is in the data ?}
+
+
+
+\section{Correspondence tables}
+
+\clearpage
+\begin{table}[ht]
+	\centering
+	%\small
+	\vspace{-36pt}\hspace{-10pt}\caption{\label{correspondance_OECD_ZA}Correspondence between the 50-sector-classification of the South African IOTs in national SIC classification and the 34-sector-classification in OECD IOTs following ISIC rev.3.1. Sources : \href{http://www.oecd.org/sti/ind/IOT_Industries_Items.pdf}{OECD code to ISIC rev. 3}, \href{https://www.statssa.gov.za/additional_services/sic/descrip6.htm}{SIC to ISIC}, \cite{IOT2014} and \citetalias{united2002isic}.}
+	\vspace{8pt}%\hspace{-10pt}
+	\begin{adjustbox}{width=\textwidth}
+	%\scriptsize
+	\normalsize
+		\begin{tabular}{lp{500pt}lll}
+		\toprule
+		Code & Industry Description & SIC & ISIC rev.3.1 & OECD code \\ \arrayrulecolor{black!30}\midrule
+		I1 & Agriculture, hunting and related services & 11 & 01 & C01T05 \\ \midrule
+		I2 & Forestry, logging and related services & 12 & 02 & C01T05 \\ \midrule
+		I3 & Fishing, operation of fish hatcheries and fish farms & 13 & 05 & C01T05 \\ \midrule
+		I4 & Mining of coal and lignite & 21 & 10 & C10T14 \\ \midrule
+		I5 & Mining of gold, uranium and metal ores  & 23-24 & 12-13 & C10T14 \\ \midrule
+		I6 & Other mining and quarrying & 25 & 14 & C10T14 \\ \midrule
+		I7 & Manufacture of food products & 301-4 & 151-154 & C15T16 \\ \midrule
+		I8 & Manufacture of beverage and tobacco products & 305-6 & 155\_16 & C15T16 \\ \midrule
+		I9 & Spinning, weaving, finishing of textiles and manufacture of other textiles & 311-2 & 17 & C17T19 \\ \midrule
+		I10 & Manufacture of knitted, crocheted fabrics, wearing apparel, fur articles and dying of fur & 313-5 & 18 & C17T19 \\ \midrule
+		I11 & Tanning and dressing of leather, manufacture of luggage, handbags, saddler and harness & 316 & 191 & C17T19 \\ \midrule
+		I12 & Manufacture of footwear & 317 & 192 & C17T19 \\ \midrule
+		I13 & Manufacture of products of wood, cork, straw and plaiting materials%; and sawmilling and planning of wood 
+		& 321-2 & 20 & C20 \\ \midrule
+		I14 & Manufacture of paper and paper products & 323 & 21 & C21T22 \\ \midrule
+		I15 & Publishing, printing and service activities related to printing; reproduction of recorded media & 324-6 & 22 & C21T22 \\ \midrule
+		I16 & Manufacture of coke oven products; and petroleum refineries/ synthesisers & 331-2 & 231-232 & C23 \\ \midrule
+		I17 & Processing of nuclear fuel; and basic chemicals & 333-4 & 233 & C23 \\ \midrule
+		I18 & Manufacture of other chemical products, and man-made fibres & 335-6 & 24 & C24 \\ \midrule
+		I19 & Manufacture of rubber products & 337 & 251 & C25 \\ \midrule
+		I20 & Manufacture of plastic products & 338 & 252 & C25 \\ \midrule
+		I21 & Manufacture of glass and glass products & 341 & 261 & C26 \\ \midrule
+		I22 & Manufacture of non-metallic mineral products (nec) & 342 & 269 & C26 \\ \midrule
+		I23 & Manufacture of furniture & 391 & 36 & C36T37 \\ \midrule
+		I24 & Manufacture nec and recycling nec & 392\_395 & 37 & C36T37 \\ \midrule
+		I25 & Manufacture of basic iron and steel and casting of metals & 351\_353 & 271\_273 & C27 \\ \midrule
+		I26 & Manufacture of precious metals and non-ferrous metals & 352 & 272 & C27 \\ \midrule
+		I27 & Manufacture of structural metal products, tanks, %reservoirs 
+		and steam generators, and other %fabricated metal products, metalwork service activities 
+		& 354-5 & 28 & C28 \\ \midrule
+		I28 & Manufacture of general/special purpose machinery, %special purpose machinery, 
+		household appliances and office %, accounting and computing 
+		machinery & 356-9 & 29-30 & C29, C30T33X \\ \midrule
+		I29 & Manufacture of electrical machinery and apparatus nec & 36 & 31 & C31 \\ \midrule
+		I30 & Manufacture of %electronic valves, tubes, other 
+		electric components; television, %and 
+		radio, %transmitters, apparatus for line 
+		telephony, %and line telegraphy; and television and radio receivers, sound or 
+		video %recording or reproducing 
+		apparatus %and associated goods 
+		& 371-3 & 32 & C30T33X \\ \midrule
+		I31 & Manufacture of medical and measuring appliances, %and instruments and appliances for measuring, checking, testing, navigating and other purposes; manufacture 
+		of optical instruments %and photographic equipment
+		; %and watches and 
+		clocks & 374-6 & 33 & C30T33X \\ \midrule
+		I32 & Manufacture of motor vehicles and parts, %bodies (coachwork) for motor vehicles, 
+		locomotives, aircraft, spacecraft, trailers and semi-trailers; %motor vehicle and engine parts and accessories 
+		; building and repairing ships and boats%, and manufacture of transport equipment not elsewhere classified. 
+		& 381-387 & 34-35 & C34, C35 \\ \midrule
+		I33 & Electricity, gas steam and hot water supply & 41 & 40 & C40T41 \\ \midrule
+		I34 & Collection, purification and distribution of water & 42 & 41 & C40T41 \\ \midrule
+		I35 & Construction & 5 & 45 & C45 \\ \midrule
+		I36 & Wholesale and commission trade, retail trade; and sale, maintenance and repair of motor vehicles and motor cycles, retail trade in automotive fuel & 61-63 & 51\_52\_50 & C50T52 \\ \midrule
+		I37 & Hotels and restaurants & 64 & 55 & C55 \\ \midrule
+		I38 & Transport (land, water, air) ; %and supporting and auxiliary transport activities, 
+		activities of travel agencies & 71-74 & 60-63 & C60T63 \\ \midrule
+		I39 & Post and telecommunications & 75 & 64 & C64 \\ \midrule
+		I40 & Financial intermediation, except insurance and pension funding & 81 & 65 & C65T67 \\ \midrule
+		I41 & Insurance and pension funding, except compulsory social security  & 82 & 66 & C65T67 \\ \midrule
+		I42 & Activities auxiliary to financial intermediation & 83 & 67 & C65T67 \\ \midrule
+		I43 & Real estate activities & 84 & 70 & C70 \\ \midrule
+		I44 & Renting of machinery and equipment, without operator, and of personal and household goods & 85 & 71 & C71 \\ \midrule
+		I45 & Research and development  & 87 & 73 & C73T74 \\ \midrule
+		I46 & Computer and related activities; and other business activities & 86\_88 & 72\_74 & C72, C73T74 \\ \midrule
+		I47 & Other community, social and personal service activities (including government) & 91\_94 & 75\_90 & C75,  \\ \midrule
+		I48 & Education & 92 & 80 & C80 \\ \midrule
+		I49 & Health and social work & 93 & 85 & C85 \\ \midrule
+		I50 & Other service activities nec & 95\_96\_99 & 91\_92\_93 & C90T93 \\
+		\arrayrulecolor{black}\bottomrule	
+	\end{tabular}
+	\end{adjustbox}
+	\thispagestyle{empty}
+\end{table}
 
 \end{document}
