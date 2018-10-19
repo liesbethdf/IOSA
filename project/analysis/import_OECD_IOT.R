@@ -39,13 +39,29 @@ r     <- which(colnames(df.IOT.temp)=="ROW")
 df.IOT.temp <- df.IOT.temp[,c(seq(1:r),cols-1,cols,seq(r:(cols-3))+r)]
 
 df.IOT.temp2 <- df.IOT.temp  %>% select(-ROW, -Variable)
-df.IOT.temp2 <- df.IOT.temp2 %>% filter(df.IOT.temp2$VAR==c("DOMIMP","TTL"))
+df.IOT.temp2 <- df.IOT.temp2 %>% filter(df.IOT.temp2$VAR %in% c("DOMIMP","TTL"))
 df.IOT.temp2 <- df.IOT.temp2  %>% select(-VAR)
 df.IOT.temp2 <- df.IOT.temp2 %>% filter(df.IOT.temp2$ROW.Var %in% c("DOM","IMP","TTL"))
-df.IOT.temp2 <- df.IOT.temp2 %>% spread(ROW.Var,'2011')
-  
 
+df.IOT.temp3 <- df.IOT.temp2  %>% select(-Column.sector..to..)
+df.IOT.temp3 <- df.IOT.temp3 %>% spread(COL,'2011')
 
+a <- which("C01T05"==colnames(df.IOT.temp3))
+z <- which("NPISH"==colnames(df.IOT.temp3))
+
+df.IOT.temp3$EXPO.T <- df.IOT.temp3$EXPO + df.IOT.temp3$CONS_NONRES 
+df.IOT.temp3$IMPO.T <- df.IOT.temp3$IMPO + df.IOT.temp3$CONS_ABR
+df.IOT.temp3$OUTPUT <- rowSums(df.IOT.temp3[,a:z])
+
+#df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, -qualifiers.list, -ROW.Var, -ROW.Sector, -Row.sector..from.., -PowerCode.Code)
+df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:OUTPUT)
+
+df.IOT.temp4 <- df.IOT.temp4 %>% spread(ROW.Var,'2011')
+df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","TTL"] <- df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","DOM"] + df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","IMP"]
+
+df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
+df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TOT, IMP=IMP/TOT)
+df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
 
 df.correspondence <- df.NE.50I.QLFS[1:50,c(1,2)]
 df.correspondence$ISIC3 <-c()
