@@ -63,6 +63,47 @@ df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
 df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TOT, IMP=IMP/TOT)
 df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
 
+sectors.oecd <- unique(df.IOT.temp4$Row.sector..from..)
+
+############################################
+############ make graph
+############################################
+
+df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(temp2,"OUTPUT")) %>% select(-TTL)
+#df.plot$COL <- c(sectors.oecd, "Total")
+df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP")
+
+df.plot <- df.plot %>% filter(df.plot$ROW.Sector=="C10T14")
+
+p <- df.plot %>% ggplot(aes(x=COL, y=Value, fill=ROW.Var)) +
+                  geom_bar(stat="identity") +
+                 # ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
+                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                #  labs(x = "Industry, SIC code") +
+                 # scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+                #  coord_flip() +
+                 # labs(fill="Decomposition :") +
+                #  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
+                #  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
+                 # scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
+                  theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("ECdecomposition-direct-indirect",yearHere, sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=20, height=25, units="cm", dpi=300)
+
+
+
+
+
+
+
+
+
+
+
+
 df.correspondence <- df.NE.50I.QLFS[1:50,c(1,2)]
 df.correspondence$ISIC3 <-c()
 
