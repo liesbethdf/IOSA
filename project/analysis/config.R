@@ -12,3 +12,6 @@ library("matlib")
 #install.packages("rJava")
 #install.packages("XLConnectJars")
 #install.packages("XLConnect")
+
+library(quadprog)
+library(optiSolve)

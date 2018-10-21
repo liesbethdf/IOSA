@@ -22,7 +22,7 @@ df.IOT.temp <- select(df.IOT.temp , -one_of(years.IOT.oecd[-ny]))
 #x[1,]
 
 nLevels                 <- length(levels(df.IOT.temp$ROW))
-df.IOT.temp$ROW.Var     <- df.IOT.temp$ROW
+df.IOT.temp$ROW.Var     <- df.IOT.temp$ROW          #split up variable name in DOM, IMP, TTL, TXS_... and sector codes
 df.IOT.temp$ROW.Sector  <- df.IOT.temp$ROW
 Var.Sect                <- levels(df.IOT.temp$ROW)
 temp                    <- Var.Sect
@@ -63,22 +63,30 @@ df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
 df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TOT, IMP=IMP/TOT)
 df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
 
-sectors.oecd <- unique(df.IOT.temp4$Row.sector..from..)
+sectors.oecd      <- unique(df.IOT.temp4$Row.sector..from..)
+code.oecd         <- unique(df.IOT.temp4$ROW.Sector)
+
+sectors.code.oecd <- paste(as.vector(sectors.oecd), as.vector(code.oecd), sep=" ")
+
 
 ############################################
 ############ make graph
 ############################################
 
-df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(temp2,"OUTPUT")) %>% select(-TTL)
-#df.plot$COL <- c(sectors.oecd, "Total")
+df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(temp2,"GFCF","GGFC","HFCE","OUTPUT")) %>% select(-TTL)
+df.plot$COL <- as.factor(df.plot$COL)
+levels(df.plot$COL) <-  c(as.vector(code.oecd), "GFCF","GOV","Households","Total")
+#levels(df.plot$COL) <-  c(as.vector(sectors.oecd), "Total")
 df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP")
+levels(df.plot$ROW.Sector) <- sectors.code.oecd
 
-df.plot <- df.plot %>% filter(df.plot$ROW.Sector=="C10T14")
+#df.plot <- df.plot %>% filter(df.plot$ROW.Sector=="C10T14")
 
 p <- df.plot %>% ggplot(aes(x=COL, y=Value, fill=ROW.Var)) +
                   geom_bar(stat="identity") +
                  # ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
                   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                  facet_wrap( ~ ROW.Sector, ncol=4, scales="free") +
                 #  labs(x = "Industry, SIC code") +
                  # scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                 #  coord_flip() +
@@ -90,8 +98,8 @@ p <- df.plot %>% ggplot(aes(x=COL, y=Value, fill=ROW.Var)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-direct-indirect",yearHere, sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=20, height=25, units="cm", dpi=300)
+fileName.graph <- paste("ImportExport_shares_v2","2011","ZA",  sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
 
 
 
