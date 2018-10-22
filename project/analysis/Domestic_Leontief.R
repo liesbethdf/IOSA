@@ -105,12 +105,14 @@ d.obj <- rowSums(S * S * B * B)
 SA.IO.codes <- paste0(rep("I",50),seq(1:50))
 ids         <- c(SA.IO.codes, "X","C", "G", "I", "Inv")
 
-A.constr <- t(matrix(c(rep(1,55),as.vector(diag(rep(1,55)))),nrow=55)) # 1st row for sum uses = output, others for uses=0 or > 0
+A.constr.i   <- t(matrix(c(rep(1,55), as.vector(diag(rep(1,55))),as.vector(diag(rep(1,55)))),nrow=55)) # 1st row for sum uses = output, others for uses=0 or > 0
+A.constr.i   <- A.constr.i[-56,]
 
-d.constr <- matrix(rep(0,55),nrow=55)
+d.constr.i   <- matrix(rep(0,110),nrow=110)
 
-val.constr <- matrix(c(as.vector(df.IOT2014$Output[1:50]),rep(0,54*50)),nrow=50) 
-#nrow( matrix(c(val.constr[i],rep(0,49)),nrow=50))
+val.constr.i <- matrix(c(as.vector(df.IOT2014$Output[1:50]),rep(0,54*50), as.vector(as.matrix(df.IOT2014[1:50,c(seq(1:50), 52,54,55,56,57)+2]))),nrow=50) 
+
+log.i        <- c("==",rep(">=",54), rep("<=",55))
 
 ### Storage space for results
 
@@ -122,15 +124,33 @@ df.IOT2014.dom <- df.IOT2014.dom[-1,]
 
 for(i in 1:nrow(S))
   {
+  log   <- log.i
+  d.constr  <- d.constr.i
+  A.constr  <- A.constr.i
+  val.constr<- val.constr.i
   zeros <- which(B[i,]==0)
-  for(z in 1:length(zeros)){ A.constr[1+z,zeros[z]]=1 }
+  
+  ##
+  log       <- log[-(zeros+55)]
+  d.constr  <- d.constr[-(zeros+55)]
+  A.constr  <- A.constr[-(zeros+55),]
+  val.constr<- val.constr[,-(zeros+55)]
+  
+  ##
+  
+    for(z in 1:length(zeros)){ log[1+zeros[z]] <- "==" }
   
   obj     <- quadfun(Q.obj, a=a.obj[i,], d=d.obj[i], id=ids, name="quad.fun")
-  constr  <- lincon(A.constr, d=d.constr, dir=rep("==",55), val=val.constr[i,], 
-                  id=ids, use=rep(TRUE,55), name=(c("Output",paste0(rep("zero",54),seq(1:54)))))
+  constr  <- lincon(A.constr, d=d.constr, dir=log, val=val.constr[i,], 
+                  id=ids, use=rep(TRUE,length(log)), name=c("Output",paste0(rep("zero",54),seq(1:54)), paste0(rep("max",length(log)-55),seq(1:(length(log)-55))) ))
   op      <- cop(obj, max=FALSE, lb=NULL, ub=NULL, lc=constr)
   
   results <- solvecop(op, solver="default", make.definite=FALSE, X=NULL, quiet=FALSE)
   
   df.IOT2014.dom <- bind_rows(df.IOT2014.dom , results$x)   
 }
+df.IOT2014.dom.rounded <- round(df.IOT2014.dom,10)
+
+k <- 49
+df.IOT2014.dom.rounded[k,1:55] <= df.IOT2014[k, c(seq(1:50), 52,54,55,56,57)+2]
+
