@@ -1,7 +1,5 @@
 
-#df.IOT.temp3
-
-df.IOT.temp5 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:lastcol)
+df.IOT.temp5 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74)
 df.IOT.temp5          <- df.IOT.temp5  %>% select(-Row.sector..from..)
 df.IOT.temp5          <- df.IOT.temp5 %>% spread(ROW.Sector,'2011')
 df.IOT.temp5$C29T33X  <- df.IOT.temp5$C29 + df.IOT.temp5$C30T33X
@@ -62,15 +60,77 @@ for(i in 1:length(pos))
     }
   }
 
+colnames(temp1)[1:50+7] <- paste(paste0(rep("I",50),seq(1:50)), colnames(temp1)[1:50+7], sep="_")
 
-#temp1$temp <- df.IOT.temp5[,9]
+temp1$Total.Industry          <- df.IOT.temp5$Total.Industry
+temp1$Exports                 <- df.IOT.temp5$EXPO.T
+temp1$Household               <- df.IOT.temp5$HFCE
+temp1$General.Government      <- df.IOT.temp5$GGFC
+temp1$Capital.formation       <- df.IOT.temp5$GFCF
+temp1$Changes.in.inventories  <- df.IOT.temp5$INVNT
 
+temp2 <- temp1[1,]
+temp2 <- temp2[-1,]
 
-df.domestic.shares.oecd <- data.frame(matrix(rep(0,2750), nrow=50))
-dom.shares <- df.domestic.shares.oecd
-colnames(dom.shares) <- c(sector.matching,"Exports", "Households", "General.Government", "Capital.formation", "Changes.in.inventories")
-names <- colnames(dom.shares)
-dom.shares$Row.Sector <- sector.matching
-dom.shares <- dom.shares[,c("Row.Sector",names)]
+for(i in 1:length(pos))
+{
+    for (j in 1:freq[i])
+    { 
+      temp2 <- bind_rows(temp2, temp1[pos[i],])   
+    }
+}
+rm(temp1)
 
-dom.shares[1,] <- df.IOT.temp5
+temp2$ROW.Sector <- colnames(temp2)[1:50+7]
+temp2$ROW.Sector <- ordered(temp2$ROW.Sector, levels=colnames(temp2)[1:50+7])
+
+############################################
+############ matrices for optisolve
+############################################
+
+# Run optisolve per row i 
+
+### Inputs
+
+S <- as.matrix(temp2[1:50, c(seq(1:50), 52,53,54,55,56)+7])
+B <- as.matrix(df.IOT2014[1:50, c(seq(1:50), 52,54,55,56,57)+2])
+#dim(S)==dim(B)
+
+Q.obj <- diag(rep(1,max(dim(S))))
+
+a.obj <- - 2 * S * B
+
+d.obj <- rowSums(S * S * B * B)
+
+SA.IO.codes <- paste0(rep("I",50),seq(1:50))
+ids         <- c(SA.IO.codes, "X","C", "G", "I", "Inv")
+
+A.constr <- t(matrix(c(rep(1,55),as.vector(diag(rep(1,55)))),nrow=55)) # 1st row for sum uses = output, others for uses=0 or > 0
+
+d.constr <- matrix(rep(0,55),nrow=55)
+
+val.constr <- matrix(c(as.vector(df.IOT2014$Output[1:50]),rep(0,54*50)),nrow=50) 
+#nrow( matrix(c(val.constr[i],rep(0,49)),nrow=50))
+
+### Storage space for results
+
+df.IOT2014.dom            <- data.frame(matrix(seq(0,55),nrow=1))
+colnames(df.IOT2014.dom)  <- ids  
+df.IOT2014.dom <- df.IOT2014.dom[-1,]
+
+### Solving
+
+for(i in 1:nrow(S))
+  {
+  zeros <- which(B[i,]==0)
+  for(z in 1:length(zeros)){ A.constr[1+z,zeros[z]]=1 }
+  
+  obj     <- quadfun(Q.obj, a=a.obj[i,], d=d.obj[i], id=ids, name="quad.fun")
+  constr  <- lincon(A.constr, d=d.constr, dir=rep("==",55), val=val.constr[i,], 
+                  id=ids, use=rep(TRUE,55), name=(c("Output",paste0(rep("zero",54),seq(1:54)))))
+  op      <- cop(obj, max=FALSE, lb=NULL, ub=NULL, lc=constr)
+  
+  results <- solvecop(op, solver="default", make.definite=FALSE, X=NULL, quiet=FALSE)
+  
+  df.IOT2014.dom <- bind_rows(df.IOT2014.dom , results$x)   
+}

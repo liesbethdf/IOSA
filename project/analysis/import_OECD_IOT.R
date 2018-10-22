@@ -47,17 +47,18 @@ df.IOT.temp3 <- df.IOT.temp2  %>% select(-Column.sector..to..)
 df.IOT.temp3 <- df.IOT.temp3 %>% spread(COL,'2011')
 
 a <- which("C01T05"==colnames(df.IOT.temp3))
+b <- which("C95"==colnames(df.IOT.temp3))
 z <- which("NPISH"==colnames(df.IOT.temp3))
 
 df.IOT.temp3$OUTPUT   <- rowSums(df.IOT.temp3[,a:z])
+df.IOT.temp3$Total.Industry   <- rowSums(df.IOT.temp3[,a:b])
 df.IOT.temp3$EXPO.T   <- df.IOT.temp3$EXPO + df.IOT.temp3$CONS_NONRES 
 df.IOT.temp3$IMPO.T   <- df.IOT.temp3$IMPO + df.IOT.temp3$CONS_ABR
 df.IOT.temp3$C29T33X  <- df.IOT.temp3$C29 + df.IOT.temp3$C30T33X
 df.IOT.temp3$C34T35   <- df.IOT.temp3$C34 + df.IOT.temp3$C35
 df.IOT.temp3$C72T74   <- df.IOT.temp3$C72 + df.IOT.temp3$C73T74
 
-lastcol <- colnames(df.IOT.temp3)[dim(df.IOT.temp3)[2]] # lastcol is "C72T74"
-df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:lastcol)
+df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74)
 
 df.IOT.temp4 <- df.IOT.temp4 %>% spread(ROW.Var,'2011')
 df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","TTL"] <- df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","DOM"] + df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","IMP"]
@@ -76,9 +77,9 @@ sectors.code.oecd <- paste(as.vector(sectors.oecd), as.vector(code.oecd), sep=" 
 ############ make graph
 ############################################
 
-df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(temp2,"GFCF","GGFC","HFCE","OUTPUT")) %>% select(-TTL)
-df.plot$COL <- as.factor(df.plot$COL)
-levels(df.plot$COL) <-  c(as.vector(code.oecd), "GFCF","GOV","Households","Total")
+df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT")) %>% select(-TTL)
+df.plot$COL <- factor(df.plot$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT"))
+levels(df.plot$COL) <-  c(as.vector(code.oecd), "Total.Industry","Export","Households","Gov","GFCF","Total")
 #levels(df.plot$COL) <-  c(as.vector(sectors.oecd), "Total")
 df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP")
 levels(df.plot$ROW.Sector) <- sectors.code.oecd
