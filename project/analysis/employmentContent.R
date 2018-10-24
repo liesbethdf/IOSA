@@ -49,7 +49,7 @@ colnames(df.ec.di) <- sector.list
 rownames(df.ec.di) <- sector.list
 
 df.e.di <- data.frame(employment.content.direct.indirect %*% diag(demand))
-colnames(df.e.di) <- sector.list
+colnames(df.e.di) <- SA.IO.codes
 
 df.output.di <- LI.d %*% diag(s.d) %*% diag(demand)
 df.output.di <- add.sectorNames(df.output.di)

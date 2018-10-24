@@ -109,8 +109,8 @@ top.indirect <- function(output.list, demand, sector.nr, amount.sectors)
 add.sectorNames <- function(A)
   {
   A <- data.frame(A)
-  colnames(A) <- sector.list
-  rownames(A) <- sector.list
+  colnames(A) <- SA.IO.codes
+  rownames(A) <- SA.IO.codes
   return(A)
   }
 
