@@ -1,4 +1,8 @@
 
+############################################
+########### construct seperate input-output tables for domestic production and importations
+############################################
+
 df.IOT.temp5 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74)
 df.IOT.temp5          <- df.IOT.temp5  %>% select(-Row.sector..from..)
 df.IOT.temp5          <- df.IOT.temp5 %>% spread(ROW.Sector,'2011')
@@ -149,8 +153,43 @@ for(i in 1:nrow(S))
   
   df.IOT2014.dom <- bind_rows(df.IOT2014.dom , results$x)   
 }
-df.IOT2014.dom.rounded <- round(df.IOT2014.dom,10)
+# Three lines below, check whether constraint of not exceeding total inputs respected.
+#df.IOT2014.dom.rounded <- round(df.IOT2014.dom,10)
+#k <- 49
+#df.IOT2014.dom.rounded[k,1:55] <= df.IOT2014[k, c(seq(1:50), 52,54,55,56,57)+2]
 
-k <- 49
-df.IOT2014.dom.rounded[k,1:55] <= df.IOT2014[k, c(seq(1:50), 52,54,55,56,57)+2]
+
+## Solved, next give names to columns and rows
+
+ncols          <- dim(df.IOT2014.dom)[2]
+df.IOT2014.dom <- df.IOT2014.dom[,-ncols]
+colnames(df.IOT2014.dom)     <- c(SA.IO.codes,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories")
+
+df.IOT2014.dom$Order                <- SA.IO.codes
+df.IOT2014.dom$SIC.code             <- SIC.code.50
+df.IOT2014.dom$Industry.description <- Industry.description.50
+
+ncols          <- dim(df.IOT2014.dom)[2]
+
+df.IOT2014.dom <- df.IOT2014.dom[,c(ncols-2,ncols-1,ncols,rep(1:55))]
+
+df.IOT2014.dom$Output <- rowSums(df.IOT2014.dom[,-c(1,2,3)])
+
+############################################
+############ Input-output table for imports
+############################################
+
+df.IOT2014.imp <- df.IOT2014.dom
+df.IOT2014.imp <- df.IOT2014.imp %>% select(-Output)
+df.IOT2014.imp[1:50,4:53] <- df.IOT2014[1:50,3:52] - df.IOT2014.dom[1:50,4:53]
+df.IOT2014.imp$Exports                <- df.IOT2014$Exports[1:50] - df.IOT2014.dom$Exports[1:50]
+df.IOT2014.imp$Household              <- df.IOT2014$Household[1:50] - df.IOT2014.dom$Household[1:50]
+df.IOT2014.imp$General.Government     <- df.IOT2014$General.Government[1:50] - df.IOT2014.dom$General.Government[1:50]
+df.IOT2014.imp$Capital.formation      <- df.IOT2014$Capital.formation[1:50] - df.IOT2014.dom$Capital.formation[1:50]
+df.IOT2014.imp$Changes.in.inventories <- df.IOT2014$Changes.in.inventories[1:50] - df.IOT2014.dom$Changes.in.inventories[1:50]
+df.IOT2014.imp$Imports                 <- rowSums(df.IOT2014.imp[,-c(1,2,3)])
+
+#round(df.IOT2014.imp$Imports[1:50],2)==-round(df.IOT2014$Imports[1:50],2) # Check, is OK
+
+
 

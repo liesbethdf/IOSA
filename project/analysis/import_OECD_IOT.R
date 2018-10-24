@@ -67,8 +67,8 @@ df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74, factor_key = T
 df.IOT.temp4 <- df.IOT.temp4 %>% spread(ROW.Var,'2011')
 #df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","TTL"] <- df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","DOM"] + df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","IMP"]
 
-#df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
-df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TTL, IMP=IMP/TTL)
+df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP # This creates the same column (in definition) as TTL, but corrects for rounding errors
+df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TOT, IMP=IMP/TOT)
 #df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
 
 sectors.oecd      <- unique(df.IOT.temp4$Row.sector..from..)
@@ -82,12 +82,12 @@ sectors.code.oecd <- paste(as.vector(sectors.oecd), as.vector(code.oecd), sep=" 
 ############################################
 # Should add indicator on the graph of how big the use is ; some are only imported but insignificant
 
-df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT")) %>% select(-TTL)
-df.plot$COL <- factor(df.plot$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT"))
+df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","Resources")) %>% select(-TTL)
+df.plot$COL <- factor(df.plot$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","Resources"))
 levels(df.plot$COL)[levels(df.plot$COL)=="EXPO.T"] <- "Export" 
 levels(df.plot$COL)[levels(df.plot$COL)=="HFCE"] <- "Households"
 levels(df.plot$COL)[levels(df.plot$COL)=="GGFC"] <- "Gov"
-levels(df.plot$COL)[levels(df.plot$COL)=="OUTPUT"] <- "Total"
+levels(df.plot$COL)[levels(df.plot$COL)=="Resources"] <- "Total"
 
 df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP", factor_key = TRUE)
 levels(df.plot$ROW.Sector) <- sectors.code.oecd
@@ -110,7 +110,7 @@ p <- df.plot %>% ggplot(aes(x=COL, y=Value, fill=ROW.Var)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ImportDomestic_shares_v2","2011","ZA",  sep="_")
+fileName.graph <- paste("ImportDomestic_shares_v2","2011","ZA",  years.IOT.oecd[ny],sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
 
 
@@ -121,40 +121,18 @@ ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, un
 
 df.plot2 <- df.IOT.temp3 %>% filter(df.IOT.temp3$ROW.Var=="TTL")
 
-df.plot2  <- df.plot2 %>% mutate_at(vars(-PowerCode.Code, -COU,-Country,-Unit.Code, -Unit,-PowerCode, - Row.sector..from.., -ROW.Var,-ROW.Sector,-OUTPUT),funs(./OUTPUT))
+df.plot2  <- df.plot2 %>% mutate_at(vars(-PowerCode.Code, -COU,-Country,-Unit.Code, -Unit,-PowerCode, - Row.sector..from.., -ROW.Var,-ROW.Sector,-OUTPUT,-Resources),funs(./Resources))
+df.plot2  <- df.plot2 %>% mutate(Resources=Resources/Resources)
 df.plot2  <- df.plot2 %>% gather(COL, Value, C01T05:C72T74 ,factor_key=TRUE)
-df.plot2  <- df.plot2 %>% filter(df.plot2$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF"))
+df.plot2  <- df.plot2 %>% filter(df.plot2$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","Resources"))
 
-df.plot2$COL <- factor(df.plot2$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF"))
+df.plot2$COL <- factor(df.plot2$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","Resources"))
 levels(df.plot2$COL)[levels(df.plot2$COL)=="EXPO.T"] <- "Export" 
 levels(df.plot2$COL)[levels(df.plot2$COL)=="HFCE"] <- "Households"
 levels(df.plot2$COL)[levels(df.plot2$COL)=="GGFC"] <- "Gov"
+levels(df.plot2$COL)[levels(df.plot2$COL)=="Resources"] <- "Total"
 
 levels(df.plot2$ROW.Sector) <- sectors.code.oecd
-
-
-p <- df.plot2 %>% ggplot(aes(x=COL, y=Value)) +
-                geom_point() +
-                # ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
-                theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-                facet_wrap( ~ ROW.Sector, ncol=4, scales="free") +
-  #  labs(x = "Industry, SIC code") +
-  # scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
-  #  coord_flip() +
-  # labs(fill="Decomposition :") +
-  #  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
-  #  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
-  # scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
-  theme(legend.position="bottom")
-print(p)
-
-setwd(dir.PLOTS)
-fileName.graph <- paste("Supply_shares","2011","ZA",  sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
-
-############################################
-############ combine the two graphs:
-############################################
 
 p <-  ggplot() + geom_bar(data=df.plot, aes(x=COL, y=Value,fill=ROW.Var),stat="identity") +
                  geom_point(data=df.plot2 ,aes(x=COL, y=Value)) +
@@ -172,8 +150,55 @@ p <-  ggplot() + geom_bar(data=df.plot, aes(x=COL, y=Value,fill=ROW.Var),stat="i
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("Supply_shares_ImpDom","2011","ZA",  sep="_")
+fileName.graph <- paste("ImportDomestic_Supply_shares","2011","ZA", years.IOT.oecd[ny],sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
+
+
+## Same graph but only for mining
+
+sectorHere <- "Mining and quarrying C10T14"
+
+df.plot3 <- df.plot  %>% filter(df.plot$ROW.Sector==sectorHere)
+df.plot4 <- df.plot2 %>% filter(df.plot2$ROW.Sector==sectorHere)
+
+p <-  ggplot() + geom_bar(data=df.plot3, aes(x=COL, y=Value,fill=ROW.Var),stat="identity") +
+                 geom_point(data=df.plot4 ,aes(x=COL, y=Value)) +
+                ylab(paste("Shares per use domestic production/importations \nShares of Total per type of use", years.IOT.oecd[ny],sep=", ")) +
+                theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                labs(x = "Intermediate (SIC code) and final uses") +
+ # scale_x_discrete(limits = rev(levels(df.plot3$COL))) +
+#  coord_flip() +
+  labs(fill="Resource origin")
+  #theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("ImportDomestic_Supply_shares","2011","ZA", sectorHere, years.IOT.oecd[ny],sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=22, height=12, units="cm", dpi=300)
+
+p <-  ggplot() + geom_bar(data=df.plot3, aes(x=COL, y=Value,fill=ROW.Var),stat="identity") +
+  geom_point(data=df.plot4 ,aes(x=COL, y=Value)) +
+   ylab(paste("Shares per use domestic production/importations \nShares of Total per type of use", years.IOT.oecd[ny],sep=", ")) +
+  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  #facet_wrap( ~ ROW.Sector, ncol=4, scales="free") +
+    labs(x = "Intermediate (SIC code) and final uses") +
+  scale_x_discrete(limits = rev(levels(df.plot3$COL))) +
+  coord_flip() +
+  labs(fill="Resource origin")
+#  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
+#  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
+# scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
+#theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("ImportDomestic_Supply_shares","2011","ZA", sectorHere, years.IOT.oecd[ny],"v2",sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=16, height=16, units="cm", dpi=300)
+
+
+
+
+
 
 
 
