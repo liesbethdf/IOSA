@@ -46,26 +46,30 @@ df.IOT.temp2 <- df.IOT.temp2 %>% filter(df.IOT.temp2$ROW.Var %in% c("DOM","IMP",
 df.IOT.temp3 <- df.IOT.temp2  %>% select(-Column.sector..to..)
 df.IOT.temp3 <- df.IOT.temp3 %>% spread(COL,'2011')
 
+df.IOT.temp3[df.IOT.temp3$ROW.Var=="IMP","IMPO"]<- -df.IOT.temp3[df.IOT.temp3$ROW.Var=="IMP","IMPO"]
+
 a <- which("C01T05"==colnames(df.IOT.temp3))
 b <- which("C95"==colnames(df.IOT.temp3))
 z <- which("NPISH"==colnames(df.IOT.temp3))
 
-df.IOT.temp3$OUTPUT   <- rowSums(df.IOT.temp3[,a:z])
-df.IOT.temp3$Total.Industry   <- rowSums(df.IOT.temp3[,a:b])
+df.IOT.temp3$OUTPUT         <- rowSums(df.IOT.temp3[,a:z])
+df.IOT.temp3$Resources      <- df.IOT.temp3$OUTPUT - df.IOT.temp3$IMPO - df.IOT.temp3$CONS_ABR
+
+df.IOT.temp3$Total.Industry <- rowSums(df.IOT.temp3[,a:b])
 df.IOT.temp3$EXPO.T   <- df.IOT.temp3$EXPO + df.IOT.temp3$CONS_NONRES 
-df.IOT.temp3$IMPO.T   <- df.IOT.temp3$IMPO + df.IOT.temp3$CONS_ABR
+#df.IOT.temp3$IMPO.T   <- df.IOT.temp3$IMPO + df.IOT.temp3$CONS_ABR
 df.IOT.temp3$C29T33X  <- df.IOT.temp3$C29 + df.IOT.temp3$C30T33X
 df.IOT.temp3$C34T35   <- df.IOT.temp3$C34 + df.IOT.temp3$C35
 df.IOT.temp3$C72T74   <- df.IOT.temp3$C72 + df.IOT.temp3$C73T74
 
-df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74)
+df.IOT.temp4 <- df.IOT.temp3 %>% gather(COL, 2011, C01T05:C72T74, factor_key = TRUE)
 
 df.IOT.temp4 <- df.IOT.temp4 %>% spread(ROW.Var,'2011')
-df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","TTL"] <- df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","DOM"] + df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","IMP"]
+#df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","TTL"] <- df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","DOM"] + df.IOT.temp4[df.IOT.temp4$COL=="OUTPUT","IMP"]
 
-df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
-df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TOT, IMP=IMP/TOT)
-df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
+#df.IOT.temp4$TOT <- df.IOT.temp4$DOM + df.IOT.temp4$IMP
+df.IOT.temp4[!df.IOT.temp4$TTL==0,] <- df.IOT.temp4[!df.IOT.temp4$TTL==0,] %>% mutate(DOM=DOM/TTL, IMP=IMP/TTL)
+#df.IOT.temp4 <- df.IOT.temp4  %>% select(-TOT)
 
 sectors.oecd      <- unique(df.IOT.temp4$Row.sector..from..)
 code.oecd         <- unique(df.IOT.temp4$ROW.Sector)
@@ -74,14 +78,18 @@ sectors.code.oecd <- paste(as.vector(sectors.oecd), as.vector(code.oecd), sep=" 
 
 
 ############################################
-############ make graph
+############ make graph of the shares domestic/import per use
 ############################################
+# Should add indicator on the graph of how big the use is ; some are only imported but insignificant
 
 df.plot     <- df.IOT.temp4%>% filter(df.IOT.temp4$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT")) %>% select(-TTL)
 df.plot$COL <- factor(df.plot$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF","OUTPUT"))
-levels(df.plot$COL) <-  c(as.vector(code.oecd), "Total.Industry","Export","Households","Gov","GFCF","Total")
-#levels(df.plot$COL) <-  c(as.vector(sectors.oecd), "Total")
-df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP")
+levels(df.plot$COL)[levels(df.plot$COL)=="EXPO.T"] <- "Export" 
+levels(df.plot$COL)[levels(df.plot$COL)=="HFCE"] <- "Households"
+levels(df.plot$COL)[levels(df.plot$COL)=="GGFC"] <- "Gov"
+levels(df.plot$COL)[levels(df.plot$COL)=="OUTPUT"] <- "Total"
+
+df.plot     <- df.plot %>% gather("ROW.Var", "Value", "DOM", "IMP", factor_key = TRUE)
 levels(df.plot$ROW.Sector) <- sectors.code.oecd
 
 #df.plot <- df.plot %>% filter(df.plot$ROW.Sector=="C10T14")
@@ -102,55 +110,109 @@ p <- df.plot %>% ggplot(aes(x=COL, y=Value, fill=ROW.Var)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ImportExport_shares_v2","2011","ZA",  sep="_")
+fileName.graph <- paste("ImportDomestic_shares_v2","2011","ZA",  sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
+
+
+############################################
+############ add a second layer to the graph
+############################################
+# This layer : indicator of how big the use is ; some are only imported but insignificant
+
+df.plot2 <- df.IOT.temp3 %>% filter(df.IOT.temp3$ROW.Var=="TTL")
+
+df.plot2  <- df.plot2 %>% mutate_at(vars(-PowerCode.Code, -COU,-Country,-Unit.Code, -Unit,-PowerCode, - Row.sector..from.., -ROW.Var,-ROW.Sector,-OUTPUT),funs(./OUTPUT))
+df.plot2  <- df.plot2 %>% gather(COL, Value, C01T05:C72T74 ,factor_key=TRUE)
+df.plot2  <- df.plot2 %>% filter(df.plot2$COL %in% c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF"))
+
+df.plot2$COL <- factor(df.plot2$COL, levels=c(as.vector(code.oecd[1:33]),"Total.Industry","EXPO.T","HFCE","GGFC","GFCF"))
+levels(df.plot2$COL)[levels(df.plot2$COL)=="EXPO.T"] <- "Export" 
+levels(df.plot2$COL)[levels(df.plot2$COL)=="HFCE"] <- "Households"
+levels(df.plot2$COL)[levels(df.plot2$COL)=="GGFC"] <- "Gov"
+
+levels(df.plot2$ROW.Sector) <- sectors.code.oecd
+
+
+p <- df.plot2 %>% ggplot(aes(x=COL, y=Value)) +
+                geom_point() +
+                # ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
+                theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                facet_wrap( ~ ROW.Sector, ncol=4, scales="free") +
+  #  labs(x = "Industry, SIC code") +
+  # scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+  #  coord_flip() +
+  # labs(fill="Decomposition :") +
+  #  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
+  #  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
+  # scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
+  theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("Supply_shares","2011","ZA",  sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
+
+############################################
+############ combine the two graphs:
+############################################
+
+p <-  ggplot() + geom_bar(data=df.plot, aes(x=COL, y=Value,fill=ROW.Var),stat="identity") +
+                 geom_point(data=df.plot2 ,aes(x=COL, y=Value)) +
+                # ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
+                 theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                 facet_wrap( ~ ROW.Sector, ncol=4, scales="free") +
+                #  labs(x = "Industry, SIC code") +
+                # scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+                # coord_flip() +
+                # labs(fill="Decomposition :") +
+                #  geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
+                #  geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
+                # scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
+                 theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("Supply_shares_ImpDom","2011","ZA",  sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=50, height=50, units="cm", dpi=300)
 
 
 
 
-
-
-
-
-
-
-
-
-df.correspondence <- df.NE.50I.QLFS[1:50,c(1,2)]
-df.correspondence$ISIC3 <-c()
-
-df.correspondence$Industry.Code.oecd <- c(rep(sectors.oecd[1],3),  # Agri, 
-                                          rep(sectors.oecd[2],3),  # Mining
-                                          rep(sectors.oecd[3],2),  # Food
-                                          rep(sectors.oecd[4],4),  # Textiles
-                                          rep(sectors.oecd[5],4),  # Wood
-                                          rep(sectors.oecd[6],2),  # Paper
-                                          rep(sectors.oecd[7],2),  # Coke
-                                          rep(sectors.oecd[8],1),  # Chem
-                                          rep(sectors.oecd[9],2),  # Rubber
-                                          rep(sectors.oecd[10],2),  # Other non-metal minerals
-                                          rep(sectors.oecd[11],),  # Basic metals
-                                          rep(sectors.oecd[12],),  # Fabricated metals
-                                          rep(sectors.oecd[13],),  # Machinery and eq nec
-                                          rep(sectors.oecd[14],),  # Comp, elec opt equip
-                                          rep(sectors.oecd[15],),  # Electr mach
-                                          rep(sectors.oecd[16],),  # Motor veh
-                                          rep(sectors.oecd[17],),  # Other transp
-                                          rep(sectors.oecd[18],),  # Manufact nec, recycling
-                                          rep(sectors.oecd[19],2),  # Elec
-                                          rep(sectors.oecd[20],1),  # Construction
-                                          rep(sectors.oecd[21],1),  # Trade
-                                          rep(sectors.oecd[22],1),  # Hotels
-                                          rep(sectors.oecd[23],1),  # Transport
-                                          rep(sectors.oecd[24],1),  # Telecom
-                                          rep(sectors.oecd[25],3),  # Fin
-                                          rep(sectors.oecd[26],1),  # Real estate act
-                                          rep(sectors.oecd[27],1),  # Renting mach and equip
-                                          rep(sectors.oecd[29],),  # R&D
-                                          rep(sectors.oecd[28],),  # Computer activities
-                                          rep(sectors.oecd[30],),  # Public admin. and defence; compulsory social security
-                                          rep(sectors.oecd[31],),  # Education
-                                          rep(sectors.oecd[32],),  # Health and social work
-                                          rep(sectors.oecd[33],),  # Other community, social and personal services
-                                          rep(sectors.oecd[34],),  # Private households with employed persons
-                                          )
+# df.correspondence <- df.NE.50I.QLFS[1:50,c(1,2)]
+# df.correspondence$ISIC3 <-c()
+# 
+# df.correspondence$Industry.Code.oecd <- c(rep(sectors.oecd[1],3),  # Agri, 
+#                                           rep(sectors.oecd[2],3),  # Mining
+#                                           rep(sectors.oecd[3],2),  # Food
+#                                           rep(sectors.oecd[4],4),  # Textiles
+#                                           rep(sectors.oecd[5],4),  # Wood
+#                                           rep(sectors.oecd[6],2),  # Paper
+#                                           rep(sectors.oecd[7],2),  # Coke
+#                                           rep(sectors.oecd[8],1),  # Chem
+#                                           rep(sectors.oecd[9],2),  # Rubber
+#                                           rep(sectors.oecd[10],2),  # Other non-metal minerals
+#                                           rep(sectors.oecd[11],),  # Basic metals
+#                                           rep(sectors.oecd[12],),  # Fabricated metals
+#                                           rep(sectors.oecd[13],),  # Machinery and eq nec
+#                                           rep(sectors.oecd[14],),  # Comp, elec opt equip
+#                                           rep(sectors.oecd[15],),  # Electr mach
+#                                           rep(sectors.oecd[16],),  # Motor veh
+#                                           rep(sectors.oecd[17],),  # Other transp
+#                                           rep(sectors.oecd[18],),  # Manufact nec, recycling
+#                                           rep(sectors.oecd[19],2),  # Elec
+#                                           rep(sectors.oecd[20],1),  # Construction
+#                                           rep(sectors.oecd[21],1),  # Trade
+#                                           rep(sectors.oecd[22],1),  # Hotels
+#                                           rep(sectors.oecd[23],1),  # Transport
+#                                           rep(sectors.oecd[24],1),  # Telecom
+#                                           rep(sectors.oecd[25],3),  # Fin
+#                                           rep(sectors.oecd[26],1),  # Real estate act
+#                                           rep(sectors.oecd[27],1),  # Renting mach and equip
+#                                           rep(sectors.oecd[29],),  # R&D
+#                                           rep(sectors.oecd[28],),  # Computer activities
+#                                           rep(sectors.oecd[30],),  # Public admin. and defence; compulsory social security
+#                                           rep(sectors.oecd[31],),  # Education
+#                                           rep(sectors.oecd[32],),  # Health and social work
+#                                           rep(sectors.oecd[33],),  # Other community, social and personal services
+#                                           rep(sectors.oecd[34],),  # Private households with employed persons
+#                                           )
