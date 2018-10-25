@@ -148,6 +148,7 @@ L.dist  <-  w * log(k * Lbar / L.m)
 N.dist  <-  w * log(k * Nbar / N.m)
 MF.dist <-  w * log(MFbar/s.d.m)
 MI.dist <-  w * log(k * MI/MI.m)
+MI.dist[is.na(MI.dist)] <- 0
 
 ## Deviations from mean, direct
 
@@ -209,7 +210,7 @@ results <- list(df.results,df.results.ec.matrix)
 ############ Graphs of employment content, total economy
 ############################################
 
-######################## Decomposition of difference with average
+######################## Decomposition of difference with average, direct and indirect together
 
 df.plot <- results[[1]]
 Industry.code <- paste(df.plot$Industry, df.plot$SIC,sep = " ")
@@ -220,7 +221,7 @@ df.plot$Industry.code <- factor(df.plot$Industry.code,levels=Industry.code)
 
 df.plot.temp <- df.plot
 
-df.plot <- df.plot %>% gather(Decomposition,Value, - Industry, -Industry.code, -SIC, -Order, -ec, -ec.direct, -ec.indirect, - ec.mean, -ec.dev, factor_key = TRUE)
+df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T, ec.dev.decomp.L, ec.dev.decomp.N, ec.dev.decomp.MF, ec.dev.decomp.MI, factor_key = TRUE)
 
 levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
 df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
@@ -231,6 +232,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                  labs(x = "Industry, SIC code") +
                  scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+                 scale_y_continuous(limits = c(-2.2, 3.5)) +
                  coord_flip() +
                  labs(fill="Decomposition :") +
                  theme(legend.position="bottom")
@@ -314,28 +316,58 @@ df.plot$Industry.code <- factor(df.plot$Industry.code,levels=Industry.code)
 
 df.plot.temp <- df.plot ; rm(df.plot.temp)
 
-df.plot <- df.plot %>% gather(Decomposition,Value, - Industry, -Industry.code, -SIC, -Order, -ec, -ec.direct, -ec.indirect, - ec.mean, -ec.dev, factor_key = TRUE)
+df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T.d, ec.dev.decomp.L.d, ec.dev.decomp.N.d, ec.dev.decomp.MF.d, ec.dev.decomp.MI.d, factor_key = TRUE)
 
 levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
 df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
-  geom_bar(stat="identity") +
-  ylab(paste0("Employment content against average, ",yearHere)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(x = "Industry, SIC code") +
-  scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
-  coord_flip() +
-  labs(fill="Decomposition :") +
-  theme(legend.position="bottom")
+                geom_bar(stat="identity") +
+                ylab(paste0("Direct employment content against average, ",yearHere)) +
+                theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                labs(x = "Industry, SIC code") +
+                scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+                scale_y_continuous(limits = c(-2.2, 3.5)) +
+                coord_flip() +
+                labs(fill="Decomposition :") +
+                theme(legend.position="bottom")
 print(p)
 
 setwd(dir.PLOTS)
 fileName.graph <- paste("ECdecomposition-avg-PQ-direct",yearHere, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=20, height=25, units="cm", dpi=300)
 
+######################## Decomposition of difference with average, indirect
 
+df.plot <- results[[1]]
+Industry.code <- paste(df.plot$Industry, df.plot$SIC,sep = " ")
 
+df.plot$Industry <- factor(df.plot$Industry,levels=Industry)
+df.plot$Industry.code <- Industry.code
+df.plot$Industry.code <- factor(df.plot$Industry.code,levels=Industry.code)
+
+df.plot.temp <- df.plot ; rm(df.plot.temp)
+
+df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T.i, ec.dev.decomp.L.i, ec.dev.decomp.N.i, ec.dev.decomp.MF.i, ec.dev.decomp.MI.i, factor_key = TRUE)
+
+levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
+df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
+
+p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
+                  geom_bar(stat="identity") +
+                  ylab(paste0("Indirect employment content against average, ",yearHere)) +
+                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                  labs(x = "Industry, SIC code") +
+                  scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+                  scale_y_continuous(limits = c(-2.2, 3.5)) +
+                  coord_flip() +
+                  labs(fill="Decomposition :") +
+                  theme(legend.position="bottom")
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("ECdecomposition-avg-PQ-indirect",yearHere, sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=20, height=25, units="cm", dpi=300)
 
 
 
