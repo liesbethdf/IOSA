@@ -9,5 +9,13 @@ source("Domestic_Leontief.R")
 
 source("sector-description.R")
 
+source("employmentContent.R")
+source("employmentContent_DomImp.R")
+
+source("allContent_DomImp.R")
+
+
+
+
 source("plots.R")
 source("scenarios.R")

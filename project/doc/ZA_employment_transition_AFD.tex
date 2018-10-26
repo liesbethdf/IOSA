@@ -864,4 +864,55 @@ Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the pr
 	\thispagestyle{empty}
 \end{table}
 
+\clearpage
+\section{Decomposition}
+
+Equation \label{allUSes} can be rewritten as :
+\begin{equation}
+%y_i + m_i - d_i^m= \sum_j \Bigg(\frac{z_{ij}^d}{y_i + m_i-d_i} + \frac{z_{ij}^m}{y_i + m_i-d_i} \Bigg) (y_i + m_i) + d_i^d
+y_i + m_i - d_i^m= \sum_j \big(z_{ij}^d + z_{ij}^m \big) + d_i^d, 
+\end{equation}
+where $d^r = c^r_i + g_i^r + i_i^r + inv_i^r + x_i^r$ , $r\in\{d,m\}$ denote final demand for domestically produced goods and services and for imported goods. The aggregates $m_i - d_i^m$ are the imports used as intermediate inputs, or differently put, the importation needed for domestic production.
+
+We are interested in, given a final demand vector for domestically produced goods $\boldsymbol{d}^d$, not only how much domestic production this entails, but also how much importation this generates because of the use of imported goods as intermediate inputs. To this end, we define modified matrices of technical coefficients $\tilde{A}^r$ as the matrices with elements $\tilde{a}^r_{ij}$ : 
+\begin{align}
+\tilde{a}^r_{ij} = \frac{z_{ij}^d}{y_i + m_i - d_i^m}
+\end{align}
+These matrices tell us how much intermediary inputs, respectively of domestic and of imported origin, are needed per unit of domestic output and imported intermediate goods. Additionally, we define the technical coefficients matrix $\tilde{A}= \tilde{A}^d + \tilde{A}^m$ that states the total intermediary inputs, of any origin, per unit of imports + domestic output.
+
+%We then define the matrices $Y$ and $M_{int}$ such that :
+
+Given $D^d$ the matrix with demand $d^d$ on the diagonal and 0's elsewher, we then define the matrix $\mli{YM}$ as :
+\begin{equation}
+\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d 
+\end{equation}
+The element $ym_{ij}$ of $\mli{YM}$ is the sum of domestic production and imported intermediate goods of sector $i$ needed to satisfy final demand by sector j $d_j^d$.
+
+\li{The column sums of $M_{int}$ are the same as the column sums of $Z^m$, but are the two matrices the same ?}
+
+We now want to split matrix $\mli{YM}$ up into domestic output and intermediate inputs that were imported.
+
+For this we will decompose the factor that is analogous to the Leontief inverse :
+
+\begin{align}
+(\mathbb{I} - \tilde{A})^{-1} &= (\mathbb{I} - \tilde{A}^d - \tilde{A}^m)^{-1} \nonumber \\
+&= (\mathbb{I} - \tilde{A}^d)^{-1} + (\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} + rest \label{decomp1}
+\end{align}
+
+The first term on the right hand side measures domestic output necessary to satisfy demand $D^d$. We take a closer look at the second and third terms at the right-hand side of  \ref{decomp1} by developing the power series : 
+\begin{equation}
+(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  
+\end{equation}
+Whereas the significance of $A^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(A^m)^k D^d$ with $k>1$ seems nebulous. To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual.
+
+
+
+
+
+
+
+
+
+
+
 \end{document}

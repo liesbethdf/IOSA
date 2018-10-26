@@ -7,7 +7,7 @@ n     <- 50
 fd    <- df.IOT2014$Exports[1:n] + df.IOT2014$Household[1:n] + df.IOT2014$General.Government[1:n] + df.IOT2014$Capital.formation[1:n] + df.IOT2014$Changes.in.inventories[1:n]
 fd.d  <- df.IOT2014.dom$Exports[1:n] + df.IOT2014.dom$Household[1:n] + df.IOT2014.dom$General.Government[1:n] + df.IOT2014.dom$Capital.formation[1:n] + df.IOT2014.dom$Changes.in.inventories[1:n]
 
-s.d   <- fd.d/fd        # share domestic
+s.d   <- fd.d/fd        # share domestic    #fd : final demand #fd.d # final demand met with domestic goods
 
 Z     <- as.matrix(df.IOT2014[1:n,(1:n)+2])  
 Z.d   <- as.matrix(df.IOT2014.dom[1:n,(1:n)+3])
@@ -32,8 +32,13 @@ LI.m  <- inv(as.matrix(L.m))
 s.d.exp   <- rep(0,n)
 s.d.cons  <- rep(0,n)
 s.d.gov   <- rep(0,n)
-s.d.fcap  <- rep(0,n)
+s.d.gfcf  <- rep(0,n)
 s.d.chi   <- rep(0,n)
+s.m.exp   <- rep(0,n)
+s.m.cons  <- rep(0,n)
+s.m.gov   <- rep(0,n)
+s.m.gfcf  <- rep(0,n)
+s.m.chi   <- rep(0,n)
 
 nonzero <- which(!df.IOT2014$Exports[1:50]==0)
 s.d.exp[nonzero] <- df.IOT2014.dom$Exports[nonzero]/df.IOT2014$Exports[nonzero]
@@ -45,10 +50,29 @@ nonzero <- which(!df.IOT2014$General.Government[1:50]==0)
 s.d.gov[nonzero] <- df.IOT2014.dom$General.Government[nonzero]/df.IOT2014$General.Government[nonzero]
 
 nonzero <- which(!df.IOT2014$Capital.formation[1:50]==0)
-s.d.fcap[nonzero] <- df.IOT2014.dom$Capital.formation[nonzero]/df.IOT2014$Capital.formation[nonzero]
+s.d.gfcf[nonzero] <- df.IOT2014.dom$Capital.formation[nonzero]/df.IOT2014$Capital.formation[nonzero]
 
 nonzero <- which(!df.IOT2014$Changes.in.inventories[1:50]==0)
 s.d.chi[nonzero] <- df.IOT2014.dom$Changes.in.inventories[nonzero]/df.IOT2014$Changes.in.inventories[nonzero]
+
+nonzero <- which(!df.IOT2014$Exports[1:50]==0)
+s.m.exp[nonzero] <- df.IOT2014.imp$Exports[nonzero]/df.IOT2014$Exports[nonzero]
+
+nonzero <- which(!df.IOT2014$Household[1:50]==0)
+s.m.cons[nonzero] <- df.IOT2014.imp$Household[nonzero]/df.IOT2014$Household[nonzero]
+
+nonzero <- which(!df.IOT2014$General.Government[1:50]==0)
+s.m.gov[nonzero] <- df.IOT2014.imp$General.Government[nonzero]/df.IOT2014$General.Government[nonzero]
+
+nonzero <- which(!df.IOT2014$Capital.formation[1:50]==0)
+s.m.gfcf[nonzero] <- df.IOT2014.imp$Capital.formation[nonzero]/df.IOT2014$Capital.formation[nonzero]
+
+nonzero <- which(!df.IOT2014$Changes.in.inventories[1:50]==0)
+s.m.chi[nonzero] <- df.IOT2014.imp$Changes.in.inventories[nonzero]/df.IOT2014$Changes.in.inventories[nonzero]
+
+
+
+
 
 ############################################
 ############ Contenu en emploie / employment content
