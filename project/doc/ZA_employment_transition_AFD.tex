@@ -45,7 +45,8 @@
 %\usepackage{tikz}
 %\usetikzlibrary{positioning}
 
-
+\usepackage{tabularx}
+\usepackage{array}
 
 \newcommand{\mli}[1]{\mathit{#1}}
 
@@ -74,6 +75,8 @@
 \begin{document}
 \defcitealias{united2002isic}{ISIC rev. 3.1}
 \defcitealias{IOT2014}{StatSA, IOT 2014}
+
+\newcommand{\STAB}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
 
 \tableofcontents
 
@@ -113,8 +116,8 @@ If output doubles,  %, which includes exports, consumption by households and gov
 the demand for inputs addressed to other sectors will react with the same order of magnitude. This effect can be substantial : in terms of employment, the number of jobs created indirectly, throughout the economy via demand for inputs, can be higher than the number of jobs created in the sector using the inputs. The second mechanism consists of how the price of the output of a sector, used as input by others, has repercussions on the profitability of other sectors and the price of the corresponding commodities. 
 
 %The macroeconomic picture provided by the IOT allows to systematically evaluate the impact of the external scenarios throughout the economy, taking into account how each sector depends on others for its revenue.
- 
- 
+
+
 The methodology here used for the analysis allows to take into account both direct and indirect consequences on the macro-level. The information needed to perform such an analysis is provided by input output tables (IOT). %These tables provide quantitative information on what inputs each sector uses from the other sectors and on how the output from each of the sectors is used.  It is based on the input-output table (IOT) of the South African economy. 
 An IOT is a quantitative representation of the economy as a whole showing the inter-dependencies between sectors formed by the procurement relationships. %These inter-dependencies can be described in two ways, both based on the same fact : the goods produced by every industrial sector are used on the one hand for final uses, such as electrical appliances bought by households, and on the other hand used as inputs by other sectors. Examples of the latter are  This fact is described in the IOT firstly 1) by showing 
 The IOT shows how the output of an industrial sector is used throughout the economy : final goods for export, investment, for consumption by households, government, as inputs for a number of other sectors and how much is exported. Inputs can be primary commodities such as coal or metal ores, processed goods such as steel or parts that can be assembled into machinery, etc. Consequently, the IOT also shows what inputs every sector uses produced by the same and other sectors. This latter fact can also be described by saying that the IOT shows how one sectors activity creates demand, and how much of it, to other sectors. Indeed, making cars out of steel generates economic activity and jobs in the steel sector. 
@@ -134,16 +137,116 @@ These impact will be estimated both in terms of loss or gain in GDP or growth, a
 %The impact on employment is assessed of the external threats, as identified by CPI, facing South Africa under a 2DS, from a macroeconomic standpoint. 
 %The effect on employment (and global cost to the economy) assuming the baseline scenario, which is IEA's New Policies Scenario (NPS), is compared with CPI's 2DS scenario. The 2DS is an adaptation of the IEA's SDS. 
 
+
+\subsection{The input-output table}
+
+An input-output table is a quantitative representation of the economy as a whole showing the inter-dependencies between sectors formed by their mutual procurement relationships. %These inter-dependencies can be described in two ways, both based on the same fact : the goods produced by every industrial sector are used on the one hand for final uses, such as electrical appliances bought by households, and on the other hand used as inputs by other sectors. Examples of the latter are  This fact is described in the IOT firstly 1) by showing 
+The precise structure of an input-output table varies %along with in line ith 
+in consonance with the level of detail of the data collected. The more detailed the data, the heavier the data requirements. Figure \ref{IOT_basic} represents the structure of the IOT table as supplied by the South African statistical agency (Stat SA).  
+
+The IOT shows how the output of an industrial sector $i$ is used throughout the economy : final goods for export, investment, for consumption by households, government, as inputs for a number of other sectors and how much is exported. Inputs can be primary commodities such as coal or metal ores, processed goods such as steel or parts that can be assembled into machinery, etc. Consequently, the IOT also shows what inputs every sector uses produced by the same and other sectors. This latter fact can also be described by saying that the IOT shows how one sectors activity creates demand, and how much of it, to other sectors. Indeed, making cars out of steel generates economic activity and jobs in the steel sector. 
+
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{width=\textwidth}
+	\renewcommand*{\arraystretch}{1.15}
+	%\footnotesize
+	\small
+	\begin{tabular}{cr|ccccc|b{30pt}b{30pt}p{30pt}b{30pt}b{30pt}|c|c}
+		%\toprule
+				%& \STAB{\rotatebox[origin=l]{90}{Sector $1$}} & &\STAB{\rotatebox[origin=r]{90}{Sector $j$}} & & \STAB{\rotatebox[origin=l]{90}{Sector $n$}} & \STAB{\rotatebox[origin=r]{90}{Consumption}} & \STAB{\rotatebox[origin=l]{90}{Government expenditures}} & \STAB{\rotatebox[origin=r]{90}{Exports}} & \STAB{\rotatebox[origin=l]{90}{GFCF}} & \STAB{\rotatebox[origin=r]{90}{Changes in inventories}} &  \STAB{\rotatebox[origin=l]{90}{Imports}} & \STAB{\rotatebox[origin=r]{90}{Output}}  \\ 		
+\multicolumn{2}{c}{\ }		& \multicolumn{5}{c}{Using/ buying sectors} & \multicolumn{5}{c}{Final demand}  &  \multicolumn{2}{c}{\ }	   \\
+%\cmidrule{3-7}
+		
+&		& Sector $1$ & \ldots& Sector $j$ &\ldots & Sector $n$ & Cons. & Gov. exp. & Exports & GFCF & Ch. inv. & Imports & Output  \\
+		\hline
+\multirow{5}{15pt}{\STAB{\rotatebox[origin=c]{90}{Supplying/}}\STAB{\rotatebox[origin=c]{90}{selling sectors}}}& Sector $1$& $z_{11}$ & \ldots& $z_{1j}$ & \ldots & $z_{1n}$ & $c_1$ & $g_1$ & $e_1$ & $i_i$ & $inv_i$ & $-m_i$ & $x_i$  \\ 
+&\STAB{\rotatebox[origin=l]{90}{\ldots}}\ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  \STAB{\rotatebox[origin=l]{90}{\ldots}} \\ 
+&Sector $i$& $z_{i1}$ & \ldots & $z_{ij}$ &\ldots & $z_{in}$ & $c_i$ & $g_i$ & $e_i$ & $i_i$ & $inv_i$ & $-m_i$ & $x_i$  \\ 
+&\STAB{\rotatebox[origin=l]{90}{\ldots}} \ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  \STAB{\rotatebox[origin=l]{90}{\ldots}} \\ 
+&Sector $n$& $z_{n1}$ &\ldots & $z_{nj}$ & \ldots& $z_{nn}$ & $c_n$ & $g_n$ & $e_n$ & $i_n$ & $inv_n$ & $-m_n$ & $x_n$  \\ 
+		\hline
+\multicolumn{2}{r|}{Total expenditures (Int./final)} & $z_1$ & & $z_j$ & & $z_n$ & $c$ & $g$ & $e$ & $i$ & $inv$ & $-m$ & $x$  \\  
+\hline
+\multicolumn{2}{r|}{Net taxes on products}& $t_1$ &\ldots & $t_j$ & \ldots& $t_n$ &  \multicolumn{7}{c}{\ }     \\ 
+\cline{1-7} 
+\multirow{3}{15pt}{\STAB{\rotatebox[origin=c]{90}{Value}}\STAB{\rotatebox[origin=c]{90}{added}}}&Wages& $w_1$ &\ldots & $w_j$ &\ldots & $w_n$ &  \multicolumn{7}{c}{\ }  \\ 
+&Other taxes& $ot_1$ &\ldots & $ot_j$ & \ldots& $ot_n$ &   \multicolumn{7}{c}{\ }    \\ 		
+&Gross op. surplus& $gs_1$ & \ldots& $gs_j$ &\ldots & $gs_n$ &  \multicolumn{7}{c}{\ }     \\
+\cline{1-7} 		
+&Output& $x_1$ & & $x_j$ & & $x_n$ &  \multicolumn{7}{c}{\ }  \\ 		
+	\end{tabular}
+	\end{adjustbox}
+
+	\caption{\label{IOT_basic}Structure of a single-country Input-Output table. The IOT supplied by the South African Statistical Agency has this form.	 }
+\end{table} 
+
+
+
+
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{width=\textwidth}
+		\renewcommand*{\arraystretch}{1.15}
+		%\footnotesize
+		\small
+		\begin{tabular}{cr|ccccc|b{30pt}b{30pt}p{30pt}b{30pt}b{30pt}|c|c}
+			%\toprule
+			%& \STAB{\rotatebox[origin=l]{90}{Sector $1$}} & &\STAB{\rotatebox[origin=r]{90}{Sector $j$}} & & \STAB{\rotatebox[origin=l]{90}{Sector $n$}} & \STAB{\rotatebox[origin=r]{90}{Consumption}} & \STAB{\rotatebox[origin=l]{90}{Government expenditures}} & \STAB{\rotatebox[origin=r]{90}{Exports}} & \STAB{\rotatebox[origin=l]{90}{GFCF}} & \STAB{\rotatebox[origin=r]{90}{Changes in inventories}} &  \STAB{\rotatebox[origin=l]{90}{Imports}} & \STAB{\rotatebox[origin=r]{90}{Output}}  \\ 		
+			\multicolumn{2}{c}{\ }		& \multicolumn{5}{c}{Using/ buying sectors} & \multicolumn{5}{c}{Final demand}  &  \multicolumn{2}{c}{\ }	   \\
+			%\cmidrule{3-7}
+			
+			&		& Sector $1$ & \ldots& Sector $j$ &\ldots & Sector $n$ & Cons. & Gov. exp. & Exports & GFCF & Ch. inv. & Imports & Output  \\
+			\hline
+			\multirow{5}{25pt}{\STAB{\rotatebox[origin=c]{90}{Supplying/}}\STAB{\rotatebox[origin=c]{90}{selling sectors}}\STAB{\rotatebox[origin=c]{90}{(Domestic)}}}& Sector $1$& $z^d_{11}$ & \ldots& $z^d_{1j}$ & \ldots & $z^d_{1n}$ & $c^d_1$ & $g^d_1$ & $e^d_1$ & $i^d_i$ & $inv^d_i$ &  & $x_i$  \\ 
+						&\STAB{\rotatebox[origin=l]{90}{\ldots}}\ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  & &  \STAB{\rotatebox[origin=l]{90}{\ldots}} \\ 
+			&Sector $i$& $z^d_{i1}$ & \ldots & $z^d_{ij}$ &\ldots & $z^d_{in}$ & $c^d_i$ & $g^d_i$ & $e^d_i$ & $i^d_i$ & $inv^d_i$ &  & $x_i$  \\ 
+			&\STAB{\rotatebox[origin=l]{90}{\ldots}} \ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  &  &  \STAB{\rotatebox[origin=l]{90}{\ldots}} \\ 
+			&Sector $n$& $z^d_{n1}$ &\ldots & $z^d_{nj}$ & \ldots& $z^d_{nn}$ & $c^d_n$ & $g^d_n$ & $e^d_n$ & $i^d_n$ & $inv^d_n$ &  & $x_n$  \\ 
+			\hline
+			\multirow{5}{25pt}{\STAB{\rotatebox[origin=c]{90}{Supplying/}}\STAB{\rotatebox[origin=c]{90}{selling sectors}}\STAB{\rotatebox[origin=c]{90}{(Rest of the world)}}}& Sector $1$& $z^m_{11}$ & \ldots& $z^m_{1j}$ & \ldots & $z^m_{1n}$ & $c^m_1$ & $g^m_1$ & $e^m_1$ & $i^m_i$ & $inv^m_i$ & $-m_i$ &  \\ 
+			&\STAB{\rotatebox[origin=l]{90}{\ldots}}\ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &   \\ 
+			&Sector $i$& $z^m_{i1}$ & \ldots & $z^m_{ij}$ &\ldots & $z^m_{in}$ & $c^m_i$ & $g^m_i$ & $e^m_i$ & $i^m_i$ & $inv^m_i$ & $-m_i$ &   \\ 
+			&\STAB{\rotatebox[origin=l]{90}{\ldots}} \ \ \ \ \ \ &  \STAB{\rotatebox[origin=l]{90}{\ldots}}&  & \STAB{\rotatebox[origin=l]{90}{\ldots}}&  &\STAB{\rotatebox[origin=l]{90}{\ldots}}&  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  &  & \STAB{\rotatebox[origin=l]{90}{\ldots}} &  \\ 
+			&Sector $n$& $z^m_{n1}$ &\ldots & $z^m_{nj}$ & \ldots& $z^m_{nn}$ & $c^m_n$ & $g^m_n$ & $e^m_n$ & $i^m_n$ & $inv^m_n$ & $-m_n$ &   \\ 
+			\hline
+		\multicolumn{2}{r|}{Total expenditures (Int./final)} & $z_1$ & & $z_j$ & & $z_n$ & $c$ & $g$ & $e$ & $i$ & $inv$ & $-m$ & $x$  \\  
+		\hline
+		\multicolumn{2}{r|}{Net taxes on products}& $t_1$ &\ldots & $t_j$ & \ldots& $t_n$ &  \multicolumn{7}{c}{\ }     \\ 
+		\cline{1-7} 
+		\multirow{3}{15pt}{\STAB{\rotatebox[origin=c]{90}{Value}}\STAB{\rotatebox[origin=c]{90}{added}}}&Wages& $w_1$ &\ldots & $w_j$ &\ldots & $w_n$ &  \multicolumn{7}{c}{\ }  \\ 
+		&Other taxes& $ot_1$ &\ldots & $ot_j$ & \ldots& $ot_n$ &   \multicolumn{7}{c}{\ }    \\ 		
+		&Gross op. surplus& $gs_1$ & \ldots& $gs_j$ &\ldots & $gs_n$ &  \multicolumn{7}{c}{\ }     \\
+		\cline{1-7} 		
+		&Output& $x_1$ & & $x_j$ & & $x_n$ &  \multicolumn{7}{c}{\ }  \\ 		
+			
+		\end{tabular}
+	\end{adjustbox}
+	
+	\caption{\label{IOT_importsUses}Structure of a single-country Input-Output table where the uses of imports are specified.}
+\end{table} 
+
+
+
+
+
+
+
+
+
+
+
+
 \clearpage
 
 \subsection{Input-output demand-pull model}
 
-The accounting equations embodied in the rows of the IOT hold that for every sector $i$ ($i \in \{1,\ldots,n\}$), its total output $y_i$ is given by : $y_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + x_i - m_i$, where $z_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $x_i$ exports and $m_i$ is imports. This equation can be rewritten as equation \ref{IOT} to show, on the left-hand side, how the total amount of goods available to be used by the domestic economy is obtained, and on the right-hand side how the goods are used :  
+The accounting equations embodied in the rows of the IOT hold that for every sector $i$ ($i \in \{1,\ldots,n\}$), its total output $x_i$ is given by : $x_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + e_i - m_i$, where $z_{ij}$ stands for the intermediate inputs used by sector $j$ and provided by sector $i$, $c_i$ and $g_i$ stand for consumption by household and government, $i_i$ is investment, $e_i$ exports and $m_i$ is imports. This equation can be rewritten as equation \ref{IOT} to show, on the left-hand side, how the total amount of goods available to be used by the domestic economy is obtained, and on the right-hand side how the goods are used :  
 \begin{equation}
-y_i + m_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + x_i \label{IOT}
+x_i + m_i = \sum_j z_{ij} + c_i + g_i + i_i + inv_i + e_i \label{IOT}
 \end{equation}
 %Indeed, all goods domestically produced $y_i$ and imported $m_i$ are at some point available within the domestic economy. 
-The goods obtained through domestic production and imports are consumed domestically, for intermediary ($z_{ij}$) or final  purposes ($c_i$, $g_i$, $i_i$, $inv_i$) and the remaining share is exported and a source of revenue. However, the equation does not provide information on what share of consumption by households of good $i$ stems from domestic production $c_i^d$ versus from imports $c_i^m = c_i - c_i^d$. The same is true for the other uses $u_i$, $u_i \in \{z_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ on the right-hand side of eqn. \ref{IOT}. %Note that the possibility is left open that a share of imports is re-exported.
+The goods obtained through domestic production and imports are consumed domestically, for intermediary ($z_{ij}$) or final  purposes ($c_i$, $g_i$, $i_i$, $inv_i$) and the remaining share is exported and a source of revenue. However, the equation does not provide information on what share of consumption by households of good $i$ stems from domestic production $c_i^d$ versus from imports $c_i^m = c_i - c_i^d$. The same is true for the other uses $u_i$, $u_i \in \{z_{ij}, c_i, g_i, i_i, inv_i, e_i\}$ on the right-hand side of eqn. \ref{IOT}. %Note that the possibility is left open that a share of imports is re-exported.
 
 For the intended analysis, the distinction between the uses made of imported versus domestically produced goods and services is important. Indeed, consumption of domestic output creates economic activity, and thus jobs and value, in the sector to which demand is addressed. In contrast, when for example an industry uses imported goods as intermediate inputs for its activity, this does not give rise to domestic jobs. Is is only when domestically produced goods are used as intermediate inputs that jobs are generated and value available domestically is created, indirectly, through the interlocking dependencies between industrial sectors.
 
@@ -153,22 +256,22 @@ For the intended analysis, the distinction between the uses made of imported ver
 To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. Each of these specifies accounting equations \ref{useOutput} and \ref{useImports} that permit to decompose eqn. \ref{IOT} in eqn. \ref{allUSes}:
 
 \begin{align}
-y_i &= \sum_j z_{ij}^d + c_i^d + g_i^d + i_i^d + inv_i^d + x_i^d \label{useOutput} \\
-m_i &= \sum_j z_{ij}^m + c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{useImports} \\
-y_i + m_i &= \sum_j (z_{ij}^d + z_{ij}^m) + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + x_i^m \label{allUSes}
+x_i &= \sum_j z_{ij}^d + c_i^d + g_i^d + i_i^d + inv_i^d + e_i^d \label{useOutput} \\
+m_i &= \sum_j z_{ij}^m + c_i^m + g_i^m + i_i^m + inv_i^m + e_i^m \label{useImports} \\
+x_i + m_i &= \sum_j (z_{ij}^d + z_{ij}^m) + c^d_i + g_i^d + i_i^d + inv_i^d + e_i^d +  c_i^m + g_i^m + i_i^m + inv_i^m + e_i^m \label{allUSes}
 \end{align}
 
 To study the impact of changes in export or domestic price changes of specific goods and services on the domestic economy, only the set of equations \ref{useOutput} is needed.
 
 Denoting %$a_{ij}=z_{ij}/y_i$ the amount of inputs from sector $j$, sector $i$ uses to produce 1 unit of output, 
-$a_{ij}^d=z_{ij}^d/y_i$ the amount of domestically produced inputs of good $j$ used by sector $i$ to produce one unit of output, %and $a_{ij}^m=z_{ij}^m/y_i$ the amount of imported inputs of good $j$ used per unit of output from sector $i$, 
+$a_{ij}^d=z_{ij}^d/x_i$ the amount of domestically produced inputs of good $j$ used by sector $i$ to produce one unit of output, %and $a_{ij}^m=z_{ij}^m/x_i$ the amount of imported inputs of good $j$ used per unit of output from sector $i$, 
 we get :
 \begin{equation}
 y_i = \sum_j a_{ij}^d \, y_i + c^d_i + g_i^d + i_i^d + inv_i^d + x_i^d
 \end{equation}
 
 
-In matrix notation, with $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $X^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors %denoted with small letters, 
+In matrix notation, with $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $E^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors %denoted with small letters, 
 with 0's off-diagonal and with $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import and total Leontief matrices of coefficients $a_{ij}^d, a_{ij}^m, a_{ij}$, we get :
 
 %\begin{equation}
@@ -177,7 +280,7 @@ with 0's off-diagonal and with $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import
 %Using that $M = A^m\, Y  +  C^m + G^m + I^m + INV^m + X^m$ :
 
 \begin{equation}
-Y = A^d  Y + C^d + G^d + I^d + INV^d + X^d \label{useOutputsDom}
+X = A^d  X + C^d + G^d + I^d + INV^d + E^d \label{useOutputsDom}
 \end{equation}
 
 In the absence of seperate IOTs for domestic production and imports, the fast solution is to suppose that for every type of use $u_i$, the share $s_{i}^d$ of domestic output within the total use is equal over all the types of uses made :
@@ -196,15 +299,15 @@ C^d &= S^d \, C \\
 G^d &= S^d \, G \\
 I^d &= S^d \, I \\
 INV^d &= S^d \, INV \\
-X^d &= S^d \, X 
+E^d &= S^d \, E 
 \end{align}
 
 Combining the above with eqn. \ref{useOutputsDom} and denoting $\mathbb{I}$ the identity matrix, we obtain the demand-driven input-output model that allows to determine for a given scenario of final demand $D = (C, G, I, INV, X )$, the output per sector needed :
 \begin{equation}
 %Y  = S^d \, A \, Y + S^d \, (C + G + I + INV + X)  \label{IO1} \\
-Y = (\mathbb{I} - S^d \, A)^{-1} \,  S^d \, (C + G + I + INV + X)  \label{IOdemand-driven}
+X = (\mathbb{I} - S^d \, A)^{-1} \,  S^d \, (C + G + I + INV + E)  \label{IOdemand-driven}
 \end{equation}
-The elements $y_{ij}$ of the $n \times n$ matrix $Y$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
+The elements $x_{ij}$ of the $n \times n$ matrix $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
 
 %where the first term on the right hand side is intermediate demand and the second term final demand for domestic goods and services.
 
@@ -307,6 +410,23 @@ Consider an alternative scenario $A$ where the price of input $i$ changes by $\l
 \end{equation}
 
 This price increase can be interpreted as a measure for how the total cost of the price change is distributed over all sectors. In addition, the cost to final consumers can be determined. 
+
+
+\subsection{Tracing export revenue}
+
+The revenue coming into the country from selling goods to other countries is distributed, following the logic of economic activity, to different participants. Part of the export revenue pays workers, part goes to the state via taxes, and the remaining part represents the remuneration of capital, which is in practice the money used to pay back debt, pay shareholders, etc. However, not all the revenue coming into the country via exports of say sector $i$ stays within the country. Part is used to import intermediate goods used in the production of the exported goods and thus leaves the country again. The part of the export revenue that is used by sector $i$ to buy intermediate goods for its production (of exported goods) is a cost to the sector but not a loss for the domestic economy : the cost to sector $i$ is revenue for supplying sectors, who after paying in turn their supplying sector, use the remainder, value added, to pay wages, taxes and remunerate capital. This suggests that the export revenue can be traced back into a part leaving the country, and a part distributed as value added --- wages, taxes and capital remuneration --- throughout the economy. 
+
+First we show that the revenue coming in via final demand, in our case we are most interested in exports, can be decomposed entirely in value added created in the different sector of the economy. (To simplify, we assume away for now "Taxes on production (?)".)
+
+\ldots
+
+We thus see that the total value of final demand has spread throughout the economy creating value in different sectors. The matrix ... traces back that value to where the demand for the products generated. However, not all the value originates in the domestic economy. 
+
+The cost of imported inputs represent export revenue for the rest of the world (RoW) and thus represent foreign value added, which is embedded in gross exports, part of final demand y. 
+
+There are two separate issues : one is that the demand for imported intermediate goods does not generate jobs within the economy, the second is how the demand generated for domestic goods, whether it be final or the indirectly generated demand for intermediates, canbe decomposed as value added over the whole economy. 
+
+
 
 \section{Data}
 
@@ -876,7 +996,7 @@ where $d^r = c^r_i + g_i^r + i_i^r + inv_i^r + x_i^r$ , $r\in\{d,m\}$ denote fin
 
 We are interested in, given a final demand vector for domestically produced goods $\boldsymbol{d}^d$, not only how much domestic production this entails, but also how much importation this generates because of the use of imported goods as intermediate inputs. To this end, we define modified matrices of technical coefficients $\tilde{A}^r$ as the matrices with elements $\tilde{a}^r_{ij}$ : 
 \begin{align}
-\tilde{a}^r_{ij} = \frac{z_{ij}^d}{y_i + m_i - d_i^m}
+\tilde{a}^r_{ij} = \frac{z_{ij}^r}{y_i + m_i - d_i^m} \label{defAtilde}
 \end{align}
 These matrices tell us how much intermediary inputs, respectively of domestic and of imported origin, are needed per unit of domestic output and imported intermediate goods. Additionally, we define the technical coefficients matrix $\tilde{A}= \tilde{A}^d + \tilde{A}^m$ that states the total intermediary inputs, of any origin, per unit of imports + domestic output.
 
@@ -884,7 +1004,7 @@ These matrices tell us how much intermediary inputs, respectively of domestic an
 
 Given $D^d$ the matrix with demand $d^d$ on the diagonal and 0's elsewher, we then define the matrix $\mli{YM}$ as :
 \begin{equation}
-\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d 
+\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d \label{YM}
 \end{equation}
 The element $ym_{ij}$ of $\mli{YM}$ is the sum of domestic production and imported intermediate goods of sector $i$ needed to satisfy final demand by sector j $d_j^d$.
 
@@ -901,9 +1021,45 @@ For this we will decompose the factor that is analogous to the Leontief inverse 
 
 The first term on the right hand side measures domestic output necessary to satisfy demand $D^d$. We take a closer look at the second and third terms at the right-hand side of  \ref{decomp1} by developing the power series : 
 \begin{equation}
-(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  
+(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  \label{importedInputsneeded}
 \end{equation}
-Whereas the significance of $A^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(A^m)^k D^d$ with $k>1$ seems nebulous. To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual.
+Whereas the significance of $\tilde{A}^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(\tilde{A}^m)^k D^d$ with $k>1$ seems nebulous when interpreted along the same line. This line of interpretation looks at the matrix $\tilde{A}^m D^d$ row-wise : we seek an answer to the question how much output from each sector is needed to satisfy the demanded production from other sectors. In this case, the "output from each sector needed" are imported goods. The term $\tilde{A}^m \tilde{A}^m D^d$ does not make sense in this interpretation : what are the import needed to generate the imports ? Rather, one can think of $\tilde{A}^m D^d$ column-wise and interpret each element $a^m_{ij}\,d^d_j$as a contribution to the cost of producing a good $j$, or a contribution to the value of the good $j$ by using the intermediate input $i$, obtained through importation. Then, $\tilde{A}^m \tilde{A}^m D^d$ also takes on a clear significance : it represents the value generated indirectly by using imported intermediate inputs to %generate value by 
+produce output that was produced with imported inputs. 
+%Instead of thinking in terms of the output of sector $i$ needed to satisfy demand from sector $j$, think of it vice-versa : it is the value of output of sector $j$ originating from using input $i$. Of course, a single input cannot produce a good. This is why the former sentence contains "value of". Using input $i$ contributes to the cost of production or to the value of good $j$. 
+
+Why would one determine how much imported goods are needed to import goods ? 
+
+To able to create the value generated by using imported inputs, a certain amount of imported inputs are needed, etc.
+Beware, is is using the imported inputs that creates value domestically ; producing obviously doesn't.
+
+It is now clear that the terms \ref{importedInputsneeded} contribute to the amount of imported goods needed to satisfy domestically produced final demand. The terms in the $rest$ term contain both $\tilde{A}^d$ and $\tilde{A}^m$ factors. For example $\tilde{A}^m \tilde{A}^d D^d$ represents the value generated by using imported goods to produce the intermediate inputs necessary for the production of the intermediate inputs $\tilde{A}^d D^d$, where this last term can be worded as the value created by using locally produced inputs to produce demand $D^d$.
+
+The rest term is known, given by $$ rest =(\mathbb{I} - \tilde{A})^{-1} - (\mathbb{I} - \tilde{A}^d)^{-1} - (\mathbb{I} - \tilde{A}^m)^{-1} + \mathbb{I}.$$
+It contains both value created by using imported and domestically produced inputs and will her be roughly split up according to the last step in the production process :
+$$
+rest = \tilde{A}^d (\tilde{A}^m + T) + \tilde{A}^m(\tilde{A}^d + T)
+$$
+The first term on the right-hand side is counted as domestic production and the second term as imports. (The second term are all the imports needed/used to produce the intermediary inputs --- direct inputs and the chain of indirect inputs --- that have been produced using both imported and domestic inputs.)
+
+The unknown tail $T$ is easily determined : $$ T = ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)$$
+Matrix $\mli{LM}$ as given in eqn. \ref{YM} is then split up as :
+\begin{align}
+\tilde{Y} &= (\mathbb{I} - \tilde{A}^d)^{-1} \, D^d + \tilde{A}^d \big(\tilde{A}^m +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d \\
+\tilde{M} &= (\mathbb{I} - \tilde{A}^m)^{-1} \, D^d - \mathbb{I} + \tilde{A}^m \big(\tilde{A}^d +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d
+\end{align}
+
+
+%The value created by producing a product is the value of the product. The value of using the product as intermediate input is 
+
+%To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual. Starting from \ref{defAtilde} in matrix notation :
+
+%\begin{align}
+%\tilde{A}^m &= Z^m \, (diag(\boldsymbol{y + m - d^m}) )^{-1} \nonumber\\
+%&=  Z^m \, (diag(\boldsymbol{y}))^{-1} \, \big( \mathbb{I} +  (diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})   \big)^{-1} \nonumber\\
+%&= Z^m \, (diag(\boldsymbol{y}))^{-1} \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k \nonumber\\
+%&= A^m  \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k
+%\end{align}
+
 
 
 
