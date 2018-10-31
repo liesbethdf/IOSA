@@ -191,5 +191,5 @@ df.IOT2014.imp$Imports                 <- rowSums(df.IOT2014.imp[,-c(1,2,3)])
 
 #round(df.IOT2014.imp$Imports[1:50],2)==-round(df.IOT2014$Imports[1:50],2) # Check, is OK
 
-
+# The output of this file is df.IOT2014.dom and df.IOT2014.imp
 

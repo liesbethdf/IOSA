@@ -5,6 +5,8 @@
 
 fileName.list <- c("Final_Input_Output_tables_for_South_Africa_2013.xlsx", "Final_Input_Output_tables_for_South_Africa_2014.xlsx")
 
+n <- 50 # number of sectors
+
 ############ 2013
 i <- 1
 data <- paste(dir.DATA, fileName.list[i], sep = sep)
@@ -22,7 +24,7 @@ df.IOT2014 <- data.frame(read_excel(data,
                                     sheet=2, 
                                     range = cell_limits(ul = c(2,1), lr = c(60, 60))))
 
-colnames(df.IOT2014)[3:52] <-df.IOT2014[1,3:52]
+colnames(df.IOT2014)[1:n +2] <-df.IOT2014[1,1:n +2]
 
 df.IOT2014 <- df.IOT2014[-1,]
 rownames(df.IOT2014) <- seq(1:dim(df.IOT2014)[1])

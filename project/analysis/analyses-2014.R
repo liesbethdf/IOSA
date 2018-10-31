@@ -5,7 +5,7 @@ sector    <- c("Coal and lignite")
 sector.nr <- c("4")
 
 SA.2014.ec <- decomposition.direct.indirect(LI=LI.d, 
-                                            O=df.IOT2014$Output[1:50], 
+                                            O=df.IOT2014$Output[1:n], 
                                             VAR=df.NE.50I.QLFS$`201406`, 
                                             type="E", 
                                             n=50, 
@@ -14,10 +14,10 @@ SA.2014.ec <- decomposition.direct.indirect(LI=LI.d,
                                             year=2014)
 
 SA.2014.va <- decomposition.direct.indirect(LI=LI.d, 
-                                            O=df.IOT2014$Output[1:50], 
-                                            VAR=df.IOT2014[df.IOT2014$Description=="Gross value added",colnames(df.IOT2014) %in% paste0("I",seq(1:50))], 
+                                            O=df.IOT2014$Output[1:n], 
+                                            VAR=df.IOT2014[df.IOT2014$Description=="Gross value added",colnames(df.IOT2014) %in% paste0("I",seq(1:n))], 
                                             type="VA", 
-                                            n=50, 
+                                            n=n, 
                                             indList=df.NE.50I$Industry.description,
                                             indcodeList=df.NE.50I$SIC.code, 
                                             year=2014)

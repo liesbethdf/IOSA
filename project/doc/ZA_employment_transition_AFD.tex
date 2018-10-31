@@ -282,62 +282,75 @@ x_i &= \sum_j a_{ij}^d \, x_j + c_i^d + g_i^d + i_i^d + inv_i^d + e_i^d \label{u
 
 %To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. Each of these specifies accounting equations \ref{useOutput} and \ref{useImports} that permit to decompose eqn. \ref{IOT} in eqn. \ref{allUSes}:
 
-We can now use the two sets equations \ref{useOutput} and \ref{useImports} to calculate, for a given final demand scenario $y_i= c_i + g_i + i_i + inv_i + e_i$, the output required of all sectors and importation of all types of goods, assuming the $a_{ij}^k$, $i$ $\in$ \{1,\ldots, n\}, $k$ $\in$ \{d, m\} are known.
+We can now use the two sets of equations \ref{useOutput} and \ref{useImports} to calculate, for a given final demand scenario $y_i= c_i + g_i + i_i + inv_i + e_i$, the output required of all sectors and importation of all types of goods, assuming the $a_{ij}^k$, $i$ $\in$ \{1,\ldots, n\}, $k$ $\in$ \{d, m\} are known.
 %To study the impact of changes in export or domestic price changes of specific goods and services on the domestic economy, only the set of equations \ref{useOutput} is needed.
-The set of equations \ref{useOutput} yield domestic production which in turn allows the calculation of imports with the set of equations \ref{useImports}. For easier notation, we write these two sets of equations in matrix format :
+The set of equations \ref{useOutput} yield domestic production which in turn allows the calculation of imports with the equations \ref{useImports}. 
 
-In matrix notation, with $M$, $C^\alpha$, $G^\alpha$, $I^\alpha$, $INV^\alpha$, $E^\alpha$, $\alpha \in \{d,m\}$ the diagonal matrices of the respective vectors %denoted with small letters, 
-with 0's off-diagonal and with $A^d$, $A^m$ and $A=A^d+A^m$ the domestic, import and total Leontief matrices of coefficients $a_{ij}^d, a_{ij}^m, a_{ij}$, we get :
+For easier notation, we write these two sets of equations in matrix format. Output, imports and the five types of final demand for the $n$ types of goods are each grouped in $n \times 1$ column vectors, which are denoted in bold small letters. Capital letters indicate $n \times n$ matrices. The total, domestic and imports direct requirements matrices, $A$, $A^d$ and $A^m$, have as elements on row $i$ and column $j$ the technical coefficients $a_{ij}$, $a^d_{ij}$ and $a^m_{ij}$. Five matrices are introduced that contain the shares of domestic/imported final demand in total final demand (given by equation \ref{sharesFinal}) on the diagonal and zero's elsewhere  : $S^k_{c}$, $S^k_{g}$, $S^k_{e}$, $S^k_{i}$ and $S^k_{inv}$, $k$ $\in$ \{d, m\}. Of course, $S^d_{c} + S^m_{c} = \mathbb{I}$, where $\mathbb{I}$ is the $n \times n$ unitary matrix.
 
-%\begin{equation}
-%Y + M = (A^d + A^m ) Y + C^d + G^d + I^d + INV^d + X^d +  C^m + G^m + I^m + INV^m + X^m \label{allUsesmatrix}
-%\end{equation}
-%Using that $M = A^m\, Y  +  C^m + G^m + I^m + INV^m + X^m$ :
-
-\begin{equation}
-X = A^d  X + C^d + G^d + I^d + INV^d + E^d \label{useOutputsDom}
-\end{equation}
-
-In the absence of seperate IOTs for domestic production and imports, the fast solution is to suppose that for every type of use $u_i$, the share $s_{i}^d$ of domestic output within the total use is equal over all the types of uses made :
 \begin{align}
-s_i^d &= \frac{y_i}{y_i + m_i} \\
-u_i^d &= s_i^d \, u_i \label{shareM} \\
-u_i^m &= (1-s_i^d) \, u_i
-\end{align}
-where $u_i^d$ and $u_i^m$ stand for all the possible uses made of respectively domestic output and imported products : $u_i^m \in \{z_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{z_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. %(Note that there are $n+5$ )
-
-Going to back to matrix notation and denoting $S^d$ the diagonal matrix of the shares $s_i^d$ and 0's off-diagonal, then %the following hypothesis is used to make an IO model based on the total IOT 
-:
-\begin{align}
-A^d &= S^d \, A \\
-C^d &= S^d \, C \\
-G^d &= S^d \, G \\
-I^d &= S^d \, I \\
-INV^d &= S^d \, INV \\
-E^d &= S^d \, E 
+\boldsymbol{x} &= A^d\,  \boldsymbol{x} + S^d_{c} \, \boldsymbol{c} + S^d_{g} \, \boldsymbol{g} + S^d_{i} \, \boldsymbol{i} + S^d_{inv} \, \boldsymbol{inv} + S^d_{e}\,  \boldsymbol{e} \label{useOutputsDom} \\
+\boldsymbol{m} &= A^m \, \boldsymbol{x} + S^m_{c} \,\boldsymbol{c} + S^m_{g}\, \boldsymbol{g} + S^m_{i}\, \boldsymbol{i} + S^m_{inv}\, \boldsymbol{inv} + S^m_{e}\, \boldsymbol{e} \label{useOutputsImport} 
 \end{align}
 
-Combining the above with eqn. \ref{useOutputsDom} and denoting $\mathbb{I}$ the identity matrix, we obtain the demand-driven input-output model that allows to determine for a given scenario of final demand $D = (C, G, I, INV, X )$, the output per sector needed :
-\begin{equation}
-%Y  = S^d \, A \, Y + S^d \, (C + G + I + INV + X)  \label{IO1} \\
-X = (\mathbb{I} - S^d \, A)^{-1} \,  S^d \, (C + G + I + INV + E)  \label{IOdemand-driven}
-\end{equation}
-The elements $x_{ij}$ of the $n \times n$ matrix $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
+Rearranging equation \ref{useOutputsDom}, we get :
+\begin{align}
+\boldsymbol{x} &= \big(\mathbb{I} - A^d \big)^{-1} \, \boldsymbol{y}^d \nonumber \\
+\boldsymbol{y}^d &= S^d_{c} \, \boldsymbol{c} + S^d_{g} \, \boldsymbol{g} + S^d_{i} \, \boldsymbol{i} + S^d_{inv} \, \boldsymbol{inv} + S^d_{e} \, \boldsymbol{e}
+%\boldsymbol{m} &= A^m  \boldsymbol{x} + \boldsymbol{c}^m + \boldsymbol{g}^m + \boldsymbol{i}^m + \boldsymbol{inv}^m + \boldsymbol{e}^m \label{useOutputsImport} 
+\end{align}
+Matrix $\big(\mathbb{I} - A^d \big)^{-1}$ is the domestic Leontief inverse which we note $B^d$. The elements $x_i$ of $\boldsymbol{x}$ are equal to a sum of $n$ terms : $x_i = \sum_j b_{ij}y_j$. Each of these terms and their sum are interpreted as follows : $b_{ij}y_j$ represents the output of sector $i$ stemming from the final demand addressed to sector $j$. The total $x_i$ is the total output needed from sector $i$ to satisfy the demand scenario $\boldsymbol{y}$. Because we are interested in each of these terms, the diagonal matrices $C$, $G$, $E$, $I$, $INV$ and $Y$ are introduced with the elements of the respective vectors on the diagonal and zeros off-diagonal. 
 
-%where the first term on the right hand side is intermediate demand and the second term final demand for domestic goods and services.
+%The elements $x_{ij}$ of the $n \times n$ matrix $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
 
+The demand-pull IO-model, which allows to calculate the output of all the sectors needed to satisfy given final demand $\boldsymbol{y}$ (and if relevant its components), and given direct requirement matrices $A^d$ and $A^m$, and share matrices $S^d_{c}$, $S^d_{g}$, $S^d_{e}$, $S^d_{i}$ and $S^d_{inv}$, then becomes :
 
-%In absence of such a table, the fast solution to this problem is to suppose that for every type of use $u_i$, $u_i \in \{z_{ij}, c_i, g_i, i_i, inv_i, x_i\}$ that is made of the available goods $y_{i} + m_i$ of a given sector $i$, the share $s_{i}$ of imported goods within the total use is equal over all the types of uses made :
+\begin{align}
+Y^d &= S^d_{c} \, C + S^d_{g} \, G + S^d_{i} \, I + S^d_{inv} \, INV + S^d_{e} \, E \\
+Y^m &= S^m_{c} \,C + S^m_{g}\, G + S^m_{i}\, I + S^m_{inv}\, INV + S^m_{e}\, E \\
+X &= \big(\mathbb{I} - A^d \big)^{-1} \, Y^d  \\
+M &= A^m \, X + Y^m
+%\boldsymbol{m} &= A^m  \boldsymbol{x} + \boldsymbol{c}^m + \boldsymbol{g}^m + \boldsymbol{i}^m + \boldsymbol{inv}^m + \boldsymbol{e}^m \label{useOutputsImport} 
+\end{align}
+Note that $X$ and $M$ are not diagonal matrices, contrary to the final demand-matrices. The elements $m_{ij}$ of $M$ are the imports of good $i$ needed to satisfy final demand addressed to sector $i$.
+
+%In the absence of seperate IOTs for domestic production and imports, the fast solution is to suppose that for every type of use $u_i$, the share $s_{i}^d$ of domestic output within the total use is equal over all the types of uses made :
 %\begin{align}
-%s_i &= \frac{m_i}{y_i + m_i} \\
-%u_i^m &= s_i^m \, u_i \label{shareM} \\
-%u_i^d &= (1-s_i) \, u_i
+%s_i^d &= \frac{y_i}{y_i + m_i} \\
+%u_i^d &= s_i^d \, u_i \label{shareM} \\
+%u_i^m &= (1-s_i^d) \, u_i
 %\end{align}
-%where $u_i^m$ and $u_i^d$ stand for all the possible uses made of respectively imported and domestic products : $u_i^m \in \{z_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{z_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$. Thus, by hypothesis, imports $m_i$ are used for intermediate consumption, consumption by households and government, investment, inventory building and exports :
-%
-%That a share of imports is exported is part assumed for reasons of simplicity and part because in today's globalized economy imports are also used as intermediate consumption to produce a final good that might in itself be exported again.
+%where $u_i^d$ and $u_i^m$ stand for all the possible uses made of respectively domestic output and imported products : $u_i^m \in \{z_{ij}^m, c_i^m, g_i^m, i_i^m, inv_i^m, x_i^m\}$ and $u_i^d \in \{z_{ij}^d, c_i^d, g_i^d, i_i^d, inv_i^d, x_i^d\}$.
 
+%Going to back to matrix notation and denoting $S^d$ the diagonal matrix of the shares $s_i^d$ and 0's off-diagonal, then :
+%\begin{align}
+%A^d &= S^d \, A \\
+%C^d &= S^d \, C \\
+%G^d &= S^d \, G \\
+%I^d &= S^d \, I \\
+%INV^d &= S^d \, INV \\
+%E^d &= S^d \, E 
+%\end{align}
 
+%Combining the above with eqn. \ref{useOutputsDom} and denoting $\mathbb{I}$ the identity matrix, we obtain the demand-driven input-output model that allows to determine for a given scenario of final demand $D = (C, G, I, INV, X )$, the output per sector needed :
+%\begin{equation}
+%%Y  = S^d \, A \, Y + S^d \, (C + G + I + INV + X)  \label{IO1} \\
+%X = (\mathbb{I} - S^d \, A)^{-1} \,  S^d \, (C + G + I + INV + E)  \label{IOdemand-driven}
+%\end{equation}
+
+\subsection{Decomposition revenue from final demand}
+
+The revenue coming into the country from selling goods to other countries is distributed, following the logic of economic activity, to different participants. Part of the export revenue pays workers, part goes to the state via taxes, and the remaining part represents the remuneration of capital, which is in practice the money used to pay back debt, pay shareholders, etc. However, not all the revenue coming into the country via exports of say sector $i$ stays within the country. Part is used to import intermediate goods used in the production of the exported goods and thus leaves the country again. The part of the export revenue that is used by sector $i$ to buy intermediate goods for its production (of exported goods) is a cost to the sector but not a loss for the domestic economy : the cost to sector $i$ is revenue for supplying sectors, who after paying in turn their supplying sector, use the remainder, value added, to pay wages, taxes and remunerate capital. This suggests that the export revenue can be traced back into a part leaving the country, and a part distributed as value added --- wages, taxes and capital remuneration --- throughout the economy. 
+
+First we show that the revenue coming in via final demand, in our case we are most interested in exports, can be decomposed entirely in value added created in the different sector of the economy. (To simplify, we assume away for now "Taxes on production (?)".)
+
+\ldots
+
+We thus see that the total value of final demand has spread throughout the economy creating value in different sectors. The matrix ... traces back that value to where the demand for the products generated. However, not all the value originates in the domestic economy. 
+
+The cost of imported inputs represent export revenue for the rest of the world (RoW) and thus represent foreign value added, which is embedded in gross exports, part of final demand y. 
+
+There are two separate issues : one is that the demand for imported intermediate goods does not generate jobs within the economy, the second is how the demand generated for domestic goods, whether it be final or the indirectly generated demand for intermediates, canbe decomposed as value added over the whole economy. 
 
 
 \subsection{Employment content}
@@ -427,19 +440,6 @@ Consider an alternative scenario $A$ where the price of input $i$ changes by $\l
 This price increase can be interpreted as a measure for how the total cost of the price change is distributed over all sectors. In addition, the cost to final consumers can be determined. 
 
 
-\subsection{Tracing export revenue}
-
-The revenue coming into the country from selling goods to other countries is distributed, following the logic of economic activity, to different participants. Part of the export revenue pays workers, part goes to the state via taxes, and the remaining part represents the remuneration of capital, which is in practice the money used to pay back debt, pay shareholders, etc. However, not all the revenue coming into the country via exports of say sector $i$ stays within the country. Part is used to import intermediate goods used in the production of the exported goods and thus leaves the country again. The part of the export revenue that is used by sector $i$ to buy intermediate goods for its production (of exported goods) is a cost to the sector but not a loss for the domestic economy : the cost to sector $i$ is revenue for supplying sectors, who after paying in turn their supplying sector, use the remainder, value added, to pay wages, taxes and remunerate capital. This suggests that the export revenue can be traced back into a part leaving the country, and a part distributed as value added --- wages, taxes and capital remuneration --- throughout the economy. 
-
-First we show that the revenue coming in via final demand, in our case we are most interested in exports, can be decomposed entirely in value added created in the different sector of the economy. (To simplify, we assume away for now "Taxes on production (?)".)
-
-\ldots
-
-We thus see that the total value of final demand has spread throughout the economy creating value in different sectors. The matrix ... traces back that value to where the demand for the products generated. However, not all the value originates in the domestic economy. 
-
-The cost of imported inputs represent export revenue for the rest of the world (RoW) and thus represent foreign value added, which is embedded in gross exports, part of final demand y. 
-
-There are two separate issues : one is that the demand for imported intermediate goods does not generate jobs within the economy, the second is how the demand generated for domestic goods, whether it be final or the indirectly generated demand for intermediates, canbe decomposed as value added over the whole economy. 
 
 
 

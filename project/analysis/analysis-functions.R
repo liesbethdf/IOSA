@@ -19,7 +19,7 @@ decomposition.direct.indirect <- function(LI, O, VAR, type, n, indList, indcodeL
 #    type <- "VA"
     VAR.per.production <- VAR/O
       
-    VAR.content.direct.indirect <- diag(VAR.per.production) %*% LI %*% diag(s.d)
+    VAR.content.direct.indirect <- diag(VAR.per.production) %*% LI
     
     VAR.content.indirect <- colSums(VAR.content.direct.indirect - diag(diag(VAR.content.direct.indirect)))
     
