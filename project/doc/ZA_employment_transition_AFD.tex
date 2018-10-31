@@ -302,22 +302,19 @@ Rearranging equation \ref{useOutputsDom}, we get :
 %\boldsymbol{m} &= A^m  \boldsymbol{x} + \boldsymbol{c}^m + \boldsymbol{g}^m + \boldsymbol{i}^m + \boldsymbol{inv}^m + \boldsymbol{e}^m \label{useOutputsImport} 
 \end{align}
 Matrix $\big(\mathbb{I} - A^d \big)^{-1}$ is the domestic Leontief inverse which we note $B^d$. The elements $x_i$ of $\boldsymbol{x}$ are equal to a sum of $n$ terms : $x_i = \sum_j b_{ij}y_j$. Each of these terms are interpreted as follows : $b_{ij}y_j$ represents the output of sector $i$ stemming from the final demand addressed to sector $j$. The total $x_i$ is the total output needed from sector $i$ to satisfy the demand scenario $\boldsymbol{y}$. Because we are interested in each of these terms, the diagonal matrices $C$, $G$, $E$, $I$, $INV$ and $Y$ are introduced with the elements of the respective vectors (denoted by the same letter in lower case and bold) on the diagonal and zeros off-diagonal. Then, eqn. \ref{outputVector} becomes $X = \big(\mathbb{I} - A^d \big)^{-1} \, Y^d$, where $X$ has elements $x_{ij} = b_{ij}y_{jj}$. The interpretation of these elements is the same as for $b_{ij}y_j$ given above, since $y_j = y_{jj}$.
-%The elements $x_{ij}$ of the $n \times n$ matrix $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
 
 Similarly, we are interested in the terms that make up the vector $\boldsymbol{m}$ as given by eqn. \ref{importVector} or of the matrix $M$ given by $M = A^m \, X + Y^m$. Element $m_{ik}$ of $M$ is given by $m_{ik} = \sum_j a_{ij}x_{jk}$ which represents the the import of good $i$ by all sectors in response to demand of sector $k$. Element $m_i$ of $\boldsymbol{m}$ is then the import of good $i$ in response to demand from all sectors. However, for our analysis, we would like to know the import of all $n$ types of goods, done by each sector, in response to demand from sector $k$. Thus, we would like to know the sum $\sum_i a_{ij}x_{jk}$, which is the import expense of sector $j$ in response to demand from sector $k$. 
 
-
-
-The demand-pull IO-model, which allows to calculate the output of all the sectors needed to satisfy given final demand $\boldsymbol{y}$ (and if relevant its components), and given direct requirement matrices $A^d$ and $A^m$, and share matrices $S^d_{c}$, $S^d_{g}$, $S^d_{e}$, $S^d_{i}$ and $S^d_{inv}$, then becomes :
-
+To this end we introduce the matrices $X^k$, which are diagonal matrices with the $k$th column of $X$ on the diagonal and zero elsewhere. The demand-pull IO-model, which allows to calculate the output and import by all the sectors needed to satisfy given final demand $\boldsymbol{y}$ (and if relevant its components, eg. consumption,\ldots), then becomes :
 \begin{align}
 Y^d &= S^d_{c} \, C + S^d_{g} \, G + S^d_{i} \, I + S^d_{inv} \, INV + S^d_{e} \, E \\
 Y^m &= S^m_{c} \,C + S^m_{g}\, G + S^m_{i}\, I + S^m_{inv}\, INV + S^m_{e}\, E \\
 X &= \big(\mathbb{I} - A^d \big)^{-1} \, Y^d  \\
-M &= A^m \, X + Y^m
+M^k &= A^m \, X^k + Y^m, \ \ \  k \in \{1,\ldots,n\}
 %\boldsymbol{m} &= A^m  \boldsymbol{x} + \boldsymbol{c}^m + \boldsymbol{g}^m + \boldsymbol{i}^m + \boldsymbol{inv}^m + \boldsymbol{e}^m \label{useOutputsImport} 
 \end{align}
-Note that $X$ and $M$ are not diagonal matrices, contrary to the final demand-matrices. The elements $m_{ij}$ of $M$ are the imports of good $i$ needed to satisfy final demand addressed to sector $i$.
+In summary, the above model allows to calculate the output of all sectors and import by all sectors needed to satisfy a given final demand scenario. The matrices with parameters of the model are the direct requirement matrices $A^d$ and $A^m$, and the share matrices $S^d_{c}$, $S^d_{g}$, $S^d_{e}$, $S^d_{i}$ and $S^d_{inv}$. Final demand for domestic production is given by $Y^d$ which is zero off-diagonal ; its $i$th diagonal element is final demand for domestically produced goods addressed to sector $i$. Final demand for imported goods is given by $Y^m$, of which the $i$th diagonal element represents the final demand for imported goods of sector $i$ ; again, the off-diagonal elements are zero. The results of the model are to be found in the output matrix $X$ and the $n$ import matrices $M$. The elements $x_{ij}$ of $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario. The elements $m^k_{ij}$ of $M^k$ represent the import of good $i$ done by sector $j$ to satisfy demand (in domestically produced goods) from sector $k$. Thus, the columns sums of $M^k$ are the imported goods, intermediate and final, of all types sector $j$ needs to satisfy demand from sector $k$.
+
 
 %In the absence of seperate IOTs for domestic production and imports, the fast solution is to suppose that for every type of use $u_i$, the share $s_{i}^d$ of domestic output within the total use is equal over all the types of uses made :
 %\begin{align}
