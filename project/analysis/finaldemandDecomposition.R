@@ -120,7 +120,20 @@ TO.di   <- diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
 TP.di   <- diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
 OS.di   <- diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
 
-output.di     <-  LI.d %*% demand.d
+X.di    <-  LI.d %*% diag(demand.d.scen)
+
+X1.di   <- diag(X.di[,1])
+M.int.1     <- A.m %*% X1.di
+M.int       <- M.int.1
+
+for (k in 2:n)
+{
+  Xk.di       <- diag(X.di[,k])
+  M.int.k <- A.m %*% Xk.di
+  M.int       <- bind_rows(M.int,M.int.k)
+}
+
+
 
 rowSums(wages.di)
 rowSums(VA.di)
