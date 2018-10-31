@@ -110,29 +110,97 @@ for (yearHere in df.scen$Year[2:18])
 ############ + Employment effect
 ############################################
 
-yearHere <- 2020
+colnamesHere.di         <- c(Order,"Industry","Year","Var","Case")
+colnamesHere.finDemand  <- c("Final.demand.imp","Industry","Year","Var","Case") 
 
-demand.d.scen <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, "Vol.BAU"]
+X.di            <- data.frame(matrix(ncol = length(colnamesHere.di), nrow = 0))
+colnames(X.di)  <- colnamesHere.di
+WS.di           <- X.di
+VA.di           <- X.di
+TO.di           <- X.di
+TP.di           <- X.di
+OS.di           <- X.di
+M.int           <- X.di
 
-WS.di   <- diag(WS.per.production) %*% LI.d %*% diag(demand.d.scen)
-VA.di   <- diag(VA.per.production) %*% LI.d %*% diag(demand.d.scen)
-TO.di   <- diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
-TP.di   <- diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
-OS.di   <- diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
+M.finalDemand             <- data.frame(matrix(ncol = length(colnamesHere.finDemand), nrow = 0))
+colnames(M.finalDemand)   <- colnamesHere.finDemand
 
-X.di    <-  LI.d %*% diag(demand.d.scen)
-
-X1.di   <- diag(X.di[,1])
-M.int.1     <- A.m %*% X1.di
-M.int       <- M.int.1
-
-for (k in 2:n)
+for (yearHere in 2018:2035)
 {
-  Xk.di       <- diag(X.di[,k])
-  M.int.k <- A.m %*% Xk.di
-  M.int       <- bind_rows(M.int,M.int.k)
+#  for(scenarioHere in c("Vol.BAU"))
+  for(scenarioHere in c("Vol.BAU","Vol.2Deg"))
+  {
+ #   yearHere <- 2018
+ #  scenarioHere <- "Vol.BAU"
+    
+    demand.d.scen <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, scenarioHere]
+
+    X.diHere    <-  LI.d %*% diag(demand.d.scen)
+    WS.diHere   <-  diag(WS.per.production) %*% LI.d %*% diag(demand.d.scen)
+    VA.diHere   <-  diag(VA.per.production) %*% LI.d %*% diag(demand.d.scen)
+    TO.diHere   <-  diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
+    TP.diHere   <-  diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
+    OS.diHere   <-  diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
+    
+    df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere)
+    names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus") 
+    for(i in 1:6)
+    {
+      df            <- data.frame(df.list[[i]])
+      colnames(df)  <- Order
+      df$Industry   <- rep(Order[1],n)
+      df$Year       <- rep(yearHere,n)
+      df$Var        <- rep(names.var[i],n)
+      df$Case       <- rep(scenarioHere,n)
+      df.list[[i]]  <- df
+    }
+    
+    X.di    <- bind_rows(X.di,df.list[[1]]) 
+    WS.di   <- bind_rows(WS.di,df.list[[2]]) 
+    VA.di   <- bind_rows(VA.di,df.list[[3]]) 
+    TO.di   <- bind_rows(TO.di,df.list[[4]]) 
+    TP.di   <- bind_rows(TP.di,df.list[[5]]) 
+    OS.di   <- bind_rows(OS.di,df.list[[6]]) 
+    
+    M.finalDemandHere           <-  diag(s.m.exp)   %*%   demand.d.scen
+    M.finalDemandHere           <-  data.frame(M.finalDemandHere)
+    colnames(M.finalDemandHere) <- "Final.demand.imp"
+    M.finalDemandHere$Industry  <- Order
+    M.finalDemandHere$Year      <- yearHere
+    M.finalDemandHere$Var       <- rep("Imported final goods",n)
+    M.finalDemandHere$Case      <- rep(scenarioHere,n)
+    M.finalDemand               <- bind_rows(M.finalDemand, M.finalDemandHere)
+    
+    
+    X1.di                       <- diag(X.diHere[,1])
+    M.int.1                     <- A.m %*% X1.di
+    M.intHere                   <- data.frame(M.int.1)
+    colnames(M.intHere)         <- Order
+    M.intHere$Industry          <- rep(Order[1],n)
+    M.intHere$Year              <- rep(yearHere,n)
+    M.intHere$Var               <- rep("Imported inputs",n)
+    M.intHere$Case              <- rep(scenarioHere,n)
+    
+    for (k in 2:50)
+    {
+      Xk.di                 <- diag(X.diHere[,k])
+      M.int.k               <- data.frame(round(A.m %*% Xk.di,6))
+      colnames(M.int.k)     <- Order
+      M.int.k$Industry      <- rep(Order[k],n)
+      M.int.k$Year          <- rep(yearHere,n)
+      M.int.k$Var         <- rep("Imported inputs",n)
+      M.int.k$Case        <- rep(scenarioHere,n)
+      M.intHere             <- bind_rows(M.intHere,M.int.k)
+    }
+    M.int     <-  bind_rows(M.int,M.intHere) 
+    
+  }
+
 }
 
+results.coalExport  <- list(X.di, WS.di, VA.di, TO.di, TP.di, OS.di, M.int, M.finalDemand)
+
+## Here the generation of results end. Oh no, still price ...
 
 
 rowSums(wages.di)
