@@ -20,4 +20,9 @@ df.CPI <- df.CPI %>% gather(Year, Value, -Case, -Variable, -Unit)
 df.CPI$Year <- as.numeric(df.CPI$Year)
 #df.CPI$Case <- as.factor(df.CPI$Case)
 
+df.CPI$Var <- df.CPI$Variable
+df.CPI$Var <- substr(df.CPI$Var,8,8)
+#df.CPI$Var[df.CPI$Var=="V"] <-"Vol"
+df.CPI$Var <- paste(df.CPI$Var,df.CPI$Case,sep="." )
+  
 setwd(dir.ANALYSIS)
