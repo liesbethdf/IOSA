@@ -295,13 +295,18 @@ For easier notation, we write these two sets of equations in matrix format. Outp
 
 Rearranging equation \ref{useOutputsDom}, we get :
 \begin{align}
-\boldsymbol{x} &= \big(\mathbb{I} - A^d \big)^{-1} \, \boldsymbol{y}^d \nonumber \\
-\boldsymbol{y}^d &= S^d_{c} \, \boldsymbol{c} + S^d_{g} \, \boldsymbol{g} + S^d_{i} \, \boldsymbol{i} + S^d_{inv} \, \boldsymbol{inv} + S^d_{e} \, \boldsymbol{e}
+\boldsymbol{y}^d &= S^d_{c} \, \boldsymbol{c} + S^d_{g} \, \boldsymbol{g} + S^d_{i} \, \boldsymbol{i} + S^d_{inv} \, \boldsymbol{inv} + S^d_{e} \, \boldsymbol{e} \nonumber \\
+\boldsymbol{y}^m &= S^m_{c} \, \boldsymbol{c} + S^m_{g} \, \boldsymbol{g} + S^m_{i} \, \boldsymbol{i} + S^m_{inv} \, \boldsymbol{inv} + S^m_{e} \, \boldsymbol{e} \nonumber  \\
+\boldsymbol{x} &= \big(\mathbb{I} - A^d \big)^{-1} \, \boldsymbol{y}^d \label{outputVector} \\
+\boldsymbol{m} &= A^m \, \boldsymbol{x} + \boldsymbol{y}^m \label{importVector} 
 %\boldsymbol{m} &= A^m  \boldsymbol{x} + \boldsymbol{c}^m + \boldsymbol{g}^m + \boldsymbol{i}^m + \boldsymbol{inv}^m + \boldsymbol{e}^m \label{useOutputsImport} 
 \end{align}
-Matrix $\big(\mathbb{I} - A^d \big)^{-1}$ is the domestic Leontief inverse which we note $B^d$. The elements $x_i$ of $\boldsymbol{x}$ are equal to a sum of $n$ terms : $x_i = \sum_j b_{ij}y_j$. Each of these terms and their sum are interpreted as follows : $b_{ij}y_j$ represents the output of sector $i$ stemming from the final demand addressed to sector $j$. The total $x_i$ is the total output needed from sector $i$ to satisfy the demand scenario $\boldsymbol{y}$. Because we are interested in each of these terms, the diagonal matrices $C$, $G$, $E$, $I$, $INV$ and $Y$ are introduced with the elements of the respective vectors on the diagonal and zeros off-diagonal. 
-
+Matrix $\big(\mathbb{I} - A^d \big)^{-1}$ is the domestic Leontief inverse which we note $B^d$. The elements $x_i$ of $\boldsymbol{x}$ are equal to a sum of $n$ terms : $x_i = \sum_j b_{ij}y_j$. Each of these terms are interpreted as follows : $b_{ij}y_j$ represents the output of sector $i$ stemming from the final demand addressed to sector $j$. The total $x_i$ is the total output needed from sector $i$ to satisfy the demand scenario $\boldsymbol{y}$. Because we are interested in each of these terms, the diagonal matrices $C$, $G$, $E$, $I$, $INV$ and $Y$ are introduced with the elements of the respective vectors (denoted by the same letter in lower case and bold) on the diagonal and zeros off-diagonal. Then, eqn. \ref{outputVector} becomes $X = \big(\mathbb{I} - A^d \big)^{-1} \, Y^d$, where $X$ has elements $x_{ij} = b_{ij}y_{jj}$. The interpretation of these elements is the same as for $b_{ij}y_j$ given above, since $y_j = y_{jj}$.
 %The elements $x_{ij}$ of the $n \times n$ matrix $X$ give the output sector $j$ needs from sector $i$ to satisfy the final demand scenario $D$.
+
+Similarly, we are interested in the terms that make up the vector $\boldsymbol{m}$ as given by eqn. \ref{importVector} or of the matrix $M$ given by $M = A^m \, X + Y^m$. Element $m_{ik}$ of $M$ is given by $m_{ik} = \sum_j a_{ij}x_{jk}$ which represents the the import of good $i$ by all sectors in response to demand of sector $k$. Element $m_i$ of $\boldsymbol{m}$ is then the import of good $i$ in response to demand from all sectors. However, for our analysis, we would like to know the import of all $n$ types of goods, done by each sector, in response to demand from sector $k$. Thus, we would like to know the sum $\sum_i a_{ij}x_{jk}$, which is the import expense of sector $j$ in response to demand from sector $k$. 
+
+
 
 The demand-pull IO-model, which allows to calculate the output of all the sectors needed to satisfy given final demand $\boldsymbol{y}$ (and if relevant its components), and given direct requirement matrices $A^d$ and $A^m$, and share matrices $S^d_{c}$, $S^d_{g}$, $S^d_{e}$, $S^d_{i}$ and $S^d_{inv}$, then becomes :
 
@@ -339,6 +344,8 @@ Note that $X$ and $M$ are not diagonal matrices, contrary to the final demand-ma
 %\end{equation}
 
 \subsection{Decomposition revenue from final demand}
+
+
 
 The revenue coming into the country from selling goods to other countries is distributed, following the logic of economic activity, to different participants. Part of the export revenue pays workers, part goes to the state via taxes, and the remaining part represents the remuneration of capital, which is in practice the money used to pay back debt, pay shareholders, etc. However, not all the revenue coming into the country via exports of say sector $i$ stays within the country. Part is used to import intermediate goods used in the production of the exported goods and thus leaves the country again. The part of the export revenue that is used by sector $i$ to buy intermediate goods for its production (of exported goods) is a cost to the sector but not a loss for the domestic economy : the cost to sector $i$ is revenue for supplying sectors, who after paying in turn their supplying sector, use the remainder, value added, to pay wages, taxes and remunerate capital. This suggests that the export revenue can be traced back into a part leaving the country, and a part distributed as value added --- wages, taxes and capital remuneration --- throughout the economy. 
 

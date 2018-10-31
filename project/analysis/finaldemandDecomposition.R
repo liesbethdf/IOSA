@@ -114,11 +114,11 @@ yearHere <- 2020
 
 demand.d.scen <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, "Vol.BAU"]
 
-wages.di      <- diag(WS.per.production) %*% LI.d %*% diag(demand.d.scen)
-VA.di         <- diag(VA.per.production) %*% LI.d %*% diag(demand.d.scen)
-taxesOther.di <- diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
-taxesProd.di  <- diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
-GOSurplus.di  <- diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
+WS.di   <- diag(WS.per.production) %*% LI.d %*% diag(demand.d.scen)
+VA.di   <- diag(VA.per.production) %*% LI.d %*% diag(demand.d.scen)
+TO.di   <- diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
+TP.di   <- diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
+OS.di   <- diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
 
 output.di     <-  LI.d %*% demand.d
 
@@ -134,50 +134,4 @@ colSums(taxesOther.di)
 colSums(taxesProd.di)
 colSums(GOSurplus.di)
 
-wages.di.diff      <- diag(wages.per.production)     %*% LI.d %*% demand.d.diff
-VA.di.diff         <- diag(VA.per.production)        %*% LI.d %*% demand.d.diff
-taxesOther.di.diff <- diag(taxesOther.per.production)%*% LI.d %*% demand.d.diff
-taxesProd.di.diff  <- diag(taxesProd.per.production) %*% LI.d %*% demand.d.diff
-GOSurplus.di.diff  <- diag(GOSurplus.per.production) %*% LI.d %*% demand.d.diff
 
-output.d.di.diff     <-  LI.d %*% demand.d.diff
-
-rowSums(wages.di.diff)
-rowSums(VA.di.diff)
-rowSums(taxesOther.di.diff)
-rowSums(taxesProd.di.diff)
-rowSums(GOSurplus.di.diff)
-
-colSums(wages.di.diff)
-colSums(VA.di.diff)
-colSums(taxesOther.di.diff)
-colSums(taxesProd.di.diff)
-colSums(GOSurplus.di.diff)
-
-############################################
-############ Importations
-############################################
-
-Imports.M <- abs(df.IOT2014$Imports[1:n])
-Imports.M[Imports.M==0] <- 0.001
-
-demand.m  <-  diag(s.m.exp)   %*%   diag(vect.exp) +
-              diag(s.m.cons)  %*%   diag(vect.cons) +
-              diag(s.m.gov)   %*%   diag(vect.gov) +
-              diag(s.m.gfcf)  %*%   diag(vect.gfcf) +
-              diag(s.m.chi)   %*%   diag(vect.chi)
-
-vect.exp.scen    <- vect.exp
-vect.exp.scen[4] <- vect.exp[4] * 0.5
-
-demand.m.scen  <- diag(s.m.exp) %*% diag(vect.exp.scen) +
-                  diag(s.m.cons) %*% diag(vect.cons) +
-                  diag(s.m.gov) %*% diag(vect.gov) +
-                  diag(s.m.gfcf) %*% diag(vect.gfcf) +
-                  diag(s.m.chi) %*% diag(vect.chi)
-
-demand.m.diff     <- demand.m - demand.m.scen
-output.m.di.diff  <- MLI.m %*% demand.m.diff
-
-###################################################################################
-ena
