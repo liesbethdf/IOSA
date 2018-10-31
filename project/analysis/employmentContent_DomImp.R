@@ -3,10 +3,10 @@
 ############ Check Leontief inverse ; ok, same as provided by SA Stat
 ############################################
 
-fd    <- df.IOT2014$Exports[1:n] + df.IOT2014$Household[1:n] + df.IOT2014$General.Government[1:n] + df.IOT2014$Capital.formation[1:n] + df.IOT2014$Changes.in.inventories[1:n]
-fd.d  <- df.IOT2014.dom$Exports[1:n] + df.IOT2014.dom$Household[1:n] + df.IOT2014.dom$General.Government[1:n] + df.IOT2014.dom$Capital.formation[1:n] + df.IOT2014.dom$Changes.in.inventories[1:n]
-
-s.d   <- fd.d/fd        # share domestic    #fd : final demand #fd.d # final demand met with domestic goods
+# fd    <- df.IOT2014$Exports[1:n] + df.IOT2014$Household[1:n] + df.IOT2014$General.Government[1:n] + df.IOT2014$Capital.formation[1:n] + df.IOT2014$Changes.in.inventories[1:n]
+# fd.d  <- df.IOT2014.dom$Exports[1:n] + df.IOT2014.dom$Household[1:n] + df.IOT2014.dom$General.Government[1:n] + df.IOT2014.dom$Capital.formation[1:n] + df.IOT2014.dom$Changes.in.inventories[1:n]
+# 
+# s.d   <- fd.d/fd        # share domestic    #fd : final demand #fd.d # final demand met with domestic goods
 
 # Z     <- as.matrix(df.IOT2014[1:n,(1:n)+2])  
 # Z.d   <- as.matrix(df.IOT2014.dom[1:n,(1:n)+3])
@@ -86,8 +86,8 @@ df.ec.di <- data.frame(employment.content.direct.indirect)
 colnames(df.ec.di) <- SA.IO.codes
 rownames(df.ec.di) <- SA.IO.codes
 
-df.e.di <- data.frame(employment.content.direct.indirect %*% diag(demand))
-colnames(df.e.di) <- SA.IO.codes
+# df.e.di <- data.frame(employment.content.direct.indirect %*% diag(demand))
+# colnames(df.e.di) <- SA.IO.codes
 
 df.output.di <- LI.d %*% diag(s.d) %*% diag(demand)
 df.output.di <- add.sectorNames(df.output.di)
