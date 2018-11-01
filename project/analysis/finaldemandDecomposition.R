@@ -186,13 +186,13 @@ initiate.outputDecomp     <- data.frame(matrix(rep(NA,length(colnamesHere.output
 colnames(df.outputDecomp) <- colnamesHere.outputDecomp
 colnames(initiate.outputDecomp) <- colnamesHere.outputDecomp
 
-for (yearHere in 2018:2018)
+for (yearHere in 2018:2035)
 {
 #  for(scenarioHere in c("Vol.BAU"))
   for(scenarioHere in c("BAU","2Deg"))
   {
-   yearHere <- 2018
-   scenarioHere <- "BAU"
+#   yearHere <- 2018
+#   scenarioHere <- "BAU"
     
     vect.outputDecompHere <- initiate.outputDecomp
     
@@ -267,77 +267,78 @@ for (yearHere in 2018:2018)
     
     s <- 4 # production of sector
     
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Year"]          <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Scenario"]      <- scenarioHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Industry"]      <- Order[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.dom"]    <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
-                                                                                                            df.domDemand.coal.input.v2$Var=="Vol.demandD" & 
-                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
-                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
-                                                                                                            ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.dom"]  <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
-                                                                                                            df.domDemand.coal.input.v2$Var=="Value.demandD" & 
-                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
-                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
-                                                                                                            ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.imp"]    <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
-                                                                                                            df.domDemand.coal.input.v2$Var=="Vol.demandM" & 
-                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
-                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
-                                                                                                            ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.imp"]  <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
-                                                                                                            df.domDemand.coal.input.v2$Var=="Value.demandM" & 
-                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
-                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
-                                                                                                            ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
-                                                                                                            df.domDemand.coal.input.v2$Var=="Price.e" & 
-                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
-                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
-                                                                                                            ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- rowSums(X.diHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.dom"] + 
-                                                                                 vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]-
-                                                                                 vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.dom"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]              <- rowSums(D.intHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]              <- rowSums(MI.diHere)[s] #colSums(M.intHere[,1:50])[s] yields the same
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.vol"]          <- rowSums(TP.diHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.vol"]                  <- rowSums(VA.diHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]                   <- rowSums(WS.diHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.vol"]         <- rowSums(TO.diHere)[s]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.vol"]    <- rowSums(OS.diHere)[s] 
+    for (s in 1:n)
+    {
+      
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Year"]          <- yearHere
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Scenario"]      <- scenarioHere
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Industry"]      <- Order[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.dom"]    <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                                    df.domDemand.coal.input.v2$Var=="Vol.demandD" & 
+                                                                                                                    df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                                    df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                                  ,"Value"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.dom"]  <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                                    df.domDemand.coal.input.v2$Var=="Value.demandD" & 
+                                                                                                                    df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                                    df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                                  ,"Value"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.imp"]    <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                                    df.domDemand.coal.input.v2$Var=="Vol.demandM" & 
+                                                                                                                    df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                                    df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                                  ,"Value"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.imp"]  <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                                    df.domDemand.coal.input.v2$Var=="Value.demandM" & 
+                                                                                                                    df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                                    df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                                  ,"Value"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                                df.domDemand.coal.input.v2$Var=="Price.e" & 
+                                                                                                                df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                                df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                              ,"Value"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- rowSums(X.diHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.dom"] + 
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]-
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.dom"]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]              <- rowSums(D.intHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]              <- rowSums(MI.diHere)[s] #colSums(M.intHere[,1:50])[s] yields the same
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.vol"]          <- rowSums(TP.diHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.vol"]                  <- rowSums(VA.diHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]                   <- rowSums(WS.diHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.vol"]         <- rowSums(TO.diHere)[s]
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.vol"]    <- rowSums(OS.diHere)[s] 
+      
+      VAscaler <- (vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"] - rowSums(D.intHere)[s] - rowSums(MI.diHere)[s] - rowSums(WS.diHere)[s])/
+        (rowSums(TO.diHere)[s] + rowSums(OS.diHere)[s] + rowSums(TP.diHere)[s])
+      
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"]       <- rowSums(TO.diHere)[s] * VAscaler
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"]  <- rowSums(OS.diHere)[s] * VAscaler
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.value"]        <- rowSums(TP.diHere)[s] * VAscaler
+      vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.value"]                <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"] +
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"] +
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]
+      
+      df.outputDecomp <- bind_rows(df.outputDecomp, vect.outputDecompHere)
+      vect.outputDecompHere <- initiate.outputDecomp
+      
+    }
     
-    VAscaler <- (vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"] - rowSums(D.intHere)[s] - rowSums(MI.diHere)[s] - rowSums(WS.diHere)[s])/
-                  (rowSums(TO.diHere)[s] + rowSums(OS.diHere)[s] + rowSums(TP.diHere)[s])
-    
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"]       <- rowSums(TO.diHere)[s] * VAscaler
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"]  <- rowSums(OS.diHere)[s] * VAscaler
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.value"]        <- rowSums(TP.diHere)[s] * VAscaler
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.value"]                <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"] +
-                                                                                           vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"] +
-                                                                                           vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]
-    
-    df.outputDecomp <- bind_rows(df.outputDecomp, vect.outputDecompHere)
     
   }
 
 }
 
-results.coalExport  <- list(X.di, WS.di, VA.di, TO.di, TP.di, OS.di, M.int, M.finalDemand)
+setwd(dir.TABLES)
+scenarioName    <- "ExportCoal_zeroDemandOther"
+fileName.table  <- paste(scenarioName, "outputDecomp","allSectors",sep="_")
+write.csv(df.outputDecomp,fileName.table)
 
-## Here the generation of results end. Oh no, still price ...
+setwd(dir.ANALYSIS)
 
+#View(df.outputDecomp)
 
-rowSums(wages.di)
-rowSums(VA.di)
-rowSums(taxesOther.di)
-rowSums(taxesProd.di)
-rowSums(GOSurplus.di)
-
-colSums(wages.di)
-colSums(VA.di)
-colSums(taxesOther.di)
-colSums(taxesProd.di)
-colSums(GOSurplus.di)
+#results.coalExport  <- list(X.di, WS.di, VA.di, TO.di, TP.di, OS.di, M.int, M.finalDemand)
 
 
