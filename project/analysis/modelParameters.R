@@ -102,8 +102,9 @@ VA.per.production <- VA.per.production
 TO.per.production <- taxesOther.per.production
 TP.per.production <- taxesProd.per.production 
 OS.per.production <- GOSurplus.per.production 
-
-
+TI.per.production <- totalInputs.per.production
+DI.per.production <- domesticInputs.per.production
+MI.per.production <- importedInputs.per.production
 # Some much used vectors with industries descriptions and codes, etc.
 
 Order     <- df.IOT2014$Order[1:n]

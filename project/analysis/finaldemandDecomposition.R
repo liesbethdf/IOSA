@@ -1,6 +1,6 @@
 
 ############################################
-############ Construction input vector for difference 2Deg & BAU CPI coal export projections
+############ Construction demand input vector for difference 2Deg & BAU CPI coal export projections
 ############################################
 
 ## Coal scenarios from CPI
@@ -141,6 +141,7 @@ TP.di           <- X.di
 OS.di           <- X.di
 D.int           <- X.di # Domestic inputs (costs)
 M.int           <- X.di # Imported inputs (costs)
+MI.di           <- X.di # Imported inputs (costs) again, less detailed
 
 M.finalDemand             <- data.frame(matrix(ncol = length(colnamesHere.finDemand), nrow = 0))
 colnames(M.finalDemand)   <- colnamesHere.finDemand
@@ -170,11 +171,12 @@ for (yearHere in 2018:2035)
     TO.diHere   <-  diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
     TP.diHere   <-  diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
     OS.diHere   <-  diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
-    D.intHere   <-  X.diHere - diag(demand.d.scen)
+    D.intHere   <-  diag(DI.per.production) %*% LI.d %*% diag(demand.d.scen)
+    MI.diHere   <-  diag(MI.per.production) %*% LI.d %*% diag(demand.d.scen)
     
-    df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere, D.intHere)
-    names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus", "Domestic inputs") 
-    for(i in 1:7)
+    df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere, D.intHere, MI.diHere)
+    names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus", "Domestic inputs","Imported inputs") 
+    for(i in 1:8)
     {
       df            <- data.frame(df.list[[i]])
       colnames(df)  <- Order
@@ -192,6 +194,7 @@ for (yearHere in 2018:2035)
     TP.di   <- bind_rows(TP.di,df.list[[5]]) 
     OS.di   <- bind_rows(OS.di,df.list[[6]]) 
     D.int   <- bind_rows(D.int,df.list[[7]]) 
+    MI.di   <- bind_rows(MI.di,df.list[[8]]) 
     
     M.finalDemandHere           <-  diag(s.m.exp)   %*%   demand.d.scen
     M.finalDemandHere           <-  data.frame(M.finalDemandHere)
@@ -201,7 +204,6 @@ for (yearHere in 2018:2035)
     M.finalDemandHere$Var       <- rep("Imported final goods",n)
     M.finalDemandHere$Case      <- rep(scenarioHere,n)
     M.finalDemand               <- bind_rows(M.finalDemand, M.finalDemandHere)
-    
     
     X1.di                       <- diag(X.diHere[,1])
     M.int.1                     <- A.m %*% X1.di
@@ -238,17 +240,27 @@ for (yearHere in 2018:2035)
                                                                                                             df.domDemand.coal.input.v2$Case==scenarioHere &
                                                                                                             df.domDemand.coal.input.v2$Industry==Industry[s]
                                                                                                             ,"Value"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand"]  <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, "Val"]
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- 
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]    <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]    <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod"]    <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.prod"]       <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages.prod"]    <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other"]   <- yearHere
-    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus"]  <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand"]  <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                            df.domDemand.coal.input.v2$Var=="Value.demand" & 
+                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                            ,"Value"]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                            df.domDemand.coal.input.v2$Var=="Price.e" & 
+                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                            ,"Value"]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- rowSums(X.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand"] + 
+                                                                                 vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]-
+                                                                                 vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand"]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]    <- rowSums(D.intHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]    <- rowSums(MI.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod"]    <- rowSums(TP.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA"]       <- rowSums(VA.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]   <- rowSums(WS.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other"]   <- rowSums(TO.diHere)[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus"]  <- rowSums(OS.diHere)[s] 
     
     
   }
