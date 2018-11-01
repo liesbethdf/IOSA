@@ -14,10 +14,12 @@ df.scen <- df.scen[,c(1,5,4,3,2)]
 scale.V <- df.IOT2014$Exports[4]/df.scen$V.BAU[1]
 scale.P <- 1/df.scen$P.BAU[1]
 
-df.scen$V.BAU.Cal   <- df.scen$V.BAU  * scale.V
-df.scen$V.2Deg.Cal  <- df.scen$V.2Deg * scale.V
-df.scen$P.BAU.Cal   <- df.scen$P.BAU  * scale.P
-df.scen$P.2Deg.Cal  <- df.scen$P.2Deg * scale.P
+df.scen$V.BAU.Cal     <- df.scen$V.BAU  * scale.V
+df.scen$V.2Deg.Cal    <- df.scen$V.2Deg * scale.V
+df.scen$P.BAU.Cal     <- df.scen$P.BAU  * scale.P
+df.scen$P.2Deg.Cal    <- df.scen$P.2Deg * scale.P
+df.scen$Value.BAU.Cal <- df.scen$P.BAU.Cal * df.scen$V.BAU.Cal
+df.scen$Value.2Deg.Cal <- df.scen$P.2Deg.Cal * df.scen$V.2Deg.Cal
 
 ## Final demand from 2014 SA IOT
 
@@ -39,7 +41,7 @@ demand.d <-  function(vect.exp)
                   }
 
 
-# below is the scenario for yearHere, V.BAU.Cal and it is total , not diff 3 types, BAU, 2Deg, Diff + year
+# below is the construction of domestic demand scenarios as in 2014 IOT and for coal the CPI projections
 
 domesticDemand.input <- function(yearHere)
 {
@@ -74,7 +76,6 @@ for (yearHere in df.scen$Year[2:18])
 
 # demand scenarios with coal only, the others 0
 
-
 domesticDemand.coal.input <- function(yearHere)
 {
   df.dD              <- data.frame(Industry)
@@ -82,16 +83,24 @@ domesticDemand.coal.input <- function(yearHere)
   df.dD$SIC          <- SIC
   df.dD$Year         <- rep(yearHere,n)
   
-  demandHere    <- rep(0,50)
-  demandHere[4] <- df.scen[df.scen$Year==yearHere,"V.BAU.Cal"]
-  df.dD$Vol.BAU     <- demandHere
+  demandHere        <- rep(0,50)
+  demandHere[4]     <- df.scen[df.scen$Year==yearHere,"V.BAU.Cal"]
+  df.dD$Vol.demand.BAU     <- demandHere
   
-  demandHere    <- rep(0,50)
-  demandHere[4] <- df.scen[df.scen$Year==yearHere,"V.2Deg.Cal"]
-  df.dD$Vol.2Deg    <- demandHere
+  priceHere         <- rep(1,50)
+  priceHere[4]      <- df.scen[df.scen$Year==yearHere,"P.BAU.Cal"]
+  df.dD$Price.e.BAU   <- priceHere
   
-  df.dD$Value.BAU    <- df.dD$Vol.BAU  * df.scen[df.scen$Year==yearHere,"P.BAU.Cal"]
-  df.dD$Value.2Deg   <- df.dD$Vol.2Deg * df.scen[df.scen$Year==yearHere,"P.2Deg.Cal"]
+  demandHere        <- rep(0,50)
+  demandHere[4]     <- df.scen[df.scen$Year==yearHere,"V.2Deg.Cal"]
+  df.dD$Vol.demand.2Deg    <- demandHere
+
+  priceHere         <- rep(1,50)
+  priceHere[4]      <- df.scen[df.scen$Year==yearHere,"P.2Deg.Cal"]
+  df.dD$Price.e.2Deg  <- priceHere
+    
+  df.dD$Value.demand.BAU    <- df.dD$Vol.demand.BAU  * df.dD$Price.e.BAU
+  df.dD$Value.demand.2Deg   <- df.dD$Vol.demand.2Deg * df.dD$Price.e.BAU
   
   return(df.dD)
 }
@@ -104,14 +113,24 @@ for (yearHere in df.scen$Year[2:18])
   df.domesticDemand.coal.input <- bind_rows(df.domesticDemand.coal.input,temp)
 }
 
+df.domDemand.coal.input.v2 <- df.domesticDemand.coal.input %>% gather(Var, Value, -Industry, -SIC, -Year)
+split     <- strsplit(df.domDemand.coal.input.v2$Var,split='.', fixed=TRUE)
+part1    <- unlist(split)[3*(1:length(split))-2]
+part2    <- unlist(split)[3*(1:length(split))-1]
+part3    <- unlist(split)[3*(1:length(split))]
+df.domDemand.coal.input.v2$Case <- part3
+df.domDemand.coal.input.v2$Var  <-paste(part1,part2,sep=".")
+
 
 ############################################
 ############ Decomposition of output into imports, taxes, labour and capital share
 ############ + Employment effect
 ############################################
 
-colnamesHere.di         <- c(Order,"Industry","Year","Var","Case")
-colnamesHere.finDemand  <- c("Final.demand.imp","Industry","Year","Var","Case") 
+colnamesHere.di             <- c(Order,"Industry","Year","Var","Case")
+colnamesHere.finDemand      <- c("Final.demand.imp","Industry","Year","Var","Case") 
+colnamesHere.outputDecomp   <- c("Year", "Scenario","Industry","Vol.demand","Value.demand","Price","Output.vol", "Output.value",
+                                 "Dom.inputs","Imp.inputs", "Taxes.prod", "VA", "Wages", "Taxes.other","Gross.op.surplus")
 
 X.di            <- data.frame(matrix(ncol = length(colnamesHere.di), nrow = 0))
 colnames(X.di)  <- colnamesHere.di
@@ -120,20 +139,30 @@ VA.di           <- X.di
 TO.di           <- X.di
 TP.di           <- X.di
 OS.di           <- X.di
-M.int           <- X.di
+D.int           <- X.di # Domestic inputs (costs)
+M.int           <- X.di # Imported inputs (costs)
 
 M.finalDemand             <- data.frame(matrix(ncol = length(colnamesHere.finDemand), nrow = 0))
 colnames(M.finalDemand)   <- colnamesHere.finDemand
 
+df.outputDecomp           <- data.frame(matrix(ncol = length(colnamesHere.outputDecomp), nrow = 0))
+initiate.outputDecomp     <- data.frame(matrix(rep(NA,length(colnamesHere.outputDecomp)), nrow = 1))
+colnames(df.outputDecomp) <- colnamesHere.outputDecomp
+colnames(initiate.outputDecomp) <- colnamesHere.outputDecomp
+
 for (yearHere in 2018:2035)
 {
 #  for(scenarioHere in c("Vol.BAU"))
-  for(scenarioHere in c("Vol.BAU","Vol.2Deg"))
+  for(scenarioHere in c("BAU","2Deg"))
   {
- #   yearHere <- 2018
- #  scenarioHere <- "Vol.BAU"
+   yearHere <- 2018
+   scenarioHere <- "BAU"
     
-    demand.d.scen <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, scenarioHere]
+    vect.outputDecompHere <- initiate.outputDecomp
+    
+    demand.d.scen <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere &
+                                                df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                df.domDemand.coal.input.v2$Var=="Vol.demand", "Value" ]
 
     X.diHere    <-  LI.d %*% diag(demand.d.scen)
     WS.diHere   <-  diag(WS.per.production) %*% LI.d %*% diag(demand.d.scen)
@@ -141,14 +170,15 @@ for (yearHere in 2018:2035)
     TO.diHere   <-  diag(TO.per.production) %*% LI.d %*% diag(demand.d.scen)
     TP.diHere   <-  diag(TP.per.production) %*% LI.d %*% diag(demand.d.scen)
     OS.diHere   <-  diag(OS.per.production) %*% LI.d %*% diag(demand.d.scen)
+    D.intHere   <-  X.diHere - diag(demand.d.scen)
     
-    df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere)
-    names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus") 
-    for(i in 1:6)
+    df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere, D.intHere)
+    names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus", "Domestic inputs") 
+    for(i in 1:7)
     {
       df            <- data.frame(df.list[[i]])
       colnames(df)  <- Order
-      df$Industry   <- rep(Order[1],n)
+      df$Industry   <- Order
       df$Year       <- rep(yearHere,n)
       df$Var        <- rep(names.var[i],n)
       df$Case       <- rep(scenarioHere,n)
@@ -161,6 +191,7 @@ for (yearHere in 2018:2035)
     TO.di   <- bind_rows(TO.di,df.list[[4]]) 
     TP.di   <- bind_rows(TP.di,df.list[[5]]) 
     OS.di   <- bind_rows(OS.di,df.list[[6]]) 
+    D.int   <- bind_rows(D.int,df.list[[7]]) 
     
     M.finalDemandHere           <-  diag(s.m.exp)   %*%   demand.d.scen
     M.finalDemandHere           <-  data.frame(M.finalDemandHere)
@@ -193,6 +224,32 @@ for (yearHere in 2018:2035)
       M.intHere             <- bind_rows(M.intHere,M.int.k)
     }
     M.int     <-  bind_rows(M.int,M.intHere) 
+    
+    ## Fill the summary table
+    ## Do it once for the coal sector, and once for others
+    
+    s <- 4 # production of sector
+    
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Year"]          <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Scenario"]      <- scenarioHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Industry"]      <- Order[s]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand"]    <- df.domDemand.coal.input.v2[df.domDemand.coal.input.v2$Year==yearHere & 
+                                                                                                            df.domDemand.coal.input.v2$Var=="Vol.demand" & 
+                                                                                                            df.domDemand.coal.input.v2$Case==scenarioHere &
+                                                                                                            df.domDemand.coal.input.v2$Industry==Industry[s]
+                                                                                                            ,"Value"]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand"]  <- df.domesticDemand.coal.input[df.domesticDemand.coal.input$Year==yearHere, "Val"]
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- 
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]    <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]    <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod"]    <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.prod"]       <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages.prod"]    <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other"]   <- yearHere
+    vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus"]  <- yearHere
+    
     
   }
 

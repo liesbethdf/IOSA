@@ -84,15 +84,18 @@ s.d   <- fd.d/fd        # share domestic    #fd : final demand #fd.d # final dem
 
 # the ratios to decompose output in va etc :
 
-vect.decompOutput <- c("Compensation of employees","Gross value added","Other taxes less subsidies","Net taxes on products","Gross operating surplus")
+vect.decompOutput <- c("Compensation of employees","Gross value added","Other taxes less subsidies","Net taxes on products","Gross operating surplus","Total")
 
-employment.per.production <- df.NE.50I.QLFS$`201406`                                       /df.IOT2014$Output[1:n]
-wages.per.production      <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[1],1:n+2]/df.IOT2014$Output[1:n]
-VA.per.production         <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[2],1:n+2]/df.IOT2014$Output[1:n]
-taxesOther.per.production <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[3],1:n+2]/df.IOT2014$Output[1:n]
-taxesProd.per.production  <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[4],1:n+2]/df.IOT2014$Output[1:n]
-GOSurplus.per.production  <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[5],1:n+2]/df.IOT2014$Output[1:n]
-
+employment.per.production     <- df.NE.50I.QLFS$`201406`                                       /df.IOT2014$Output[1:n]
+wages.per.production          <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[1],1:n+2]/df.IOT2014$Output[1:n]
+VA.per.production             <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[2],1:n+2]/df.IOT2014$Output[1:n]
+taxesOther.per.production     <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[3],1:n+2]/df.IOT2014$Output[1:n]
+taxesProd.per.production      <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[4],1:n+2]/df.IOT2014$Output[1:n]
+GOSurplus.per.production      <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[5],1:n+2]/df.IOT2014$Output[1:n]
+totalInputs.per.production    <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[6],1:n+2]/df.IOT2014$Output[1:n] 
+domesticInputs.per.production <- colSums(df.IOT2014.dom[1:50,1:n+3])/df.IOT2014$Output[1:n]
+importedInputs.per.production <- colSums(df.IOT2014.imp[1:50,1:n+3])/df.IOT2014$Output[1:n]
+  
 NE.per.production <- employment.per.production
 WS.per.production <- wages.per.production 
 VA.per.production <- VA.per.production
