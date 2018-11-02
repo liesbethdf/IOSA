@@ -289,15 +289,17 @@ df.QLFS.temp <- df.QLFS[df.QLFS$ISIC %in% unique(df.Employment.OECD.STATSA$ISIC)
 df.Employment.OECD.STATSA <- bind_rows(df.Employment.OECD.STATSA, df.QLFS.temp)
                                        
 df.plot <- df.Employment.OECD.STATSA %>% gather(Year, Value, -ISIC, -var, -Source)
-df.plot$Source <- factor(df.plot$Source, levels=c("QES","QLFS","OECD"))
+df.plot$Source <- factor(df.plot$Source, levels=c("QES","QLFS","OECD"), labels=c("Stat SA, QES","Stat SA, QLFS","OECD"))
 
 ## plot
 
+colours <-c("#f5b041", "#27ae60",  "#2e86c1")
 for(yearHere in c("2010","2011","2012","2013","2014"))
 {
   p <- df.plot[df.plot$Year==yearHere,] %>% ggplot(aes(x=ISIC, y=Value, fill=Source)) +
     geom_bar(stat="identity", position=position_dodge()) +
-    ylab(paste0("Number of persons employed, ",yearHere))
+    ylab(paste0("Number of persons employed, ",yearHere)) +
+    scale_fill_manual(values=colours)
   # Use position=position_dodge() ggplot(data=df2, aes(x=dose, y=len, fill=supp)) +
   
   print(p)
@@ -307,7 +309,7 @@ for(yearHere in c("2010","2011","2012","2013","2014"))
   ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=16, height=8, units="cm", dpi=300)
   
 }
-
+rm(colours)
 ############################################
 ############ Aggregate data into 50 sector format matching the IOTs
 ############################################

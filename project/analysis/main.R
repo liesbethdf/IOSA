@@ -22,6 +22,9 @@ source("modelParameters.R")
 source("employmentContent_DomImp.R")
 source("finaldemandDecomposition.R")
 
+# Generating graphs
+
+source("demandDecomposition_Graphs.R")
 
 # Below not sure if useful
 
