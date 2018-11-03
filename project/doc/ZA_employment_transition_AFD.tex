@@ -342,8 +342,6 @@ In summary, the above model allows to calculate the output of all sectors and im
 
 \subsection{Decomposition revenue from final demand}
 
-
-
 The revenue coming into the country from selling goods to other countries is distributed, following the logic of economic activity, to different participants. Part of the export revenue pays workers, part goes to the state via taxes, and the remaining part represents the remuneration of capital, which is in practice the money used to pay back debt, pay shareholders, etc. However, not all the revenue coming into the country via exports of say sector $i$ stays within the country. Part is used to import intermediate goods used in the production of the exported goods and thus leaves the country again. The part of the export revenue that is used by sector $i$ to buy intermediate goods for its production (of exported goods) is a cost to the sector but not a loss for the domestic economy : the cost to sector $i$ is revenue for supplying sectors, who after paying in turn their supplying sector, use the remainder, value added, to pay wages, taxes and remunerate capital. This suggests that the export revenue can be traced back into a part leaving the country, and a part distributed as value added --- wages, taxes and capital remuneration --- throughout the economy. 
 
 First we show that the revenue coming in via final demand, in our case we are most interested in exports, can be decomposed entirely in value added created in the different sector of the economy. (To simplify, we assume away for now "Taxes on production (?)".)
@@ -355,6 +353,36 @@ We thus see that the total value of final demand has spread throughout the econo
 The cost of imported inputs represent export revenue for the rest of the world (RoW) and thus represent foreign value added, which is embedded in gross exports, part of final demand y. 
 
 There are two separate issues : one is that the demand for imported intermediate goods does not generate jobs within the economy, the second is how the demand generated for domestic goods, whether it be final or the indirectly generated demand for intermediates, canbe decomposed as value added over the whole economy. 
+
+% From here on down, new text.
+
+Once the matrix $X$ has been determined, detailing the output needed from all sectors in response to final demand addressed to all sectors, output revenue can be decomposed into imports, value added and net taxes on products. 
+
+Given the output matrix $X$, we assume that for each type of good $j$, its production technology (represented by  the $j$th column of $A$, denoted as $\boldsymbol{a}_j$), wages $w_j$, net taxes ($t_j$ and $ot_j$)  and gross operating surplus are independent of the use of the output (by sector $i$ or as final demand) and is only dependent on its type $j$. Otherwise put, the share of taxes, wages, each of the intermediate input costs (imported and domestically produced), etc. is the same for all $x_{ij}$, $i$ $\in$ $\{1,\ldots, n\}$. Thus, the elements of $X$ can be decomposed as :
+\begin{align}
+x_{ij} &= z^{tot,d}_{ij} + z^{tot,m}_{ij} + t_{ij} + w_{ij} + ot_{ij} + gs_{ij} \label{decompositionOutput1} \\
+z^{tot}_{ij} &= x_{ij} \, z_j/x_j \\
+t_{ij} &= x_{ij} \, \, t_j/x_j \\
+w_{ij} &= x_{ij} \, w_j/x_j \\
+ot_{ij} &= x_{ij} \, ot_j/x_j \\
+gs_{ij} &= x_{ij} \, gs_j/x_j
+\end{align}
+%Introducing the matrices $Z^{tot}$, $T$, $W$, $OT$, $\mli{GS}$ with as elements the respective variables denoted with the same minuscule letters on the right-hand side of equation \ref{decompositionOutput}, 
+In the above equations, for example $z^{tot,d}_{ij}$ represents the total cost of domestically produced intermediate inputs that went into the production of $x_{ij}$. The interpretation of the other variables on the right-hand side of equation \ref{decompositionOutput1} is similar. 
+
+Summing equation \ref{decompositionOutput1} over $j$, we get :
+\begin{equation}
+x_i - \sum_j z^{tot,d}_{ij}  = \sum_j z^{tot,m}_{ij} + \sum_j \big(t_{ij} + w_{ij} + ot_{ij} + gs_{ij}\big) \label{decompositionOutput2}
+\end{equation}
+The left-hand side of the above equation is equal to final demand of good $i$, domestically produced $y^d_i$. The first term on the right-hand side is the importation of product $i$ to be used as intermediate inputs $m^{inp}_i$. Summing equation \ref{decompositionOutput2} over $i$ and reversing the order of the sums over $i$ and $j$ results in :
+\begin{equation}
+\sum_i y^d_i  = \sum_i m^{inp}_i + \sum_j \big( \sum_i t_{ij} + \sum_i (w_{ij} + ot_{ij} + gs_{ij})\big) \label{decompositionOutput3}
+\end{equation}
+The two terms within the sums over $j$ on the right-hand side of the above equation, $\sum_i t_{ij}$ and $\sum_i (w_{ij} + ot_{ij} + gs_{ij})$ represent respectively net taxes on products of sector $j$ and value added created by the sector $j$, decomposed into wages, other taxes and gross operating surplus. Thus, final domestic demand decomposes into imports, net taxes on products and value added. Adding final demand satisfied through imports $y^m_i$ for products $i$ we can write :
+\begin{equation}
+\sum_i y_i =  \sum_i (m^{inp}_i + y^m_i) + \sum_j \big( \sum_i t_{ij} + \sum_i (w_{ij} + ot_{ij} + gs_{ij})\big) \label{decompositionOutput4}
+\end{equation}
+The above equation shows how intermediate and final demand for domestically produced goods, and not for imported goods, create value added throughout the economy. Imports represent an outgoing flux for the domestic economy. (This comment is meant as an illustration of the functioning of the economy, not as an argument against importing goods.) 
 
 
 \subsection{Employment content}
