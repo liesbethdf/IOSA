@@ -490,9 +490,11 @@ The data used for the present study are obtained from Statistics South Africa (S
 
 \subsubsection{IOT}	
 
-The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. However, no table is available that specifies uses of imports versus uses of domestic production. Such a table is provided by the OECD, at a detail of 35 sectors ; the most recent one is for 2011 at the time of writing.
+To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically through theire production (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed. The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. However, no table is available that specifies uses of imports versus uses of domestic production. Such a table is provided by the OECD, at a detail of 35 sectors ; the most recent one is for 2011 at the time of writing.
 
-To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. 
+To construct a separate IOT for domestic production and for imports, the 2011 OECD tables were used to estimate such tables at the 50-sector level for the year 2014. This was done using an optimization procedure, detailed in appendix \ref{IOTopti}.
+
+%\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. 
 
 \subsubsection{Employment data}
 For the present study employment data are needed of the same sectoral aggregation as the 50-sector IOT. These are not readily available but are constructed on the basis of two types of employment data and in addition more detailed data for certain sectors, all collected by and available from Stat SA.
@@ -737,9 +739,19 @@ How is South Africa's economy possibly exposed to the greening of global supply 
 
 \subsection{Coal}
 
+\subsubsection{Coal export}
+
 A clear external transition risk faced by the South African economy under a BAU versus a 2DS scenario, is the difference in global demand for coal between both. CPI's models estimate that the value of coal exports by South Africa over the period 2018-2035 under a 2DS is about half the value under BAU, with considerably lower export demand on the long term. Moreover, the price on the global market is expected to be lower under 2DS. 
 
-\subsubsection{Volume choc on export}
+The projected export trajectories under both scenarios are presented in figure \ref{}. The area ... represents the loss in revenue from exports under a 2DS versus a BAU scenario. This loss in revenue impacts firstly the coal sector itself.  and in second instance impacts almost all other sectors of the economy. 
+
+
+\begin{figure}[!h]
+	%	\centering
+	\hspace{-10pt}\includegraphics[width=1.1\textwidth]{../graphs/ValueAdded_Secor_Coal-Export_BAU_2Deg.pdf}
+	\caption{\label{ExportRevenue_Decomposition_Diff}\small The graph shows the revenue from the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2Deg) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except  }
+\end{figure}
+
 
 \begin{figure}[!h]
 	%	\centering
@@ -804,7 +816,15 @@ jobs are lost throughout the economy, in addition to the job losses in coal-mini
 
 Stat SA documents on the transport sector : \citep{LandTransp2014}, \citep{P7000_2013}.
 
-\subsubsection{Increase of the domestic coal-price}
+\subsubsection{The domestic coal-market}
+
+
+%Due to the loss of cross-subsidies from coal-exports, which impacts the profitability of coal-mining, the domestic price of coal might increase to compensate. 
+The domestic coal market might be impacted by the volume of coal exported and the price obtained. When prices on the export market are high, then the profit resulting from exported coal can sustain relatively lower prices on the domestic market. Domestically, coal is almost only purchased by industry as inputs (see figure \ref{Uses_Resources_percent_2014}). The lion's share is used for the generation of electricity (table \ref{4_Coal-and-lignite_IIusedBy}). It is expected that cost increases for the electricity provider would be transferred to the rest of the economy by increasing the it's price. Assuming that all sectors pass on the cost increase to their price, the cost-push IO-model (eqn. \ref{cost-push-scen}) allows to estimate how an increase in the domestic coal price impacts the prices of the output of all sectors. 
+
+Figure \ref{} represents the volume and price trajectories for the domestic coal market. These have been obtained using a bottom-up approach based on the number of 
+Prospective trajectories have been built for the domestic coal market. 
+
 
 \begin{figure}[!h]
 %	\centering
@@ -812,8 +832,6 @@ Stat SA documents on the transport sector : \citep{LandTransp2014}, \citep{P7000
 	\caption{\label{costPush_I4_10} The above graph shows the increase in the price of all sectors after a 10\% increase in the price of coal, assuming that the cost increase is entirely transferred, without affecting profitability of any of the sectors.}
 \end{figure}
 
-
-Due to the loss of cross-subsidies from coal-exports, which impacts the profitability of coal-mining, the domestic price of coal might increase to compensate. Domestically, coal is mainly purchased by industry as inputs (see figure \ref{Uses_Resources_percent_2014}). The lion's share is used for the generation of electricity (table \ref{4_Coal-and-lignite_IIusedBy}). It is expected that cost increases for the electricity provider would be transferred to the rest of the economy by increasing the it's price. Assuming that all sectors pass on the cost increase to their price, the cost-push IO-model (eqn. \ref{cost-push-scen}) allows to estimate how an increase in the domestic coal price impacts the prices of the output of all sectors. 
 
 Figure \ref{costPush_I4_10} shows the increase in the price of all sectors after a 10\% increase in the price of coal. The resulting increase of the price of electricity is about 1,8\%.
 
@@ -958,8 +976,6 @@ Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the pr
 
 \section{What is in the data ?}
 
-
-
 \section{Correspondence tables}
 
 \clearpage
@@ -1049,80 +1065,83 @@ Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the pr
 \end{table}
 
 \clearpage
-\section{Decomposition}
-
-Equation \label{allUSes} can be rewritten as :
-\begin{equation}
-%y_i + m_i - d_i^m= \sum_j \Bigg(\frac{z_{ij}^d}{y_i + m_i-d_i} + \frac{z_{ij}^m}{y_i + m_i-d_i} \Bigg) (y_i + m_i) + d_i^d
-y_i + m_i - d_i^m= \sum_j \big(z_{ij}^d + z_{ij}^m \big) + d_i^d, 
-\end{equation}
-where $d^r = c^r_i + g_i^r + i_i^r + inv_i^r + x_i^r$ , $r\in\{d,m\}$ denote final demand for domestically produced goods and services and for imported goods. The aggregates $m_i - d_i^m$ are the imports used as intermediate inputs, or differently put, the importation needed for domestic production.
-
-We are interested in, given a final demand vector for domestically produced goods $\boldsymbol{d}^d$, not only how much domestic production this entails, but also how much importation this generates because of the use of imported goods as intermediate inputs. To this end, we define modified matrices of technical coefficients $\tilde{A}^r$ as the matrices with elements $\tilde{a}^r_{ij}$ : 
-\begin{align}
-\tilde{a}^r_{ij} = \frac{z_{ij}^r}{y_i + m_i - d_i^m} \label{defAtilde}
-\end{align}
-These matrices tell us how much intermediary inputs, respectively of domestic and of imported origin, are needed per unit of domestic output and imported intermediate goods. Additionally, we define the technical coefficients matrix $\tilde{A}= \tilde{A}^d + \tilde{A}^m$ that states the total intermediary inputs, of any origin, per unit of imports + domestic output.
-
-%We then define the matrices $Y$ and $M_{int}$ such that :
-
-Given $D^d$ the matrix with demand $d^d$ on the diagonal and 0's elsewher, we then define the matrix $\mli{YM}$ as :
-\begin{equation}
-\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d \label{YM}
-\end{equation}
-The element $ym_{ij}$ of $\mli{YM}$ is the sum of domestic production and imported intermediate goods of sector $i$ needed to satisfy final demand by sector j $d_j^d$.
-
-\li{The column sums of $M_{int}$ are the same as the column sums of $Z^m$, but are the two matrices the same ?}
-
-We now want to split matrix $\mli{YM}$ up into domestic output and intermediate inputs that were imported.
-
-For this we will decompose the factor that is analogous to the Leontief inverse :
-
-\begin{align}
-(\mathbb{I} - \tilde{A})^{-1} &= (\mathbb{I} - \tilde{A}^d - \tilde{A}^m)^{-1} \nonumber \\
-&= (\mathbb{I} - \tilde{A}^d)^{-1} + (\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} + rest \label{decomp1}
-\end{align}
-
-The first term on the right hand side measures domestic output necessary to satisfy demand $D^d$. We take a closer look at the second and third terms at the right-hand side of  \ref{decomp1} by developing the power series : 
-\begin{equation}
-(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  \label{importedInputsneeded}
-\end{equation}
-Whereas the significance of $\tilde{A}^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(\tilde{A}^m)^k D^d$ with $k>1$ seems nebulous when interpreted along the same line. This line of interpretation looks at the matrix $\tilde{A}^m D^d$ row-wise : we seek an answer to the question how much output from each sector is needed to satisfy the demanded production from other sectors. In this case, the "output from each sector needed" are imported goods. The term $\tilde{A}^m \tilde{A}^m D^d$ does not make sense in this interpretation : what are the import needed to generate the imports ? Rather, one can think of $\tilde{A}^m D^d$ column-wise and interpret each element $a^m_{ij}\,d^d_j$as a contribution to the cost of producing a good $j$, or a contribution to the value of the good $j$ by using the intermediate input $i$, obtained through importation. Then, $\tilde{A}^m \tilde{A}^m D^d$ also takes on a clear significance : it represents the value generated indirectly by using imported intermediate inputs to %generate value by 
-produce output that was produced with imported inputs. 
-%Instead of thinking in terms of the output of sector $i$ needed to satisfy demand from sector $j$, think of it vice-versa : it is the value of output of sector $j$ originating from using input $i$. Of course, a single input cannot produce a good. This is why the former sentence contains "value of". Using input $i$ contributes to the cost of production or to the value of good $j$. 
-
-Why would one determine how much imported goods are needed to import goods ? 
-
-To able to create the value generated by using imported inputs, a certain amount of imported inputs are needed, etc.
-Beware, is is using the imported inputs that creates value domestically ; producing obviously doesn't.
-
-It is now clear that the terms \ref{importedInputsneeded} contribute to the amount of imported goods needed to satisfy domestically produced final demand. The terms in the $rest$ term contain both $\tilde{A}^d$ and $\tilde{A}^m$ factors. For example $\tilde{A}^m \tilde{A}^d D^d$ represents the value generated by using imported goods to produce the intermediate inputs necessary for the production of the intermediate inputs $\tilde{A}^d D^d$, where this last term can be worded as the value created by using locally produced inputs to produce demand $D^d$.
-
-The rest term is known, given by $$ rest =(\mathbb{I} - \tilde{A})^{-1} - (\mathbb{I} - \tilde{A}^d)^{-1} - (\mathbb{I} - \tilde{A}^m)^{-1} + \mathbb{I}.$$
-It contains both value created by using imported and domestically produced inputs and will her be roughly split up according to the last step in the production process :
-$$
-rest = \tilde{A}^d (\tilde{A}^m + T) + \tilde{A}^m(\tilde{A}^d + T)
-$$
-The first term on the right-hand side is counted as domestic production and the second term as imports. (The second term are all the imports needed/used to produce the intermediary inputs --- direct inputs and the chain of indirect inputs --- that have been produced using both imported and domestic inputs.)
-
-The unknown tail $T$ is easily determined : $$ T = ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)$$
-Matrix $\mli{LM}$ as given in eqn. \ref{YM} is then split up as :
-\begin{align}
-\tilde{Y} &= (\mathbb{I} - \tilde{A}^d)^{-1} \, D^d + \tilde{A}^d \big(\tilde{A}^m +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d \\
-\tilde{M} &= (\mathbb{I} - \tilde{A}^m)^{-1} \, D^d - \mathbb{I} + \tilde{A}^m \big(\tilde{A}^d +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d
-\end{align}
+\section{Estimation of separate domestic and import IOTs}\label{IOTopti}
 
 
-%The value created by producing a product is the value of the product. The value of using the product as intermediate input is 
-
-%To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual. Starting from \ref{defAtilde} in matrix notation :
-
+%\section{Decomposition}
+%
+%Equation \label{allUSes} can be rewritten as :
+%\begin{equation}
+%%y_i + m_i - d_i^m= \sum_j \Bigg(\frac{z_{ij}^d}{y_i + m_i-d_i} + \frac{z_{ij}^m}{y_i + m_i-d_i} \Bigg) (y_i + m_i) + d_i^d
+%y_i + m_i - d_i^m= \sum_j \big(z_{ij}^d + z_{ij}^m \big) + d_i^d, 
+%\end{equation}
+%where $d^r = c^r_i + g_i^r + i_i^r + inv_i^r + x_i^r$ , $r\in\{d,m\}$ denote final demand for domestically produced goods and services and for imported goods. The aggregates $m_i - d_i^m$ are the imports used as intermediate inputs, or differently put, the importation needed for domestic production.
+%
+%We are interested in, given a final demand vector for domestically produced goods $\boldsymbol{d}^d$, not only how much domestic production this entails, but also how much importation this generates because of the use of imported goods as intermediate inputs. To this end, we define modified matrices of technical coefficients $\tilde{A}^r$ as the matrices with elements $\tilde{a}^r_{ij}$ : 
 %\begin{align}
-%\tilde{A}^m &= Z^m \, (diag(\boldsymbol{y + m - d^m}) )^{-1} \nonumber\\
-%&=  Z^m \, (diag(\boldsymbol{y}))^{-1} \, \big( \mathbb{I} +  (diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})   \big)^{-1} \nonumber\\
-%&= Z^m \, (diag(\boldsymbol{y}))^{-1} \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k \nonumber\\
-%&= A^m  \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k
+%\tilde{a}^r_{ij} = \frac{z_{ij}^r}{y_i + m_i - d_i^m} \label{defAtilde}
 %\end{align}
+%These matrices tell us how much intermediary inputs, respectively of domestic and of imported origin, are needed per unit of domestic output and imported intermediate goods. Additionally, we define the technical coefficients matrix $\tilde{A}= \tilde{A}^d + \tilde{A}^m$ that states the total intermediary inputs, of any origin, per unit of imports + domestic output.
+%
+%%We then define the matrices $Y$ and $M_{int}$ such that :
+%
+%Given $D^d$ the matrix with demand $d^d$ on the diagonal and 0's elsewher, we then define the matrix $\mli{YM}$ as :
+%\begin{equation}
+%\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d \label{YM}
+%\end{equation}
+%The element $ym_{ij}$ of $\mli{YM}$ is the sum of domestic production and imported intermediate goods of sector $i$ needed to satisfy final demand by sector j $d_j^d$.
+%
+%\li{The column sums of $M_{int}$ are the same as the column sums of $Z^m$, but are the two matrices the same ?}
+%
+%We now want to split matrix $\mli{YM}$ up into domestic output and intermediate inputs that were imported.
+%
+%For this we will decompose the factor that is analogous to the Leontief inverse :
+%
+%\begin{align}
+%(\mathbb{I} - \tilde{A})^{-1} &= (\mathbb{I} - \tilde{A}^d - \tilde{A}^m)^{-1} \nonumber \\
+%&= (\mathbb{I} - \tilde{A}^d)^{-1} + (\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} + rest \label{decomp1}
+%\end{align}
+%
+%The first term on the right hand side measures domestic output necessary to satisfy demand $D^d$. We take a closer look at the second and third terms at the right-hand side of  \ref{decomp1} by developing the power series : 
+%\begin{equation}
+%(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  \label{importedInputsneeded}
+%\end{equation}
+%Whereas the significance of $\tilde{A}^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(\tilde{A}^m)^k D^d$ with $k>1$ seems nebulous when interpreted along the same line. This line of interpretation looks at the matrix $\tilde{A}^m D^d$ row-wise : we seek an answer to the question how much output from each sector is needed to satisfy the demanded production from other sectors. In this case, the "output from each sector needed" are imported goods. The term $\tilde{A}^m \tilde{A}^m D^d$ does not make sense in this interpretation : what are the import needed to generate the imports ? Rather, one can think of $\tilde{A}^m D^d$ column-wise and interpret each element $a^m_{ij}\,d^d_j$as a contribution to the cost of producing a good $j$, or a contribution to the value of the good $j$ by using the intermediate input $i$, obtained through importation. Then, $\tilde{A}^m \tilde{A}^m D^d$ also takes on a clear significance : it represents the value generated indirectly by using imported intermediate inputs to %generate value by 
+%produce output that was produced with imported inputs. 
+%%Instead of thinking in terms of the output of sector $i$ needed to satisfy demand from sector $j$, think of it vice-versa : it is the value of output of sector $j$ originating from using input $i$. Of course, a single input cannot produce a good. This is why the former sentence contains "value of". Using input $i$ contributes to the cost of production or to the value of good $j$. 
+%
+%Why would one determine how much imported goods are needed to import goods ? 
+%
+%To able to create the value generated by using imported inputs, a certain amount of imported inputs are needed, etc.
+%Beware, is is using the imported inputs that creates value domestically ; producing obviously doesn't.
+%
+%It is now clear that the terms \ref{importedInputsneeded} contribute to the amount of imported goods needed to satisfy domestically produced final demand. The terms in the $rest$ term contain both $\tilde{A}^d$ and $\tilde{A}^m$ factors. For example $\tilde{A}^m \tilde{A}^d D^d$ represents the value generated by using imported goods to produce the intermediate inputs necessary for the production of the intermediate inputs $\tilde{A}^d D^d$, where this last term can be worded as the value created by using locally produced inputs to produce demand $D^d$.
+%
+%The rest term is known, given by $$ rest =(\mathbb{I} - \tilde{A})^{-1} - (\mathbb{I} - \tilde{A}^d)^{-1} - (\mathbb{I} - \tilde{A}^m)^{-1} + \mathbb{I}.$$
+%It contains both value created by using imported and domestically produced inputs and will her be roughly split up according to the last step in the production process :
+%$$
+%rest = \tilde{A}^d (\tilde{A}^m + T) + \tilde{A}^m(\tilde{A}^d + T)
+%$$
+%The first term on the right-hand side is counted as domestic production and the second term as imports. (The second term are all the imports needed/used to produce the intermediary inputs --- direct inputs and the chain of indirect inputs --- that have been produced using both imported and domestic inputs.)
+%
+%The unknown tail $T$ is easily determined : $$ T = ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)$$
+%Matrix $\mli{LM}$ as given in eqn. \ref{YM} is then split up as :
+%\begin{align}
+%\tilde{Y} &= (\mathbb{I} - \tilde{A}^d)^{-1} \, D^d + \tilde{A}^d \big(\tilde{A}^m +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d \\
+%\tilde{M} &= (\mathbb{I} - \tilde{A}^m)^{-1} \, D^d - \mathbb{I} + \tilde{A}^m \big(\tilde{A}^d +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d
+%\end{align}
+%
+%
+%%The value created by producing a product is the value of the product. The value of using the product as intermediate input is 
+%
+%%To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual. Starting from \ref{defAtilde} in matrix notation :
+%
+%%\begin{align}
+%%\tilde{A}^m &= Z^m \, (diag(\boldsymbol{y + m - d^m}) )^{-1} \nonumber\\
+%%&=  Z^m \, (diag(\boldsymbol{y}))^{-1} \, \big( \mathbb{I} +  (diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})   \big)^{-1} \nonumber\\
+%%&= Z^m \, (diag(\boldsymbol{y}))^{-1} \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k \nonumber\\
+%%&= A^m  \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k
+%%\end{align}
 
 
 

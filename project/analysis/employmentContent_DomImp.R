@@ -82,6 +82,9 @@ employment.per.production <- df.NE.50I.QLFS$`201406`/df.IOT2014$Output[1:n]
 #employment.content.direct.indirect <- round(diag(employment.per.production) %*% LI.d,3)
 employment.content.direct.indirect <- diag(employment.per.production) %*% LI.d %*% diag(s.d)
 
+employmentLies <- diag(employment.per.production) %*% LI.d %*% diag(s.d) %*% diag(demand)
+
+
 df.ec.di <- data.frame(employment.content.direct.indirect)
 colnames(df.ec.di) <- SA.IO.codes
 rownames(df.ec.di) <- SA.IO.codes
