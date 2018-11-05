@@ -17,6 +17,10 @@ source("importData_OECD_IOT.R")
 source("Domestic_Leontief.R")
 source("modelParameters.R")
 
+# Demand scenarios
+
+source("demandScenarios.R")
+
 # Analysis
 
 source("employmentContent_DomImp.R")
@@ -25,6 +29,8 @@ source("finaldemandDecomposition.R")
 # Generating graphs
 
 source("demandDecomposition_Graphs.R")
+source("employmentDecomposition_Graphs.R")
+
 
 # Below not sure if useful
 
