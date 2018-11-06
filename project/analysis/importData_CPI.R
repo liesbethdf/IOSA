@@ -34,16 +34,30 @@ df.plot$"Value" <- df.plot$`Export Price` * df.plot$`Export Volumes`
 df.plot         <- df.plot %>% gather(Variable, Value, -Case, -Year)
 #df.plot         <- df.plot %>% filter(!df.plot$Variable=="Value")
 df.plot$Case    <- factor(df.plot$Case, levels =c("BAU","2Deg"))
-df.plot          <- df.plot[order(df.plot$Case),]
+df.plot         <- df.plot[order(df.plot$Case),]
 
-colours <- 
+levels.Var      <- c("Export Volumes", "Export Price", "Value")
+labels.Var      <- c("Exported volumes, mtce", "Export price, USD/mtce", "Revenue from coal export, USD")
+
+df.plot$Variable <- factor(df.plot$Variable, levels=levels.Var, labels=labels.Var)
+df.plot          <- df.plot[order(df.plot$Variable),]
+
+
+
+colours <- c("#5d6d7e", "#dc7633")
+#facet.labels <- list('Export Price'="Export price, USD", 'Export Volumes'="Exported volumes, mtce", 'Value'="Revenue from coal export, USD")
+#facet.labels <- c("Export price, USD", "Exported volumes, mtce", "Revenue from coal export, USD")
+
 
 p <- df.plot %>% ggplot(aes(x=Year, y=Value)) +
 #                 geom_line(aes(color=Case, linetype=Variable)) +
-                 geom_line(aes(color=Case)) +
-                 scale_color_brewer(palette="Paired") +
-                facet_wrap(~ Variable, nrow=1, scales="free")
-#                 scale_colour_manual(values=colours)
+                 geom_line(aes(color=Case), size=0.8) +
+                 #geom_area(aes(fill = Case, group = Case), alpha = 0.5, position = 'identity') +
+                 scale_fill_manual(values = c("#aeb6bf","#dc7633")) +
+                 #scale_color_brewer(palette="Paired") +
+                 ylab("") +
+                 scale_colour_manual(values=colours) +
+                 facet_wrap(~ Variable, nrow=1, scales="free") #, labeller=as_labeller(facet.labels))
 print(p)
 
 setwd(dir.PLOTS)

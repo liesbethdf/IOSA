@@ -18,7 +18,7 @@ valueaddedDecomp.CE    <- resultsHereCoalExport[[3]][[2]]
 
 
 ############ graph for employment resulting from coal export :
-plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colours)
+plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colours, label.y.axis)
 {
 #scenarioReference <- "BAU"
 #  detail <- 10
@@ -66,7 +66,7 @@ plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colour
   p <- df.plot %>% ggplot(aes(x=Year, y=Value, fill=Industry)) +
     geom_bar(stat="identity") +
     #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    labs(x = "Year", y="number of jobs") +
+    labs(x = "Year", y=label.y.axis) +
     #scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
     #scale_y_continuous(limits = c(0, 100000)) +
     #coord_flip() +
@@ -77,24 +77,26 @@ plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colour
   return(p)
 }
 
+############ graph for employment distributed over sectors
+
 colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e")    
-p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=resultsNemployees.CE, colours=colours)
+p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=resultsNemployees.CE, colours=colours, label.y.axis="number of jobs")
 
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("NumberEmployees_Secor","Coal-Export","BAU_2Deg", sep="_")
+fileName.graph <- paste("NumberEmployees_Sector","Coal-Export","BAU_2Deg", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
 
 ############ graph for value added distributed over sectors
 
 colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e")    
-p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=valueaddedDecomp.CE, colours=colours)
+p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=valueaddedDecomp.CE, colours=colours, label.y.axis = "million Rand (constant 2014)")
 plot(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Secor","Coal-Export","BAU_2Deg", sep="_")
+fileName.graph <- paste("ValueAdded_Sector","Coal-Export","BAU_2Deg", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
 
