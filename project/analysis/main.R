@@ -24,7 +24,9 @@ source("demandScenarios.R")
 # Analysis
 
 source("employmentContent_DomImp.R")
-source("finaldemandDecomposition.R")
+source("finaldemandDecomposition-function.R")
+#source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
+source("employmentContent_atRisk.R")
 
 # Generating graphs
 

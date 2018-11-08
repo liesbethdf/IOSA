@@ -197,6 +197,7 @@ ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=16, height=16, un
 
 
 
+setwd(dir.ANALYSIS)
 
 
 

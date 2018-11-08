@@ -20,7 +20,7 @@ df.IOT.temp5 <- df.IOT.temp5  %>% select(-TTL, -IMP, -TOT)
 
 df.IOT.temp5 <- df.IOT.temp5 %>% spread(COL,DOM)
 
-df.IOT.temp5 <- df.IOT.temp5  %>% select(-CONS_ABR, -CONS_NONRES, -EXPO, -IMPO, -IMPO.T, -NPISH)
+df.IOT.temp5 <- df.IOT.temp5  %>% select(-CONS_ABR, -CONS_NONRES, -EXPO, -IMPO, -NPISH)
 
 code.oecd.l <- unique(df.IOT.temp5$ROW.Sector)
 #code.oecd <- as.vector(code.oecd)
@@ -32,15 +32,15 @@ sector.matching <- c(rep(code.oecd.l[1],3), rep(code.oecd.l[2],3),
                      rep(code.oecd.l[9],2), rep(code.oecd.l[10],2),
                      rep(code.oecd.l[20],2), rep(code.oecd.l[11],2), 
                      rep(code.oecd.l[12],1), 
-                     rep(code.oecd.long[14],1), 
+                     rep(code.oecd.l[14],1), 
                      rep(code.oecd.l[16],1), rep(code.oecd.l[15],2),
-                     rep(code.oecd.long[18],1), 
+                     rep(code.oecd.l[18],1), 
                      rep(code.oecd.l[21],2), rep(code.oecd.l[22],1),
                      rep(code.oecd.l[23],1), rep(code.oecd.l[24],1),
                      rep(code.oecd.l[25],1), rep(code.oecd.l[26],1),
                      rep(code.oecd.l[27],3), rep(code.oecd.l[28],1),
                      rep(code.oecd.l[29],1), rep(code.oecd.l[32],1), 
-                     rep(code.oecd.long[31],1), 
+                     rep(code.oecd.l[31],1), 
                      rep(code.oecd.l[33],1), rep(code.oecd.l[34],1), 
                      rep(code.oecd.l[35],1), rep(code.oecd.l[36],1)
                      )

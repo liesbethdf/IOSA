@@ -1,11 +1,10 @@
 
 ############################################
-############ Import CPI coal data
+############ Import CPI coal export data + graphs
 ############################################
 
 fileName.list <- c("CPI_coal_power.xlsx")
 
-############ Coal export
 i <- 1
 data <- paste(dir.DATA, fileName.list[i], sep = sep)
 
@@ -64,10 +63,28 @@ setwd(dir.PLOTS)
 fileName.graph <- paste("Coal-Export","CPI_VolPrice","BAU_2Deg", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=6, units="cm", dpi=300)
 
+setwd(dir.ANALYSIS)
+
+
+############################################
+############ Import CPI coal domestic data + graphs
+############################################
+
+fileName.list <- c("CPI_coal_power.xlsx")
+
+i <- 1
+data <- paste(dir.DATA, fileName.list[i], sep = sep)
+
+df.CPI.domestic <- data.frame(read_excel(data, 
+                                         sheet=2, 
+                                         range = cell_limits(ul = c(1,1), lr = c(13, 22))))
+df.CPI.domestic <- df.CPI.domestic %>% gather(Year, Value, -Case, -Plants, -Variable, -Unit)
+
+df.CPI.domestic$Year <- as.numeric(substr(df.CPI.domestic$Year, 2,5))
+df.CPI.domestic <- df.CPI.domestic %>% spread
 
 
 
 
 
-
-
+setwd(dir.ANALYSIS)
