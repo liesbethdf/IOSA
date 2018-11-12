@@ -231,6 +231,7 @@ results <- list(df.results,df.results.ec.matrix)
 ############################################
 
 ######################## Decomposition of difference with average, direct and indirect together
+yearHere <- "2014"
 
 df.plot <- results[[1]]
 Industry.code <- paste(df.plot$Industry, df.plot$SIC,sep = " ")
@@ -243,19 +244,20 @@ df.plot.temp <- df.plot
 
 df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T, ec.dev.decomp.L, ec.dev.decomp.N, ec.dev.decomp.MF, ec.dev.decomp.MI, factor_key = TRUE)
 
-levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
-df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
+levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
+df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes", "Local demand \nfinal products","Local demand \ninputs"))
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                  geom_bar(stat="identity") +
-                 ylab(paste0("Employment content against average, ",yearHere)) +
-                 theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                 ylab(paste0("Employment content, #jobs/million Rand, against average, ",yearHere)) +
+                 #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                  labs(x = "Industry, SIC code") +
                  scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                  scale_y_continuous(limits = c(-2.2, 3.5)) +
                  coord_flip() +
                  labs(fill="Decomposition :") +
-                 theme(legend.position="bottom")
+                 theme(legend.position="bottom") +
+                 scale_fill_manual(values=coloursDecomp)
 print(p)
 
 setwd(dir.PLOTS)
@@ -273,21 +275,22 @@ df.plot <- df.plot.temp
 df.plot <- df.plot %>% select(Industry.code, ec.direct, ec.indirect)
 
 df.plot <- df.plot %>% gather(Decomposition,Value, -Industry.code, factor_key = TRUE)
-levels(df.plot$Decomposition) <- c("Direct","Indirect")
+levels(df.plot$Decomposition) <- c("within sector","in other sectors")
 
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   geom_bar(stat="identity") +
                   ylab(paste0("Employment content, #jobs/million Rand, ",yearHere)) +
-                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   coord_flip() +
-                  labs(fill="Decomposition :") +
+                  labs(fill="Number of jobs :") +
                   geom_hline(yintercept = c(1.09), linetype="longdash", colour ="#00BFC4", size=0.8) +
                   geom_hline(yintercept = c(2.4), linetype="longdash", colour = "#999999",size=0.8) +
                   scale_y_continuous(breaks = sort(c(seq(round(min(df.plot$Value),0), round(max(df.plot$Value),0), length.out=3), 1.09,2.4))) +
-                    theme(legend.position="bottom")
+                    theme(legend.position="bottom") +
+scale_fill_manual(values=coloursDecomp)
 print(p)
 
 setwd(dir.PLOTS)
@@ -303,17 +306,18 @@ df.plot$ec.dev.decomp.id  <- df.plot$ec.indirect - mean(df.plot$ec.indirect)
 df.plot <- df.plot %>% select(Industry.code, ec.dev.decomp.d, ec.dev.decomp.id)
 
 df.plot <- df.plot %>% gather(Decomposition,Value, -Industry.code, factor_key = TRUE)
-levels(df.plot$Decomposition) <- c("Direct","Indirect")
+levels(df.plot$Decomposition) <- c("within sector","in other sectors")
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   geom_bar(stat="identity") +
                   ylab(paste0("Employment content against average, ",yearHere)) +
-                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   coord_flip() +
-                  labs(fill="Decomposition :") +
-                  theme(legend.position="bottom")
+                  labs(fill="Number of jobs :") +
+                  theme(legend.position="bottom") +
+                  scale_fill_manual(values=coloursDecomp)
 print(p)
 
 setwd(dir.PLOTS)
@@ -338,19 +342,20 @@ df.plot.temp <- df.plot ; rm(df.plot.temp)
 
 df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T.d, ec.dev.decomp.L.d, ec.dev.decomp.N.d, ec.dev.decomp.MF.d, ec.dev.decomp.MI.d, factor_key = TRUE)
 
-levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
-df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
+levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
+df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes", "Local demand \nfinal products","Local demand \ninputs"))
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                 geom_bar(stat="identity") +
-                ylab(paste0("Direct employment content against average, ",yearHere)) +
-                theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                ylab(paste0("Employment, direct and indirect, within each sector, against average, ",yearHere)) +
+                #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                 labs(x = "Industry, SIC code") +
                 scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                 scale_y_continuous(limits = c(-2.2, 3.5)) +
                 coord_flip() +
                 labs(fill="Decomposition :") +
-                theme(legend.position="bottom")
+                theme(legend.position="bottom") +
+                scale_fill_manual(values=coloursDecomp)
 print(p)
 
 setwd(dir.PLOTS)
@@ -370,19 +375,20 @@ df.plot.temp <- df.plot ; rm(df.plot.temp)
 
 df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T.i, ec.dev.decomp.L.i, ec.dev.decomp.N.i, ec.dev.decomp.MF.i, ec.dev.decomp.MI.i, factor_key = TRUE)
 
-levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","Wages", "Local \nfinal demand","Intermediate \nimports")
-df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("Wages","Labour \nshare","Taxes", "Local \nfinal demand","Intermediate \nimports"))
+levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
+df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes", "Local demand \nfinal products","Local demand \ninputs"))
 
 p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   geom_bar(stat="identity") +
-                  ylab(paste0("Indirect employment content against average, ",yearHere)) +
-                  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                  ylab(paste0("Employment in all other sectors, against average, ",yearHere)) +
+                  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   scale_y_continuous(limits = c(-2.2, 3.5)) +
                   coord_flip() +
                   labs(fill="Decomposition :") +
-                  theme(legend.position="bottom")
+                  theme(legend.position="bottom") +
+                  scale_fill_manual(values=coloursDecomp)
 print(p)
 
 setwd(dir.PLOTS)

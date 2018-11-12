@@ -103,6 +103,8 @@ df.domesticDemand.input$Var  <-paste(part1,part2,sep=".")
 
 # this is the result : df.domesticDemand.input
 
+cat("Demand scenario as input with 2014 demand everywhere except for coal=CPI : df.domesticDemand.input","\n","\n")
+
 ############ demand scenarios with coal export only, the others 0
 
 domesticDemand.coal.input <- function(yearHere)
@@ -156,7 +158,7 @@ df.domDemand.coal.input.v2$Var  <-paste(part1,part2,sep=".")
 
 # this is the result : df.domDemand.coal.input.v2
 
-
+cat("Demand scenario as input with zero demand everywhere except for coal : df.domDemand.coal.input.v2","\n","\n")
 
 
 

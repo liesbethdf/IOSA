@@ -30,8 +30,9 @@ source("employmentContent_atRisk.R")
 
 # Generating graphs
 
-source("demandDecomposition_Graphs.R")
+#source("demandDecomposition_Stats.R")
 source("employmentDecomposition_Graphs.R")
+source("demandDecomposition_Graphs.R")
 
 
 # Below not sure if useful

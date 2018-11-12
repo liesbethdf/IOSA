@@ -5,6 +5,8 @@
 #################### once for BAU, once for 2Deg, once for difference + total, summed over all years
 ############################################
 
+df.outputDecomp <- outputDecomp.CE.summ
+
 df.plot <- df.outputDecomp %>% select (Year, Scenario, Industry, Value.demand.dom, Value.demand.imp, Output.value, Dom.inputs,
                                        Imp.inputs, Wages, Taxes.other.value, Gross.op.surplus.value, Taxes.prod.value, VA.value)
 
@@ -109,37 +111,21 @@ ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, uni
 
 
 
-# df.plot.oneyear <- df.plot %>% filter(df.plot$Year==2018 & df.plot$Scenario=="BAU")
+
+
+
+# df.plot2 <- df.outputDecomp %>% select (Year, Scenario, Industry, Value.demand.dom, Value.demand.imp, Output.value, Dom.inputs,
+#                                        Imp.inputs, Wages, Taxes.other.value, Gross.op.surplus.value, Taxes.prod.value, VA.value)
 # 
-# sum(df.plot.oneyear$VA.value) - df.plot.oneyear$VA.value[s]
-# df.plot.oneyear$VA.value[s] 
+# df.plot2[is.na(df.plot2)] <- 0
 # 
-# sum(df.plot.oneyear$Output.value) - df.plot.oneyear$Output.value[s] 
-# df.plot.oneyear$Output.value[s]
+# df.plot2 <- df.plot2[1:50,]
 # 
-# sum(df.plot.oneyear$Gross.op.surplus.value) - df.plot.oneyear$Gross.op.surplus.value[s]
-# sum(df.plot.oneyear$Imp.inputs)             - df.plot.oneyear$Imp.inputs[s]
-# sum(df.plot.oneyear$Value.demand.imp)       - df.plot.oneyear$Value.demand.imp[s]
-# sum(df.plot.oneyear$Taxes.other.value)      - df.plot.oneyear$Taxes.other.value[s]
-# sum(df.plot.oneyear$Wages)                  - df.plot.oneyear$Wages[s]
-# sum(df.plot.oneyear$Taxes.prod.value)       - df.plot.oneyear$Taxes.prod.value[s]
+# dim(df.plot2)
 # 
-# df.plot.oneyear$VA.value[s]
-# df.plot.oneyear$Taxes.prod.value[s]
-
-
-df.plot2 <- df.outputDecomp %>% select (Year, Scenario, Industry, Value.demand.dom, Value.demand.imp, Output.value, Dom.inputs,
-                                       Imp.inputs, Wages, Taxes.other.value, Gross.op.surplus.value, Taxes.prod.value, VA.value)
-
-df.plot2[is.na(df.plot2)] <- 0
-
-df.plot2 <- df.plot2[1:50,]
-
-dim(df.plot2)
-
-colSums(df.plot2[,4:13]) - df.plot2[4,4:13]
-
-df.plot2[4,4:13]
+# colSums(df.plot2[,4:13]) - df.plot2[4,4:13]
+# 
+# df.plot2[4,4:13]
 
 
 

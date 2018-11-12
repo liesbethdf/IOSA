@@ -28,7 +28,9 @@ A.m   <- t(t(Z.m) / df.IOT2014$Output[1:n])
 
 # the total requirment matrices (d)     (=the Leontief inverse)
 
+L     <- diag(x = 1, nrow=n, ncol = n) - A
 L.d   <- diag(x = 1, nrow=n, ncol = n) - A.d
+LI    <- inv(as.matrix(L))
 LI.d  <- inv(as.matrix(L.d))
 
 # the share importation vs. domestic production in the different components of final demand
@@ -111,9 +113,12 @@ Order     <- df.IOT2014$Order[1:n]
 Industry  <- df.NE.50I$Industry.description
 SIC       <- df.NE.50I$SIC.code
 
+# Some colours 
 
+#coloursDecomp <- c("#5d6d7e","#f1c40f","#e74c3c","#2e86c1","#af601a")
+coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
-
+ 
 
 
 
