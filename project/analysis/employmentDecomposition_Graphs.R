@@ -97,7 +97,7 @@ colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498d
 #p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=valueaddedDecomp.CE, colours=colours, label.y.axis = "million Rand (constant 2014)")
 #plot(p)
 
-p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=valueaddedDecomp.val.CE, colours=colours, label.y.axis = "million Rand (constant 2014)")
+p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=valueaddedDecomp.val.CE, colours=colours, label.y.axis = "million Rand (constant 2014)")[[1]]
 plot(p)
 
 setwd(dir.PLOTS)
