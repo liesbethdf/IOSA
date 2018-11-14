@@ -556,15 +556,14 @@ This price increase can be interpreted as a measure for how the total cost of th
 
 \subsection{Demand scenarios}
 
+%The actual demand scenarios used to estimate the effect of different export values in 2035 are as follows. For the BAU demand scenario, demand as in the South-african economy in the year 2014, as provided by the IOT, is used. As demand scenario for 2DS, the same as BAU is used with the sole difference that the volume of coal exports is determined such that the ratio of the BAU versus the 2DS volume is equal to the ratio of the volumes specified by CPI's scenarios.
 
 
-\section{Data}
+\section{Datasources}
 
 The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. The latter offer additional information because of the treatments data underwent (aggregation, seasonal adjustment). %and because the data for South Africa have been put in relation to data  are however useful in some instances because they offer access to different types of pre-treatments . 
 
-\subsection{Datasources}
-
-\subsubsection{IOT}	
+\subsection{IOT}	
 
 To take into account that the demand for imported goods does not directly create value or give rise to jobs domestically through theire production (although the imported goods might be necessary for a particular production process), separate IOTs for domestic output and imported goods and services are needed. The most recent input output tables available from Stat SA are for the years 2013 and 2014. The level of detail is at 50 sectors. However, no table is available that specifies uses of imports versus uses of domestic production. Such a table is provided by the OECD, at a detail of 35 sectors ; the most recent one is for 2011 at the time of writing.
 
@@ -572,7 +571,7 @@ To construct a separate IOT for domestic production and for imports, the 2011 OE
 
 %\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. 
 
-\subsubsection{Employment data}
+\subsection{Employment data}
 For the present study employment data are needed of the same sectoral aggregation as the 50-sector IOT. These are not readily available but are constructed on the basis of two types of employment data and in addition more detailed data for certain sectors, all collected by and available from Stat SA.
  
 Data on employment are gathered by the South African statistics agency through two types of channels. The Quarterly Employment Survey is conducted with enterprises \citep{QES2018}. The Quarterly Labour Force Survey is a survey taken from households from individuals aged 15 years and over. Contrary to the former, the data thus obtained cover also the agricultural sector, self-employed workers whose businesses are unincorporated, unpaid family workers, and private household workers among the employed \citep{QLFS2018}.
@@ -705,6 +704,8 @@ The scenario comparisons in section \ref{scenarioAnalysis} cover the period 2018
 
 
 \subsubsection{Coal}
+
+\li{Description of the coal sector within the economy as job creator.}
 
 \ref{ChamberofMines2018Strategy}
 \ref{MineralsCouncil2018Facts}
@@ -843,6 +844,9 @@ How is South Africa's economy possibly exposed to the greening of global supply 
 
 \subsubsection{Coal export}
 
+%using the macroeconomic picture of the economy provided by the IO-model, of the effect on employment of the difference in coal export demand in 2035 under 2DS versus BAU, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 90\%, following CPI's projections. 
+%Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
+
 
 \begin{figure}[!h]
 	\centering
@@ -857,7 +861,7 @@ The projected export trajectories under both scenarios are presented in figure \
 
 This loss in revenue impacts firstly the coal sector itself and secondly, to varying degrees, the rest of the economy. As set out previously, this is because part of the revenue obtained from coal exports is spent on domestically produced inputs, necessary for mining coal, and becomes revenue for the suppliers. Thus, the risk posed under a 2DS by the lower revenue obtained from coal exports is not only a risk for the sector itself, but also for other parts of the economy. Furthermore, because the coal sector's suppliers themselves spent part of their sales revenue (obtained from the coal sector who obtained its revenue from export) on inputs, the coal export revenue spreads throughout the economy as value added of (almost) all sectors. Value added is here defined in a broad sense, i.e. as output, which is taken to be the same as total sales revenue from domestic final goods, minus the cost of inputs. It thus includes, referring to the IOT in table \ref{IOT_importsUses}, net taxes on products, other taxes, wages and gross operating surplus. In addition, part of the revenue is spent on imports. The value added of each sector thus flows to government via taxes, to workers in the form of wages and a part of gross operating surplus remunerates investors in the form of debt payments or dividends. 
 %the value created throughout the economy by the export of coal benefits different actors in the economy. For each sector, what is left over from sales revenue after paying suppliers splits into three parts : payment to workers, payment of taxes to different layers of government and a remaining share labeled gross operating surplus. This last part is used for investments and exceptional maintenance costs of the production infrastructure and is distributed to its investors, who are the de factor owners of the production infrastructure, in the form of debt payments, payments of dividends to shareholders. %This is the part that is mostly distributed to the owners of the fixed capital of the sector, i.e. to the economic actors that invested in the sector's production infrastructure and expect a return on their investment. 
-The input-output methodology does not provide information on who are the holders of the fixed capital of each sector. This information is provided by the finance-based, sector and asset-level study performed by CPI \citep{CPI2019SA}. 
+The input-output methodology does not provide information on who are the holders of the fixed capital of each sector. This aspect of the external transition risk posed to South Africa is covered by the finance-based, sector and asset-level study performed by CPI \citep{CPI2019SA}. 
 
 \begin{figure}[!b]
 	%	\centering
@@ -865,59 +869,63 @@ The input-output methodology does not provide information on who are the holders
 	\caption{\label{ExportRevenue_Decomposition_Diff}\small The graph shows the revenue from the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2Deg) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except  }
 \end{figure}
 
-\begin{table}[ht]
-	\centering
-	\renewcommand*{\arraystretch}{1.15}
-	\begin{tabular}{lp{20pt}lcccc}
-		\toprule
-%		\multicolumn{3}{c}{Ori} &\multicolumn{3}{c}{Number of persons employed, 2035} \\ 
-		%\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Export scenarios} &  \\ 
-		\multicolumn{3}{l}{Revenue destination } & \makecell{BAU\&2Deg \\2018} & \makecell{BAU\ \  \\ 2035\ \ } & \makecell{\ \ 2Deg \\\ \ 2035} & \makecell{Value at risk \\(in \ldots rand)}\\ 
-		\midrule
-		\multicolumn{3}{l}{Value added, total}   & 86.7  & 90.6 & 84.6 & \\ 	
-		& 						 & Wages & 28.9 & 20.5  & 33.4 \\ 
-		& 						 & Gross operating surplus & 55.2  &  67.2  & 48.7 &\\ 
-		& 						 & Taxes & 2.6 &  2.9 & 2.5 & \\
-		\midrule
-		\multicolumn{3}{l}{Value added, coal sector}  & 60.6 & 72.3 & 54.8 \\ 
-		& 						 & Wages & 17.9 &  12.7 & 20.8 \\ 
-		& 						 & Gross operating surplus & 41.5 & 57.6  & 32.9 & \\ 
-		& 						 & Taxes & 1.5 &  2.1 & 1.2 \\
-		\midrule
-		\multicolumn{3}{l}{Value added, rest of economy}  & 25.6  & 18.2 & 29.8 \\ 
-		& 						 & Wages & 10.9 & 7.8  & 12.7 \\ 
-		& 						 & Gross operating surplus & 13.7 &  9.7  & 15.8 & \\ 
-		& 						 & Taxes & 1.1 & 0.8  & 1.3 \\
-		\midrule
-		\multicolumn{3}{l}{Imports, total}  		 & 13.3  & 9.4  & 15.4 & \\ 	
-		& 						 & by coal sector & 8.1 &  5.8 & 9.4 & \\ 
-		& 						 & by rest of economy & 5.1 &  3.6  & 5.9 & \\ 
-		\bottomrule
-	\end{tabular}
-	\caption{\label{ExportRevenue_Decomposition_Diff_table}\small Comparison of the impact of export demand on the number of jobs related to the activity in the coal mining sector (SIC 21). The percent difference in coal exports between the two scenarios is equal to that between BAU and 2DS in 2035 as projected by CPI. The BAU scenario is approximated by the South African economy as in the year 2014.}
-\end{table}
-
-
-As detailed in section \ref{Section_decomposition}, the input-output methodology allows to decompose export revenue in imports and in value added over all sectors of the economy. Figure \ref{ExportRevenue_Decomposition_Diff} shows the decomposition of the export revenue trajectories over the period 2018-2035, for both scenarios, in imports (in red), taxes and value added (in yellow for the coal sector and blue for the other sectors). % throughout the economy. 
-These estimates are based on simplifying assumptions, such that the structure of the economy remains very close throughout the modeling period as it is in 2014. It is assumed that all the economy's real prices stay constant, including the unitary wage, except for the export price of coal.
+As laid out in section \ref{Section_decomposition}, the input-output methodology allows to decompose export revenue in imports and in value added over all sectors of the economy. Figure \ref{ExportRevenue_Decomposition_Diff} shows the decomposition of the export revenue trajectories over the period 2018-2035, for both scenarios, in imports (in red), taxes and value added (in yellow for the coal sector and blue for the other sectors). % throughout the economy. 
+The estimates are based on the simplifying assumption that the structure of the economy remains very close throughout the modeling period as it is in 2014. Is its assumed that for every sector, the amount of inputs per unit of output remains constant throughout the modeling period, as do the shares of taxes, value added and its components. All price indices (except for the unitary wages) are set equal to one at the beginning of the period. By hypothesis, all prices remain constant throughout the modeling period, including the unitary wage, except for the export price of coal.
 %Additionally, low prices further compromise the ability of the sector to pay of its debts. We assume here, in a first approximation, that 
 The coal export price affects only taxes and gross operating surplus (of the coal mining sector)%(the capital share) 
-such that the sum of value added and imports equals sales revenue. This assumption is maintained both under BAU with sustained prices as in the 2DS scenario with low prices. 
+such that the sum of value added and input costs equals sales revenue for the coal sector. This assumption is maintained both under BAU with sustained prices as in the 2DS scenario with low prices. 
+
+At the beginning of the period, 13.2\% of export revenue is spent on imported inputs, 28.9 \% goes to the payment of workers (17.9\% in the coal sector and 10.9 in other sectors of the economy), 55.2\% becomes gross operating surplus (41.5\% in the coal sector and 13.7\% in other sectors) and 2.6\% taxes (1.5\% coal and 1.1\% rest of the economy). %In 2018, the price index of exported coal is assumed 1, both under BAU and 2Deg, such that the aforementioned shares for 2018 are the shares as given by the 2014 IOT. 
+The share of revenue accruing to jobs throughout the economy is only slightly more than half the capital share and is within the coal sector less than half the capital share. This is the main reason why less jobs are created per unit of final demand addressed to the coal sector than the economy's average per unit of final demand, as is illustrated in figure \ref{Decomposition_PQ_direct}.
+
+Towards 2035, these shares change slightly because of the effect of the coal export price on taxes and gross operating surplus. Under BAU, the exported volume is approximately equal to the volume at the beginning of the period in 2018. However, the price on the international market is projected to be by up to 30\% higher in the 2030's, making the sector much more profitable than today. Assuming real input costs stay constant, the share of the coal sector's value added thus rises from 60.6\% of the total export revenue in the beginning of the period to 72.3\% towards 2035. In this scenario, the higher profitability might have a positive effect on wages. Under 2Deg, the opposite effect takes place. The projected exported volume is in 2035 a tenth of today's. This implies that few mines will be sustained by export demand. Additionally, low prices mean that exporting mines will generate less profit \textit{via} exports : value added in the mining sector captures only 54.8\% of export revenue in 2035 under 2Deg because gross operating surplus is squeezed\footnote{In appendix \ref{coal export}, table \ref{ExportRevenue_Decomposition_Diff_table} summarizes these figures.}. The mechanic effect is that the labour share will increase against the capital share ; however, this would not be due to a changing division of labour and capital, but rather due to the overall reduced profitability of the sector, which would likely put pressure on wages too. 
 
 
+\begin{figure}[!t]
+	\centering
+	\hspace{-10pt}\includegraphics[width=\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg.pdf}
+	\caption{\label{ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg}\small The graph shows the revenue from the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2Deg) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except  }
+\end{figure}
 
-At the beginning of the period, 13.2\% of export revenue is spent on imported inputs, 60.6\% becomes value added (including all taxes) %as a direct result of economic activity 
-in the coal sector, and 25.6\% becomes value added %distributed over participating actors to the activity in 
-of the other sectors of the economy. Table \ref{ExportRevenue_Decomposition_Diff_table} summarizes these figures and specifies what percent of revenue goes to government in the form of taxes, to workers in the form of wages paid, and to the holders of capital. 
-Towards the end of the period, the situation is very different under both scenarios. %Whereas under BAU, export volumes and prices are strong, under 2DS, low volumes reduce employment and wages, taxes and gross operating surplus. Indeed, 
-Under BAU, the exported volume is on average of the same order of magnitude as at the beginning of the period in 2018. However, the price on the international market is projected to be by up to 30\% higher in the 2030's, making the sector much more profitable than today. Value added in the coal sector rises from 60.6\% of the total export revenue in the beginning of the period to 72.3\% towards 2035. On the contrary, under the 2Deg scenario, the exported volume is in 2035 a tenth of today's. This implies that few mines will be sustained by export demand. Additionally, low prices mean that exporting mines will generate less profit \textit{via} exports. Value added in the mining sector is only 54.8\% in 2035 under 2Deg. In Mines that supply both the domestic and international market \ldots
-These estimates are based on simplifying and stringent assumptions. It is assumed that only the export price of coal changes and that 
-%Additionally, low prices further compromise the ability of the sector to pay of its debts. We assume here, in a first approximation, that 
-all the other prices in the economy, including the unitary wage, are constant throughout the period in real terms. The coal export price is assumed to influence only taxes and gross operating surplus %(the capital share) 
-, both under BAU with sustained prices as in the 2DS scenario with low prices. The number of employees per ton of coal mined is also assumed constant throughout the period.
+The difference in the areas between the BAU and the 2Deg graphs of figure \ref{ExportRevenue_Decomposition_Diff} represents the possible loss in revenue. As a measure for this possible loss, we take the difference between the BAU and 2Deg value added figures at the end of the modeling period in 2035, and compare this difference with South Africa's 2014 GDP.% for each of the components of value added. This loss in revenue poses a risk when the economic agent that would receive the revenue is highly dependent on the revenue source in question.
+The right panel of figure \ref{ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg} shows value added stemming from coal export in 2018 and in 2035 under BAU and under 2Deg in million Rand (constant 2014). %To get an idea of the impact on GDP, these numbers are compared to South Africa's 2014 GDP. 
+The projected value added generated by coal export in 2018 would have been 1.86\% of GDP, of which the majority of the contribution would stem from coal with 1.29\% and the remaining 0.57\% from the rest of the economy. In 2035, under BAU, coal export would attain 2.58\% of 2014 GDP and under 2Deg only 0.22\% of GDP. Thus, between both scenarios, towards the end of the period, the difference in value added to the economy between both scenarios would be more than 2\% of 2014 GDP. Over two thirds of this loss would be situated in the coal sector itself ; of the remaining lost value, about a third is situated in the transport sector. This is because a big cost to the coal sector is the transport of mined coal by truck and by rail. 
+
+In terms of employment, about 81.827 jobs would be lost 
+
+We here focus on the difference in employment and wages between the two scenarios. The yearly employment estimates are based on the assumption is that the number of employees per unit of output is also constant throughout the period and equal to figures for 2014.
 % what kind of changes could be expected in reality ?
-
 %In terms of value added, most of the risk is concentrated in the coal sector. 
+
+\begin{table}[!t]
+	\centering
+	\renewcommand*{\arraystretch}{1.15}
+	\begin{tabular}{lp{20pt}lccc}
+		\toprule
+		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{3}{c}{Number of persons employed, 2035} \\ 
+		%\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Export scenarios} &  \\ 
+		\multicolumn{3}{c}{} & BAU & 2Deg & Jobs at risk\\ 
+		\midrule
+		\multicolumn{3}{l}{Jobs sustained by coal exports, total}  		 & 94966 & 13139 & 81827 \\ 	
+		\multicolumn{3}{l}{Jobs sustained by coal exports, coal sector}  & 45098 & \ 6240 & 38858 \\ 
+		\multicolumn{3}{l}{Jobs sustained by coal exports, rest of economy}  & 49868  & \ 6899 & 42969\\ 
+		& 						 & Transport & 16868 &  \  2334 & 14534\\ 
+		& 						 & Trade & 12022 &  \ 1663  & 10359\\ 
+		& 						 & Computer activities & \, 5540 & \, \, 766  & \ \,4774\\
+		& 						 & General machinery & \ \,1780 &  \, \, 246 & \ \,1534 \\  
+		& 						 & Remaining sectors & 13658 &  \, 1890 & \ 11768 \\  
+		\bottomrule
+	\end{tabular}
+	\caption{\label{coalExport_BAUvs2DS_2035_table_employment}\small Comparison of the impact of export demand on the number of jobs related to the activity in the coal mining sector (SIC 21). The percent difference in coal exports between the two scenarios is equal to that between BAU and 2DS in 2035 as projected by CPI. The BAU scenario is approximated by the South African economy as in the year 2014.}
+\end{table}
+
+In addition, the reduction of the coal-mining sector also has an impact on economic activity in other sectors. %the IO analysis allows to make an estimate of the impact on other sectors due to . 
+The estimate of this impact, as provided by the IO-model, is shown in the bottom part of table \ref{coalExport_BAUvs2DS_2035}. Over 40 000
+jobs are lost throughout the economy, in addition to the job losses in coal-mining itself. Indeed, the amount of jobs lost in coul-mining is about the same as the amount lost throughout the economy, as could be deduced from the employment content analysis in figure \ref{Decomposition_direct_indirect_absolute}. The Transport sector is the first impacted because of the lost activity from transporting coal by rail. 
+
+
+
+Table \ref{coalExport_BAUvs2DS_2035_table_employment}
 
 Figure \ref{ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg} %and table \ref{VA_Sector_Coal-Export_BAU_2Deg_table} 
 compares both value added and employment throughout all sectors in 2035 under BAU and 2Deg with the (current) situation in 2018. Whereas in terms of value added, two thirds is concentrated in the coal sector itself and 10\% in the Transport sector. In terms of employment, about half the jobs sustained by coal export are situated within the coal sector and the other half in the other sectors of the economy. Notably, the Transport sector counts for 17.8\% of the total number of jobs sustained by coal export, Trade for 12.7\% and Computer activities for 5.8\%. The number of workers per ton of coal mined and wages are by hypothesis constant throughout the period. Table \ref{NE_Sector_Coal-Export_BAU_2Deg_table}
@@ -931,8 +939,6 @@ Whereas the total ec of the coal sector is below the economy's average, these jo
 
 %total value added created in the domestic economy according to industries.%al sectors where the value is created. In 2018, of the value added created in the domestic economy, 60.6\% is created within the coal sector, 9.2\% by the Transport sector, due to the transport of coal by rail and truck, 2.6\% in the Trade sector. %and x\% in the rest of the economy. 
 
-Graph 
-
 A reduction of coal export thus poses a risk to these other sectors if the loss of revenue stemming from a reduction of demand for inputs by the coal export is concentrated in specific actors of the South-African economy, such as in companies and/or geographical areas.
 
 
@@ -940,34 +946,6 @@ A reduction of coal export thus poses a risk to these other sectors if the loss 
 
 
 %Thus, in terms of value added, most of the risk falls on the coal sector itself, and a part of the transport sector that is very directly linked to the coal sector. 
-
-\begin{table}[ht]
-	\centering
-	\renewcommand*{\arraystretch}{1.15}
-	\begin{tabular}{lp{20pt}lccc}
-		\toprule
-		\multicolumn{3}{c}{Origin of jobs} &\multicolumn{3}{c}{Number of persons employed, 2035} \\ 
-		%\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Export scenarios} &  \\ 
-		\multicolumn{3}{c}{} & BAU & 2Deg & Jobs at risk\\ 
-		\midrule
-		\multicolumn{3}{l}{Jobs sustained by coal exports, total}  		 & 94966 & 13139 & 81827 \\ 	
-		\multicolumn{3}{l}{Jobs sustained by coal exports, coal sector}  & 45098 & \ 6240 & \\ 
-		\multicolumn{3}{l}{Jobs sustained by coal exports, rest of economy}  & 49868  & \ 6899 & \\ 
-		& 						 & Transport & 16868 &  \  2334 & \\ 
-		& 						 & Trade & 12022 &  \ 1663  & \\ 
-		& 						 & Computer activities & \, 5540 & \, \, 766  & \\
-		& 						 & General machinery & \ \,1780 &  \, \, 246
-		  & \\  
-		\bottomrule
-	\end{tabular}
-	\caption{\label{coalExport_BAUvs2DS_2035}\small Comparison of the impact of export demand on the number of jobs related to the activity in the coal mining sector (SIC 21). The percent difference in coal exports between the two scenarios is equal to that between BAU and 2DS in 2035 as projected by CPI. The BAU scenario is approximated by the South African economy as in the year 2014.}
-\end{table}
-
-\begin{figure}[!h]
-	\centering
-	\hspace{-10pt}\includegraphics[width=\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg.pdf}
-	\caption{\label{ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg}\small The graph shows the revenue from the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2Deg) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except  }
-\end{figure}
 
 
 
@@ -997,31 +975,21 @@ A reduction of coal export thus poses a risk to these other sectors if the loss 
 
 
 
+%To make an estimate from a macroeconomic point of view of the effect on the economy of the difference in coal export revenue in 2035 under 2DS versus BAU, the demand-pull IO-model is used. the prospective price and volume scenarios of coal export under a 2DS provided by CPI, and used here as input, already include the impact on the profitability of the sector of the lower coal-price on the international market. A number of unprofitable mines are assumed closed in the 2DS scenario. This means that for the 2DS trajectories of price and volume provided, the corresponding cost structure of the coal sector (column of the IOT) is assumed different than the one in the BAU scenario. We will here not attempt to make an estimate of the more efficient technology of the coal-mining sector on the aggregate level that results from the closing of unprofitable coal-mines under 2DS. The matrix of technical coefficients is assumed the same under both scenarios. This means that the obtained measures of profitability under 2DS will be a low estimate, since too high costs are assumed.
 
 
-%CPI's projections for coal export revenues towards 2035, i.e. towards the end of the period under study, are 90\% lower under 2DS than under BAU. The lower revenue is due both to lower export volumes and lower prices. Moreover, they project that the coal sector, thanks to sustained local demand mainly from electricity production, can support about 30 000 jobs on the long term.
-
-To make an estimate from a macroeconomic point of view of the effect on the economy of the difference in coal export revenue in 2035 under 2DS versus BAU, the demand-pull IO-model is used. % provided by eqn. \ref{IOdemand-driven}. %using the macroeconomic picture of the economy provided by the IO-model, of the effect on employment of the difference in coal export demand in 2035 under 2DS versus BAU, a comparison is made between the South African economy in the year 2014 and the same economy with the sole difference that coal exports are diminished by 90\%, following CPI's projections. 
-%Both the direct and the indirect impacts in terms of revenue and jobs will be discussed. In a second instance the impact is traced to specific subsectors to evaluate what share of the activity of the concerned economic units is impacted.
-The volume and the price change under both scenarios are treated in separate instances. The volume impact is taken into account by determining output and resulting employment per sector with the demand-pull model as in eqn. \ref{IOdemand-driven}, which assumes that prices are constant. Thus, the model is applied to the values of exports calculated as if the price is the BAU price, for both scenarios. Then, to take into account the price-effect, total revenue and gross operating surplus are recalculated assuming the actual price under 2DS. However, %the cost structure of the coal sector as provided by the 2014 IOT is left unchanged. This is not in accordance with the fact that 
-the prospective price and volume scenarios of coal export under a 2DS provided by CPI, and used here as input, already include the impact on the profitability of the sector of the lower coal-price on the international market. A number of unprofitable mines are assumed closed in the 2DS scenario. This means that for the 2DS trajectories of price and volume provided, the corresponding cost structure of the coal sector (column of the IOT) is assumed different than the one in the BAU scenario. We will here not attempt to make an estimate of the more efficient technology of the coal-mining sector on the aggregate level that results from the closing of unprofitable coal-mines under 2DS. The matrix of technical coefficients is assumed the same under both scenarios. This means that the obtained measures of profitability under 2DS will be a low estimate, since too high costs are assumed.
-
-%on output and employment per sector throughout the economy, the export volumes under both scenarios are evaluated under the BAU price. 
-The actual demand scenarios used to estimate the effect of different export values in 2035 are as follows. For the BAU demand scenario, demand as in the South-african economy in the year 2014, as provided by the IOT, is used. As demand scenario for 2DS, the same as BAU is used with the sole difference that the volume of coal exports is determined such that the ratio of the BAU versus the 2DS volume is equal to the ratio of the volumes specified by CPI's scenarios.
 
 %Denote $p_{E,coal}^{k,2035}$ and $q_{E,coal}^{k,2035}$, $k \in \{\mli{BAU}, \mli{2DS}\}$ the export prices and volumes of coal in the year 2035 for both scenarios. CPI projects export values of coal under respectively BAU and 2DS of $p_{E,coal}^{BAU,2035}\, q_{E,coal}^{BAU,2035}$ and $p_{E,coal}^{2DS,2035}\, q_{E,coal}^{2DS,2035}$. The values fed into the IO-model to determine the difference in output and employment induced per sector are however determined by the BAU price : $p_{E,coal}^{BAU,2035}\, q_{E,coal}^{BAU,2035}$ and $p_{E,coal}^{BAU,2035}\, q_{E,coal}^{2DS,2035}$. The remaining parts of the demand scenarios are as in 2014, as given by the 2014 IOT. 
 
-The impact on employment between the two scenarios (with hypothetical inputs) can be found in table \ref{coalExport_BAUvs2DS_2035}. The top part of the table shows that the number of jobs in the coal sector under 2DS is about half that under BAU. The IO-model projects about 39 600 jobs in the coal sector under 2DS, which is in the same ballpark as CPI's estimate. Of this total number of jobs in coal mining, 15\% is generated by export and some consumption by households. The biggest share, 85\%, is generated by demand from other sectors. 
-
-In addition, the reduction of the coal-mining sector also has an impact on economic activity in other sectors. %the IO analysis allows to make an estimate of the impact on other sectors due to . 
-The estimate of this impact, as provided by the IO-model, is shown in the bottom part of table \ref{coalExport_BAUvs2DS_2035}. Over 40 000
-jobs are lost throughout the economy, in addition to the job losses in coal-mining itself. Indeed, the amount of jobs lost in coul-mining is about the same as the amount lost throughout the economy, as could be deduced from the employment content analysis in figure \ref{Decomposition_direct_indirect_absolute}. The Transport sector is the first impacted because of the lost activity from transporting coal by rail. 
 
 %The reason behind it is that the labour share is lower than on average in the economy and wages are higher than the average. Local demand for the output of the mining sectors 21, 23-24 is higher than the economy's average. 
 
-Stat SA documents on the transport sector : \citep{LandTransp2014}, \citep{P7000_2013}.
+%Stat SA documents on the transport sector : \citep{LandTransp2014}, \citep{P7000_2013}.
 
 \subsubsection{The domestic coal-market}
+
+The impact on employment between the two scenarios (with hypothetical inputs) can be found in table \ref{coalExport_BAUvs2DS_2035}. The top part of the table shows that the number of jobs in the coal sector under 2DS is about half that under BAU. The IO-model projects about 39 600 jobs in the coal sector under 2DS, which is in the same ballpark as CPI's estimate. Of this total number of jobs in coal mining, 15\% is generated by export and some consumption by households. The biggest share, 85\%, is generated by demand from other sectors. 
+
 
 % latex table generated in R 3.4.4 by xtable 1.8-3 package
 % Tue Sep 25 17:12:36 2018
@@ -1389,7 +1357,40 @@ Global demand for crude oil in 2035 would be $24\%$ lower than in BAU and the pr
 
 \section{Extra graphs}
 
-\subsection{Coal Export}
+\subsection{Coal Export}\label{coal export}
+
+\begin{table}[ht]
+	\centering
+	\renewcommand*{\arraystretch}{1.15}
+	\begin{tabular}{lp{20pt}lcccc}
+		\toprule
+		%		\multicolumn{3}{c}{Ori} &\multicolumn{3}{c}{Number of persons employed, 2035} \\ 
+		%\multicolumn{3}{c}{Origin of jobs} &\multicolumn{2}{c}{Export scenarios} &  \\ 
+		\multicolumn{3}{l}{Revenue destination } & \makecell{BAU\&2Deg \\2018} & \makecell{BAU\ \  \\ 2035\ \ } & \makecell{\ \ 2Deg \\\ \ 2035} & \makecell{Value at risk \\(in \ldots rand)}\\ 
+		\midrule
+		\multicolumn{3}{l}{Value added, total}   & 86.7  & 90.6 & 84.6 & \\ 	
+		& 						 & Wages & 28.9 & 20.5  & 33.4 \\ 
+		& 						 & Gross operating surplus & 55.2  &  67.2  & 48.7 &\\ 
+		& 						 & Taxes & 2.6 &  2.9 & 2.5 & \\
+		\midrule
+		\multicolumn{3}{l}{Value added, coal sector}  & 60.6 & 72.3 & 54.8 \\ 
+		& 						 & Wages & 17.9 &  12.7 & 20.8 \\ 
+		& 						 & Gross operating surplus & 41.5 & 57.6  & 32.9 & \\ 
+		& 						 & Taxes & 1.5 &  2.1 & 1.2 \\
+		\midrule
+		\multicolumn{3}{l}{Value added, rest of economy}  & 25.6  & 18.2 & 29.8 \\ 
+		& 						 & Wages & 10.9 & 7.8  & 12.7 \\ 
+		& 						 & Gross operating surplus & 13.7 &  9.7  & 15.8 & \\ 
+		& 						 & Taxes & 1.1 & 0.8  & 1.3 \\
+		\midrule
+		\multicolumn{3}{l}{Imports, total}  		 & 13.3  & 9.4  & 15.4 & \\ 	
+		& 						 & by coal sector & 8.1 &  5.8 & 9.4 & \\ 
+		& 						 & by rest of economy & 5.1 &  3.6  & 5.9 & \\ 
+		\bottomrule
+	\end{tabular}
+	\caption{\label{ExportRevenue_Decomposition_Diff_table}\small Comparison of the impact of export demand on the number of jobs related to the activity in the coal mining sector (SIC 21). The percent difference in coal exports between the two scenarios is equal to that between BAU and 2DS in 2035 as projected by CPI. The BAU scenario is approximated by the South African economy as in the year 2014.}
+\end{table}
+
 
 \begin{figure}[!h]
 	%	\centering
