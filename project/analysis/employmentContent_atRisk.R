@@ -3,7 +3,7 @@
 ############################################
 ########## Graphs that give idea of decomposition of direct and indirect employment content, without summing over sectors.
 ############################################
-
+yearHere      <- "2014"
 sectorHere    <- 4
 Industry.code <- paste(Industry, SIC,sep = " ")
 
@@ -51,10 +51,12 @@ df.plot <- df.sum[,-dim(df.sum)[2]]
 
 df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T, ec.dev.decomp.L, ec.dev.decomp.N, ec.dev.decomp.MF, ec.dev.decomp.MI, factor_key = TRUE)
 
-levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
-df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes", "Local demand \nfinal products","Local demand \ninputs"))
+#df.plot$Value <- df.plot$Value + 2.24
 
-coloursDecomp <- c("#5d6d7e","#f1c40f","#e74c3c","#2e86c1","#af601a")
+levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
+df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes","Local demand \ninputs", "Local demand \nfinal products"))
+
+#coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 p <- df.plot %>% ggplot(aes(x=Industry, y=Value, fill=Decomposition)) +
                  geom_bar(stat="identity") +
@@ -63,7 +65,7 @@ p <- df.plot %>% ggplot(aes(x=Industry, y=Value, fill=Decomposition)) +
                 #theme(axis.text.y = element_text(angle = 90, hjust = 1)) +
                  labs(x = "") +
                  scale_x_discrete(limits = rev(levels(df.plot$Industry))) +
-                 scale_y_continuous(limits = c(-1, 0.5)) +
+                 scale_y_continuous(labels = function(x) x + 2.24) +
                  coord_flip() +
                  labs(fill="Decomposition :") +
                  theme(legend.position="bottom") +
