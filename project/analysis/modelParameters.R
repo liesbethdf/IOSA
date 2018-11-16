@@ -119,6 +119,106 @@ SIC       <- df.NE.50I$SIC.code
 coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
  
+############################################
+########## fixing of the parameter values for the demand-pull model, based on the IOT, domestic and import + employment data, version 2
+#################### same as the above, except for that for coal, output/production is based on mt coal produced/used, not on monetary data
+#################### this is necessary becasue the domestic price is so widely different from the international price
+############################################
+# source, facts and figures 2018, Minerals Council SA
+# coal production in 10³ tonnes 2014 = 260239 
+# coal domestically sold in 10³ tonnes 2014 = 184416
+# exported coal in 10^3 tonnes 2014 = 75823, total salesrev 51452.471(Mc), 63581.9 (IOT) => price per tonne : 0.6785866 10^6 R (Mc) or 0.83856 (IOT) 
+# imported coal in tonnes, assumed that price is equal to export price :
+# 417.1633 mR => 497.5 10³ tonnes
+# domestically sold coal, in value : 114230.414  - 63581.9 = 50649.41
+# domestic price : 50649.41 / 184416 = 0.2746476
+
+######## Construction of IOT with the coal row in volume
+
+p.d <- 50648.51 / 184416
+p.e <- 63581.9 / 75823
+
+df.IOT2014.dom.q <- df.IOT2014.dom
+
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")] <- 
+            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")]
+
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")] <- 
+            p.e^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")]
+
+#sum(df.IOT2014.dom.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
+  
+df.IOT2014.imp.q <- df.IOT2014.imp
+
+df.IOT2014.imp.q[4, colnames(df.IOT2014.imp.q) %in% c(Order,"Household","Changes.in.inventories","Exports","Imports")] <- 
+            p.e^(-1)   * df.IOT2014.imp.q[4,colnames(df.IOT2014.imp.q) %in% c(Order,"Household","Changes.in.inventories","Exports","Imports")]
+
+#sum(df.IOT2014.imp.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
+
+df.IOT2014.q                              <- df.IOT2014
+df.IOT2014.q[4,1:50+2]                    <- df.IOT2014.dom.q[4,1:50+3] + df.IOT2014.imp.q[4,1:50+3]
+df.IOT2014.q[4,"Total.Industry"]          <- sum(df.IOT2014.q[4,1:50+2])
+df.IOT2014.q[4,"Household"]               <- df.IOT2014.dom.q[4,"Household"] + df.IOT2014.imp.q[4,"Household"] 
+df.IOT2014.q[4,"Exports"]                 <- df.IOT2014.dom.q[4,"Exports"] + df.IOT2014.imp.q[4,"Exports"] 
+df.IOT2014.q[4,"Imports"]                 <- - df.IOT2014.imp.q[4,"Imports"] 
+df.IOT2014.q[4,"Changes.in.inventories"]  <- df.IOT2014.dom.q[4,"Changes.in.inventories"] + df.IOT2014.imp.q[4,"Changes.in.inventories"]
+df.IOT2014.q[4,"Output"]                  <- sum(df.IOT2014.q[4,c("Total.Industry","Household","Exports","Imports","Changes.in.inventories")])
+
+#the direct requirement matrices (m&d) (=the A matrices) with tons for coal  
+
+Z.q     <- as.matrix(df.IOT2014.q[1:n,(1:n)+2])  
+Z.d.q   <- as.matrix(df.IOT2014.dom.q[1:n,(1:n)+3])
+Z.m.q   <- as.matrix(df.IOT2014.imp.q[1:n,(1:n)+3])
+
+A.q     <- t(t(Z.q)   / df.IOT2014.q$Output[1:n])
+A.d.q   <- t(t(Z.d.q) / df.IOT2014.q$Output[1:n])
+A.m.q   <- t(t(Z.m.q) / df.IOT2014.q$Output[1:n])
+
+# the total requirment matrices (d)     (=the Leontief inverse)
+
+L.q     <- diag(x = 1, nrow=n, ncol = n) - A.q
+L.d.q   <- diag(x = 1, nrow=n, ncol = n) - A.d.q
+LI.q    <- inv(as.matrix(L.q))
+LI.d.q  <- inv(as.matrix(L.d.q))
+
+
+fd.q    <- df.IOT2014.q$Exports[1:n] + df.IOT2014.q$Household[1:n] + df.IOT2014.q$General.Government[1:n] + df.IOT2014.q$Capital.formation[1:n] + df.IOT2014.q$Changes.in.inventories[1:n]
+fd.d.q  <- df.IOT2014.dom.q$Exports[1:n] + df.IOT2014.dom.q$Household[1:n] + df.IOT2014.dom.q$General.Government[1:n] + df.IOT2014.dom.q$Capital.formation[1:n] + df.IOT2014.dom.q$Changes.in.inventories[1:n]
+
+s.d.q   <- fd.d.q/fd.q        # share domestic    #fd : final demand #fd.d # final demand met with domestic goods
+
+# the ratios to decompose output in va etc :
+
+vect.decompOutput <- c("Compensation of employees","Gross value added","Other taxes less subsidies","Net taxes on products","Gross operating surplus","Total")
+
+employment.per.production.q      <- df.NE.50I.QLFS$`201406`                                           /df.IOT2014.q$Output[1:n]
+wages.per.production.q           <- df.IOT2014.q[df.IOT2014.q$Description==vect.decompOutput[1],1:n+2]/df.IOT2014.q$Output[1:n]
+#VA.per.production             <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[2],1:n+2]/df.IOT2014.q$Output[1:n]
+#taxesOther.per.production     <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[3],1:n+2]/df.IOT2014.q$Output[1:n]
+#taxesProd.per.production      <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[4],1:n+2]/df.IOT2014.q$Output[1:n]
+#GOSurplus.per.production      <- df.IOT2014[df.IOT2014$Description==vect.decompOutput[5],1:n+2]/df.IOT2014.q$Output[1:n]
+#totalInputs.per.production    <- df.IOT2014.q[df.IOT2014.q$Description==vect.decompOutput[6],1:n+2]/df.IOT2014.q$Output[1:n] 
+#domesticInputs.per.production <- colSums(df.IOT2014.dom[1:50,1:n+3])/df.IOT2014.q$Output[1:n]
+#importedInputs.per.production <- colSums(df.IOT2014.imp[1:50,1:n+3])/df.IOT2014.q$Output[1:n]
+
+NE.per.production.q <- employment.per.production.q
+WS.per.production.q <- wages.per.production.q 
+# VA.per.production <- VA.per.production
+# TO.per.production <- taxesOther.per.production
+# TP.per.production <- taxesProd.per.production 
+# OS.per.production <- GOSurplus.per.production 
+# TI.per.production <- totalInputs.per.production
+# DI.per.production <- domesticInputs.per.production
+# MI.per.production <- importedInputs.per.production
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,7 @@ source("modelParameters.R")
 
 # Demand scenarios
 
-source("demandScenarios.R")
+source("demandScenarios.R") # need to amend (16/11) because df.CPI has changed
 
 # Analysis
 
@@ -27,6 +27,7 @@ source("employmentContent_DomImp.R")
 source("finaldemandDecomposition-function.R")
 #source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
 source("employmentContent_atRisk.R")
+source("employmentCoal_ExportDomestic.R")
 
 # Generating graphs
 
