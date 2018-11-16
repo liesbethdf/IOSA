@@ -98,7 +98,7 @@ df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m","mt","ZAR/t"
 
 df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m","mt","ZAR/t"))
 
-domesticDemand.coal.input <- function(yearHere, scenarioHere,market)
+domesticDemand.coal.input <- function(df.scen,yearHere, market)
 {
   df.dD              <- data.frame(Industry)
   colnames(df.dD)    <- "Industry"
@@ -157,11 +157,12 @@ domesticDemand.coal.input <- function(yearHere, scenarioHere,market)
   return(df.dD)
 }
 marketHere <- "Domestic"
-df.domesticDemand.coal.input <- domesticDemand.coal.input(2018,market=marketHere )
+df.domesticDemand.coal.input <- domesticDemand.coal.input(df.scen, yearHere=2018,market=marketHere )
 
-for (yearHere in df.scen$Year[2:18])
+for (yearHere in unique(df.scen$Year)[2:18])
+#for (yearHere in c(2025))
 {
-  temp <- domesticDemand.coal.input(yearHere, market=marketHere )
+  temp <- domesticDemand.coal.input(df.scen,yearHere=yearHere, market=marketHere )
   df.domesticDemand.coal.input <- bind_rows(df.domesticDemand.coal.input,temp)
 }
 

@@ -135,13 +135,13 @@ coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 ######## Construction of IOT with the coal row in volume
 
-p.d <- 50648.51 / 184416
-p.e <- 63581.9 / 75823
+p.d <- 50648.51 / 184416 * 1000
+p.e <- 63581.9 / 75823 * 1000
 
 df.IOT2014.dom.q <- df.IOT2014.dom
 
 df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")] <- 
-            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")]
+            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")] 
 
 df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")] <- 
             p.e^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")]

@@ -42,9 +42,9 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
     #  for(scenarioHere in c("Vol.BAU"))
     for(scenarioHere in c("BAU","2Deg"))
     {
-        yearHere <- 2025
+        yearHere <- 2018
        scenarioHere <- "BAU"
-       market <- "Domestic"
+       market <- "Export"
       
       vect.outputDecompHere <- initiate.outputDecomp
       
@@ -63,10 +63,12 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
       price.d.scen      <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere &
                                                       df.finalDemand.scenario$Case==scenarioHere &
                                                       df.finalDemand.scenario$Var=="Price.d", "Value" ]
-      price.d.scen <- price.e.scen
-      price.d.scen[4] <- price.e.scen [4]* 0.5
+#      price.d.scen <- price.e.scen
+#      price.d.scen[4] <- price.e.scen [4]* 0.5
       
       Xq.diHere   <-  LI.d.q %*% diag(demand.d.scen)
+      Xpq.diHere  <-  diag(price.d.scen) %*% (Xq.diHere - diag(demand.d.scen)) + diag(price.e.scen) %*% diag(demand.d.scen) # value of output given that intermediate inputs are sold at different price than exports
+
       
       # need the year's price to determine DI.per.production and MI.per.production 
       # input costs
@@ -75,19 +77,19 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
       DI.val.total              <- DI.vol.total * price.d.scen
       output.vectHere.val       <- DI.val.total + demand.d.scen.val
         
-      DI.per.production.matrix  <-  diag(price.d.scen) %*% A.d.q %*%  Xq.diHere
-      MI.per.production.matrix  <-  diag(price.e.scen) %*% A.m.q %*%  diag(output.vectHere) # we suppose price imports is same as price exports (internat price)
-      DI.per.production         <-  colSums(DI.per.production.matrix)/output.vectHere
-      MI.per.production         <-  colSums(MI.per.production.matrix)/output.vectHere
+      DI.per.production.matrix  <-  diag(price.d.scen) %*% A.d.q %*%  diag(output.vectHere) # contains per column the intermediary inputs (domestic) in value
+      MI.per.production.matrix  <-  diag(price.e.scen) %*% A.m.q %*%  diag(output.vectHere) # assumption is price imports is same as price exports (internat price)
+      DI.per.production         <-  colSums(DI.per.production.matrix)/output.vectHere.val
+      MI.per.production         <-  colSums(MI.per.production.matrix)/output.vectHere.val
       DI.per.production[is.na(DI.per.production)] <- 0
       MI.per.production[is.na(MI.per.production)] <- 0
-      # value of output given that intermediate inputs are sold at different price than exports
-      Xpq.diHere                   <-  rowSums(DI.per.production.matrix) + demand.d.scen.val
-
-#      Xpq.diHere  <-  diag(price.e.scen)        %*% LI.d.q %*% diag(demand.d.scen)
+ 
       WS.diHere   <-  diag(WS.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
-      Xpq.diHere - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
+      rowSums(Xpq.diHere) - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
+      
+      rowSums(Xpq.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
+      
       
       VA.diHere   <-  diag(VA.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
       TO.diHere   <-  diag(TO.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
