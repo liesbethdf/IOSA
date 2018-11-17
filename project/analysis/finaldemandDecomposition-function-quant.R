@@ -79,24 +79,36 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
         
       DI.per.production.matrix  <-  diag(price.d.scen) %*% A.d.q %*%  diag(output.vectHere) # contains per column the intermediary inputs (domestic) in value
       MI.per.production.matrix  <-  diag(price.e.scen) %*% A.m.q %*%  diag(output.vectHere) # assumption is price imports is same as price exports (internat price)
-      DI.per.production         <-  colSums(DI.per.production.matrix)/output.vectHere.val
-      MI.per.production         <-  colSums(MI.per.production.matrix)/output.vectHere.val
-      DI.per.production[is.na(DI.per.production)] <- 0
-      MI.per.production[is.na(MI.per.production)] <- 0
+      DI.per.production.q         <-  colSums(DI.per.production.matrix)/output.vectHere.val
+      MI.per.production.q         <-  colSums(MI.per.production.matrix)/output.vectHere.val
+      DI.per.production.q[is.na(DI.per.production.q)] <- 0
+      MI.per.production.q[is.na(MI.per.production.q)] <- 0
  
       WS.diHere   <-  diag(WS.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
-      rowSums(Xpq.diHere) - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
+      WS.per.production.q <- WS.per.production.q * output.vectHere / output.vectHere.val 
       
-      rowSums(Xpq.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
+      rest                <- rowSums(Xpq.diHere) - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
       
+      OS.per.production.q <- OS.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
+
+      TP.per.production.q <- TP.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
       
-      VA.diHere   <-  diag(VA.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
-      TO.diHere   <-  diag(TO.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
-      TP.diHere   <-  diag(TP.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
-      OS.diHere   <-  diag(OS.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
-      D.intHere   <-  diag(DI.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
-      MI.diHere   <-  diag(MI.per.production)   %*% LI.d.q %*% diag(demand.d.scen)
+      TO.per.production.q <- TO.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
+      
+      WS.per.production.q[is.na(MI.per.production.q)] <- 0
+      OS.per.production.q[is.na(DI.per.production.q)] <- 0
+      TP.per.production.q[is.na(MI.per.production.q)] <- 0
+      TO.per.production.q[is.na(MI.per.production.q)] <- 0
+      
+      VA.per.production.q <- OS.per.production.q + TO.per.production.q + WS.per.production.test
+      
+      VA.diHere   <-  diag(VA.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      TO.diHere   <-  diag(TO.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      TP.diHere   <-  diag(TP.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      OS.diHere   <-  diag(OS.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      D.intHere   <-  diag(DI.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      MI.diHere   <-  diag(MI.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
       NE.diHere   <-  diag(employment.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
       X.val.diHere<-  LI.d.q %*% diag(demand.d.scen) - diag(demand.d.scen) + diag(demand.d.scen.val)
