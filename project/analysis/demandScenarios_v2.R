@@ -6,99 +6,9 @@
 
 df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m","mt","ZAR/t"))
 
+############ function for demand scenarios with coal demand from CPI, the others sectors 0
 
-## Final demand from 2014 SA IOT
-
-# yearHere <- df.scen$Year[1]
-# 
-# vect.exp  <-  df.IOT2014$Exports[1:n] 
-# vect.cons <-  df.IOT2014$Household[1:n] 
-# vect.gov  <-  df.IOT2014$General.Government[1:n] 
-# vect.gfcf <-  df.IOT2014$Capital.formation[1:n]
-# vect.chi  <-  df.IOT2014$Changes.in.inventories[1:n]
-# 
-# demand.d <-  function(vect.exp, vect.cons, vect.gov, vect.gfcf, vect.chi)
-# {
-#   diag(s.d.exp)   %*%   vect.exp +
-#     diag(s.d.cons)  %*%   vect.cons +
-#     diag(s.d.gov)   %*%   vect.gov +
-#     diag(s.d.gfcf)  %*%   vect.gfcf +
-#     diag(s.d.chi)   %*%   vect.chi
-# }
-# 
-# demand.m <-  function(vect.exp, vect.cons, vect.gov, vect.gfcf, vect.chi)
-# {
-#   diag(s.m.exp)   %*%   vect.exp +
-#     diag(s.m.cons)  %*%   vect.cons +
-#     diag(s.m.gov)   %*%   vect.gov +
-#     diag(s.m.gfcf)  %*%   vect.gfcf +
-#     diag(s.m.chi)   %*%   vect.chi
-# }
-# 
-# ############ below is the construction of domestic demand scenarios as in 2014 IOT and for coal the CPI projections
-# 
-# domesticDemand.input <- function(yearHere)
-# {
-#   df.dD              <- data.frame(Industry)
-#   colnames(df.dD)    <- "Industry"
-#   df.dD$SIC          <- SIC
-#   df.dD$Year         <- rep(yearHere,n)
-#   
-#   vect.expHere          <- vect.exp
-#   vect.expHere[4]       <- df.scen[df.scen$Year==yearHere,"V.BAU.Cal"]
-#   demandHereD           <- demand.d(vect.expHere, vect.cons, vect.gov, vect.gfcf, vect.chi) 
-#   demandHereM           <- demand.m(vect.expHere, vect.cons, vect.gov, vect.gfcf, vect.chi) 
-#   df.dD$Vol.demandD.BAU <- demandHereD
-#   df.dD$Vol.demandM.BAU <- demandHereM
-#   
-#   priceHere             <- rep(1,50)
-#   priceHere[4]          <- df.scen[df.scen$Year==yearHere,"P.BAU.Cal"]
-#   df.dD$Price.e.BAU     <- priceHere
-#   
-#   vect.expHere          <- vect.exp
-#   vect.expHere[4]       <- df.scen[df.scen$Year==yearHere,"V.2Deg.Cal"]
-#   demandHereD           <- demand.d(vect.expHere, vect.cons, vect.gov, vect.gfcf, vect.chi) 
-#   demandHereM           <- demand.m(vect.expHere, vect.cons, vect.gov, vect.gfcf, vect.chi) 
-#   df.dD$Vol.demandD.2Deg<- demandHereD
-#   df.dD$Vol.demandM.2Deg<- demandHereM
-#   
-#   priceHere             <- rep(1,50)
-#   priceHere[4]          <- df.scen[df.scen$Year==yearHere,"P.2Deg.Cal"]
-#   df.dD$Price.e.2Deg    <- priceHere
-#   
-#   df.dD$Value.demandD.BAU    <- df.dD$Vol.demandD.BAU  * df.dD$Price.e.BAU
-#   df.dD$Value.demandD.2Deg   <- df.dD$Vol.demandD.2Deg * df.dD$Price.e.2Deg
-#   df.dD$Value.demandM.BAU    <- df.dD$Vol.demandM.BAU  * df.dD$Price.e.BAU
-#   df.dD$Value.demandM.2Deg   <- df.dD$Vol.demandM.2Deg * df.dD$Price.e.2Deg
-#   
-#   return(df.dD)
-# }
-# 
-# df.domesticDemand.input <- domesticDemand.input(2018)
-# 
-# for (yearHere in df.scen$Year[2:18])
-# {
-#   temp <- domesticDemand.input(yearHere)
-#   df.domesticDemand.input <- bind_rows(df.domesticDemand.input,temp)
-# }
-# 
-# df.domesticDemand.input <- df.domesticDemand.input %>% gather(Var, Value, -Industry, -SIC, -Year)
-# split     <- strsplit(df.domesticDemand.input$Var,split='.', fixed=TRUE)
-# part1    <- unlist(split)[3*(1:length(split))-2]
-# part2    <- unlist(split)[3*(1:length(split))-1]
-# part3    <- unlist(split)[3*(1:length(split))]
-# df.domesticDemand.input$Case <- part3
-# df.domesticDemand.input$Var  <-paste(part1,part2,sep=".")
-# 
-# # this is the result : df.domesticDemand.input
-# 
-# cat("Demand scenario as input with 2014 demand everywhere except for coal=CPI : df.domesticDemand.input","\n","\n")
-
-############ demand scenarios with coal export only, the others 0
-
-df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m","mt","ZAR/t"))
-
-domesticDemand.coal.input <- function(df.scen,yearHere, market)
+domesticDemand.coal.zeros <- function(df.scen,yearHere, market)
 {
   df.dD              <- data.frame(Industry)
   colnames(df.dD)    <- "Industry"
@@ -156,27 +66,45 @@ domesticDemand.coal.input <- function(df.scen,yearHere, market)
   
   return(df.dD)
 }
-marketHere <- "Domestic"
-df.domesticDemand.coal.input <- domesticDemand.coal.input(df.scen, yearHere=2018,market=marketHere )
 
-for (yearHere in unique(df.scen$Year)[2:18])
-#for (yearHere in c(2025))
+## put in handy format
+
+domesticDemand.coal <- function(df.scen, market)
 {
-  temp <- domesticDemand.coal.input(df.scen,yearHere=yearHere, market=marketHere )
-  df.domesticDemand.coal.input <- bind_rows(df.domesticDemand.coal.input,temp)
+#  market              <- "Domestic"
+#  fileName                <- paste("df.domesticDemand.coal", market,sep=".")
+  df.domesticDemand.coal  <- domesticDemand.coal.zeros(df.scen, yearHere=2018,market=market )
+  
+  for (yearHere in unique(df.scen$Year)[2:18])
+    #for (yearHere in c(2025))
+  {
+    temp <- domesticDemand.coal.zeros(df.scen, yearHere=yearHere, market=market )
+    df.domesticDemand.coal <- bind_rows(df.domesticDemand.coal,temp)
+  }
+  
+  df.demand <- df.domesticDemand.coal %>% gather(Var, Value, -Industry, -SIC, -Year)
+  split     <- strsplit(df.demand$Var,split='.', fixed=TRUE)
+  part1    <- unlist(split)[3*(1:length(split))-2]
+  part2    <- unlist(split)[3*(1:length(split))-1]
+  part3    <- unlist(split)[3*(1:length(split))]
+  df.demand$Case <- part3
+  df.demand$Var  <-paste(part1,part2,sep=".")
+
+#  results <- list(market,df.demand)
+  return(df.demand)
+  
 }
+  
+############ demand scenarios with coal export demand from CPI, the others sectors 0
 
-df.domDemand.coal.input.v2 <- df.domesticDemand.coal.input %>% gather(Var, Value, -Industry, -SIC, -Year)
-split     <- strsplit(df.domDemand.coal.input.v2$Var,split='.', fixed=TRUE)
-part1    <- unlist(split)[3*(1:length(split))-2]
-part2    <- unlist(split)[3*(1:length(split))-1]
-part3    <- unlist(split)[3*(1:length(split))]
-df.domDemand.coal.input.v2$Case <- part3
-df.domDemand.coal.input.v2$Var  <-paste(part1,part2,sep=".")
+df.domesticDemand.coalExport <- domesticDemand.coal(df.scen, market="Export" )
 
-# this is the result : df.domDemand.coal.input.v2
+cat("Demand scenario as input with zero demand all sectors except for coal export : df.domesticDemand.coalExport","\n","\n")
 
-cat("Demand scenario as input with zero demand everywhere except for coal : df.domDemand.coal.input.v2","\n","\n")
+
+df.domesticDemand.coalDomestic <- domesticDemand.coal(df.scen, market="Domestic" )
+
+cat("Demand scenario as input with zero demand all sector except for domestic coal use : df.domesticDemand.coalDomestic","\n","\n")
 
 
 

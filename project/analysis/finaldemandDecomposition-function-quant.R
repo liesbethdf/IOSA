@@ -3,31 +3,33 @@
 ############ Decomposition of output into imports, taxes, labour and capital share
 ############ + Employment effect
 ############################################
-df.finalDemand.scenario <- df.domDemand.coal.input.v2
-finaldemandDecomposition <- function(df.finalDemand.scenario, market)
+#df.finalDemand.scenario <- df.domDemand.coal.input.v2
+#df.finalDemand.scenario <- df.domesticDemand.coal.export
+finaldemandDecomposition <- function(df.finalDemand.scenario)
 {
   colnamesHere.di             <- c(Order,"Industry","Year","Var","Case")
   colnamesHere.finDemand      <- c("Final.demand.imp","Industry","Year","Var","Case") 
-  colnamesHere.outputDecomp   <- c("Year", "Scenario","Industry","Vol.demand.dom","Value.demand.dom","Vol.demand.imp","Value.demand.imp","Price","Output.vol", "Output.value",
-                                   "Dom.inputs","Imp.inputs", "Taxes.prod.vol", "VA.vol", "Wages", "Taxes.other.vol","Gross.op.surplus.vol",
-                                   "Taxes.other.value", "Gross.op.surplus.value", "Taxes.prod.value", "VA.value")
+  colnamesHere.outputDecomp   <- c("Year", "Scenario","Industry","Vol.demand.dom","Value.demand.dom","Vol.demand.imp","Value.demand.imp","Price.export",
+                                   "Price.domestic","Output.value", "Dom.inputs","Imp.inputs", "Taxes.prod", "VA", "Wages", 
+                                    "Taxes.other","Gross.op.surplus")
   
-  X.di            <- data.frame(matrix(ncol = length(colnamesHere.di), nrow = 0))
-  colnames(X.di)  <- colnamesHere.di
-  WS.di       <- X.di
-  VA.di       <- X.di
-  TO.di       <- X.di
-  TP.di       <- X.di
-  OS.di       <- X.di
-  D.int       <- X.di # Domestic inputs (costs)
-  M.int       <- X.di # Imported inputs (costs) again, more detailed
-  MI.di       <- X.di # Imported inputs (costs)
-  NE.di       <- X.di # Number of employees
-  X.val.di    <- X.di
-  TO.val.di   <- X.di
-  TP.val.di   <- X.di
-  OS.val.di   <- X.di
-  VA.val.di   <- X.di
+  Xq.di            <- data.frame(matrix(ncol = length(colnamesHere.di), nrow = 0))
+  colnames(Xq.di)  <- colnamesHere.di
+  Xpq.di      <- Xq.di
+  WS.di       <- Xq.di
+  VA.di       <- Xq.di
+  TO.di       <- Xq.di
+  TP.di       <- Xq.di
+  OS.di       <- Xq.di
+  DI.di       <- Xq.di # Domestic inputs (costs)
+  M.int       <- Xq.di # Imported inputs (costs) again, more detailed
+  MI.di       <- Xq.di # Imported inputs (costs)
+  NE.di       <- Xq.di # Number of employees
+  # X.val.di    <- Xq.di
+  # TO.val.di   <- Xq.di
+  # TP.val.di   <- Xq.di
+  # OS.val.di   <- Xq.di
+  # VA.val.di   <- Xq.di
   
 #  M.finalDemand             <- data.frame(matrix(ncol = length(colnamesHere.finDemand), nrow = 0))
 #  colnames(M.finalDemand)   <- colnamesHere.finDemand
@@ -42,10 +44,10 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
     #  for(scenarioHere in c("Vol.BAU"))
     for(scenarioHere in c("BAU","2Deg"))
     {
-        yearHere <- 2018
-       scenarioHere <- "BAU"
-       market <- "Export"
-      
+      # yearHere <- 2018
+      # scenarioHere <- "BAU"
+      # market <- "Export"
+      # 
       vect.outputDecompHere <- initiate.outputDecomp
       
       demand.d.scen     <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere &
@@ -61,15 +63,12 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
                                                    df.finalDemand.scenario$Var=="Price.e", "Value" ]
       
       price.d.scen      <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere &
-                                                      df.finalDemand.scenario$Case==scenarioHere &
-                                                      df.finalDemand.scenario$Var=="Price.d", "Value" ]
-#      price.d.scen <- price.e.scen
-#      price.d.scen[4] <- price.e.scen [4]* 0.5
+                                                   df.finalDemand.scenario$Case==scenarioHere &
+                                                   df.finalDemand.scenario$Var=="Price.d", "Value" ]
       
       Xq.diHere   <-  LI.d.q %*% diag(demand.d.scen)
       Xpq.diHere  <-  diag(price.d.scen) %*% (Xq.diHere - diag(demand.d.scen)) + diag(price.e.scen) %*% diag(demand.d.scen) # value of output given that intermediate inputs are sold at different price than exports
 
-      
       # need the year's price to determine DI.per.production and MI.per.production 
       # input costs
       output.vectHere           <- rowSums(Xq.diHere) # the total output needed for all sectors is volume terms 
@@ -91,42 +90,42 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
       rest                <- rowSums(Xpq.diHere) - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
       
       OS.per.production.q <- OS.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
-
       TP.per.production.q <- TP.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
-      
       TO.per.production.q <- TO.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
       
-      WS.per.production.q[is.na(MI.per.production.q)] <- 0
-      OS.per.production.q[is.na(DI.per.production.q)] <- 0
-      TP.per.production.q[is.na(MI.per.production.q)] <- 0
-      TO.per.production.q[is.na(MI.per.production.q)] <- 0
+      WS.per.production.q[is.na(WS.per.production.q)] <- 0
+      OS.per.production.q[is.na(OS.per.production.q)] <- 0
+      TP.per.production.q[is.na(TP.per.production.q)] <- 0
+      TO.per.production.q[is.na(TO.per.production.q)] <- 0
       
-      VA.per.production.q <- OS.per.production.q + TO.per.production.q + WS.per.production.test
+      VA.per.production.q <- OS.per.production.q + TO.per.production.q + WS.per.production.q
+      VA.per.production.q[is.na(VA.per.production.q)] <- 0
       
-      VA.diHere   <-  diag(VA.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
-      TO.diHere   <-  diag(TO.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
-      TP.diHere   <-  diag(TP.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
-      OS.diHere   <-  diag(OS.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
-      D.intHere   <-  diag(DI.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
-      MI.diHere   <-  diag(MI.per.production.q)   %*% LI.d.q %*% diag(demand.d.scen)
+      VA.diHere   <-  diag(VA.per.production.q)   %*% Xpq.diHere 
+      TO.diHere   <-  diag(TO.per.production.q)   %*% Xpq.diHere 
+      TP.diHere   <-  diag(TP.per.production.q)   %*% Xpq.diHere 
+      OS.diHere   <-  diag(OS.per.production.q)   %*% Xpq.diHere 
+      DI.diHere   <-  diag(DI.per.production.q)   %*% Xpq.diHere 
+      MI.diHere   <-  diag(MI.per.production.q)   %*% Xpq.diHere 
       NE.diHere   <-  diag(employment.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
-      X.val.diHere<-  LI.d.q %*% diag(demand.d.scen) - diag(demand.d.scen) + diag(demand.d.scen.val)
+#      X.val.diHere<-  LI.d.q %*% diag(demand.d.scen) - diag(demand.d.scen) + diag(demand.d.scen.val)
       
-      VAscaler <- (X.val.diHere - D.intHere - MI.diHere - WS.diHere)/ (TO.diHere + OS.diHere + TP.diHere)
-      VAscaler[is.na(VAscaler)] <- 1
+#      VAscaler <- (X.val.diHere - DI.diHere - MI.diHere - WS.diHere)/ (TO.diHere + OS.diHere + TP.diHere)
+#      VAscaler[is.na(VAscaler)] <- 1
       
-      TO.val.diHere   <-  TO.diHere * VAscaler
-      TP.val.diHere   <-  TP.diHere * VAscaler
-      OS.val.diHere   <-  OS.diHere * VAscaler
+#      TO.val.diHere   <-  TO.diHere * VAscaler
+#      TP.val.diHere   <-  TP.diHere * VAscaler
+#      OS.val.diHere   <-  OS.diHere * VAscaler
       
-      VA.val.diHere   <-  WS.diHere + OS.val.diHere + TO.val.diHere
+#      VA.val.diHere   <-  WS.diHere + OS.val.diHere + TO.val.diHere
       
-      df.list   <- list(X.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere, D.intHere, MI.diHere, NE.diHere, 
-                        X.val.diHere, TO.val.diHere, TP.val.diHere, OS.val.diHere, VA.val.diHere)
-      names.var <- c("Output","Compensation employees", "Gross value added", "Other taxes", "Taxes on production", "Gross operating surplus", 
-                     "Domestic inputs","Imported inputs","Employment", "Output in value", "Other taxes, value", "Taxes on production, value", 
-                     "Gross operating surplus, value", "Value added, value") 
+      df.list   <- list(Xq.diHere, Xpq.diHere, WS.diHere, VA.diHere, TO.diHere, TP.diHere, OS.diHere, DI.diHere, MI.diHere, NE.diHere) 
+                        #X.val.diHere, TO.val.diHere, TP.val.diHere, OS.val.diHere, VA.val.diHere)
+      names.var <- c("Output volume","Output value","Compensation employees", "Gross value added value", "Other taxes value", "Taxes on production value", 
+                     "Gross operating surplus value", "Domestic inputs value","Imported inputs value","Employment") 
+      
+      #, "Output in value", "Other taxes, value", "Taxes on production, value", "Gross operating surplus, value", "Value added, value") 
       for(i in 1:length(df.list))
       {
         df            <- data.frame(df.list[[i]])
@@ -138,20 +137,21 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
         df.list[[i]]  <- df
       }
       
-      X.di        <- bind_rows(X.di,df.list[[1]]) 
-      WS.di       <- bind_rows(WS.di,df.list[[2]]) 
-      VA.di       <- bind_rows(VA.di,df.list[[3]]) 
-      TO.di       <- bind_rows(TO.di,df.list[[4]]) 
-      TP.di       <- bind_rows(TP.di,df.list[[5]]) 
-      OS.di       <- bind_rows(OS.di,df.list[[6]]) 
-      D.int       <- bind_rows(D.int,df.list[[7]]) 
-      MI.di       <- bind_rows(MI.di,df.list[[8]]) 
-      NE.di       <- bind_rows(NE.di,df.list[[9]]) 
-      X.val.di    <- bind_rows(X.val.di,df.list[[10]]) 
-      TO.val.di   <- bind_rows(TO.val.di,df.list[[11]]) 
-      TP.val.di   <- bind_rows(TP.val.di,df.list[[12]]) 
-      OS.val.di   <- bind_rows(OS.val.di,df.list[[13]]) 
-      VA.val.di   <- bind_rows(VA.val.di,df.list[[14]]) 
+      Xq.di       <- bind_rows(Xq.di,df.list[[1]]) 
+      Xpq.di      <- bind_rows(Xpq.di,df.list[[2]]) 
+      WS.di       <- bind_rows(WS.di,df.list[[3]]) 
+      VA.di       <- bind_rows(VA.di,df.list[[4]]) 
+      TO.di       <- bind_rows(TO.di,df.list[[5]]) 
+      TP.di       <- bind_rows(TP.di,df.list[[6]]) 
+      OS.di       <- bind_rows(OS.di,df.list[[7]]) 
+      DI.di       <- bind_rows(DI.di,df.list[[8]]) 
+      MI.di       <- bind_rows(MI.di,df.list[[9]]) 
+      NE.di       <- bind_rows(NE.di,df.list[[10]]) 
+      # X.val.di    <- bind_rows(X.val.di,df.list[[10]]) 
+      # TO.val.di   <- bind_rows(TO.val.di,df.list[[11]]) 
+      # TP.val.di   <- bind_rows(TP.val.di,df.list[[12]]) 
+      # OS.val.di   <- bind_rows(OS.val.di,df.list[[13]]) 
+      # VA.val.di   <- bind_rows(VA.val.di,df.list[[14]]) 
       
   #    M.finalDemandHere           <-  diag(s.m.exp)   %*%   demand.d.scen # no this is incorrect, demand.d.scen is domestic demand not total, the following lines are incorrect
   #    M.finalDemandHere           <-  data.frame(M.finalDemandHere)
@@ -162,7 +162,7 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
   #    M.finalDemandHere$Case      <- rep(scenarioHere,n)
   #    M.finalDemand               <- bind_rows(M.finalDemand, M.finalDemandHere)
       
-      X1.di                       <- diag(X.diHere[,1])
+      X1.di                       <- diag(Xq.diHere[,1])
       M.int.1                     <- A.m %*% X1.di
       M.intHere                   <- data.frame(M.int.1)
       colnames(M.intHere)         <- Order
@@ -173,7 +173,7 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
       
       for (k in 2:50)
       {
-        Xk.di                 <- diag(X.diHere[,k])
+        Xk.di                 <- diag(Xq.diHere[,k])
         M.int.k               <- data.frame(round(A.m %*% Xk.di,6))
         colnames(M.int.k)     <- Order
         M.int.k$Industry      <- rep(Order[k],n)
@@ -215,32 +215,24 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
                                                                                                                    df.finalDemand.scenario$Case==scenarioHere &
                                                                                                                    df.finalDemand.scenario$Industry==Industry[s]
                                                                                                                  ,"Value"]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price"]         <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere & 
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price.export"]      <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere & 
                                                                                                                df.finalDemand.scenario$Var=="Price.e" & 
                                                                                                                df.finalDemand.scenario$Case==scenarioHere &
                                                                                                                df.finalDemand.scenario$Industry==Industry[s]
                                                                                                              ,"Value"]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]    <- rowSums(X.diHere)[s]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]  <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Value.demand.dom"] + 
-                                                                                     vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.vol"]-
-                                                                                     vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Vol.demand.dom"]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]              <- rowSums(D.intHere)[s]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Price.domestic"]    <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere & 
+                                                                                                                      df.finalDemand.scenario$Var=="Price.d" & 
+                                                                                                                      df.finalDemand.scenario$Case==scenarioHere &
+                                                                                                                      df.finalDemand.scenario$Industry==Industry[s]
+                                                                                                                    ,"Value"]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"]      <- rowSums(Xpq.diHere)[s]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Dom.inputs"]              <- rowSums(DI.diHere)[s]
         vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Imp.inputs"]              <- rowSums(MI.diHere)[s] #colSums(M.intHere[,1:50])[s] yields the same
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.vol"]          <- rowSums(TP.diHere)[s]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.vol"]                  <- rowSums(VA.diHere)[s]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod"]              <- rowSums(TP.diHere)[s]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA"]                      <- rowSums(VA.diHere)[s]
         vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]                   <- rowSums(WS.diHere)[s]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.vol"]         <- rowSums(TO.diHere)[s]
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.vol"]    <- rowSums(OS.diHere)[s] 
-        
-        VAscaler <- (vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Output.value"] - rowSums(D.intHere)[s] - rowSums(MI.diHere)[s] - rowSums(WS.diHere)[s])/
-          (rowSums(TO.diHere)[s] + rowSums(OS.diHere)[s] + rowSums(TP.diHere)[s])
-        
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"]       <- rowSums(TO.diHere)[s] * VAscaler
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"]  <- rowSums(OS.diHere)[s] * VAscaler
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.prod.value"]        <- rowSums(TP.diHere)[s] * VAscaler
-        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="VA.value"]                <- vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other.value"] +
-                                                                                               vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus.value"] +
-                                                                                               vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Wages"]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Taxes.other"]             <- rowSums(TO.diHere)[s]
+        vect.outputDecompHere[1,colnames(vect.outputDecompHere)=="Gross.op.surplus"]        <- rowSums(OS.diHere)[s] 
         
         df.outputDecomp <- bind_rows(df.outputDecomp, vect.outputDecompHere)
         vect.outputDecompHere <- initiate.outputDecomp
@@ -250,22 +242,18 @@ finaldemandDecomposition <- function(df.finalDemand.scenario, market)
     }
     
   }
-  results <- list(list("Output, direct and indirect, volume",X.di),        #1
-                  list("Compensation of employees",WS.di),                 #2
-                  list("Value added, volume",VA.di),                       #3
-                  list("Other taxes, volume",TO.di),                       #4
-                  list("Net taxes on production, volume",TP.di),           #5
-                  list("Gross operating surplus, volume",OS.di),           #6
-                  list("Domestically produced inputs, volume",D.int),      #7
-                  list("Imported inputs, volume",MI.di),                   #8
-                  list("Imported inputs, detailed, volume",M.int),         #9
+  results <- list(list("Output, direct and indirect, volume",Xq.di),      #1
+                  list("Output, direct and indirect, value",Xpq.di),      #2
+                  list("Compensation of employees", WS.di),               #3
+                  list("Value added",VA.di),                              #4
+                  list("Other taxes",TO.di),                              #5
+                  list("Net taxes on production",TP.di),                  #6
+                  list("Gross operating surplus",OS.di),                  #7
+                  list("Domestically produced inputs",D.int),             #8
+                  list("Imported inputs",MI.di),                          #9
+              #    list("Imported inputs, detailed, volume",M.int),        #10
                   list("Number of employees",NE.di),                      #10
-                  list("Output, direct and indirect, value",X.val.di),    #11
-                  list("Other taxes, value",TO.val.di),                   #12
-                  list("Taxes on production, value",TP.val.di),           #13
-                  list("Gross operating surplus, value",OS.val.di),       #14
-                  list("Value added, value", VA.val.di),                  #15
-                  list("Summary",df.outputDecomp))                        #16
+                  list("Summary",df.outputDecomp))                        #11
   return(results)
 }
 
