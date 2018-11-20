@@ -135,34 +135,38 @@ coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 ######## Construction of IOT with the coal row in volume
 
-p.d <- 50648.51 / 184416 * 1000
-p.e <- 63581.9 / 75823 * 1000
+p.d <- 50648.51 / 184.416
+p.e <- 63581.9 / 75.823
 
 df.IOT2014.dom.q <- df.IOT2014.dom
 
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")] <- 
-            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","Changes.in.inventories")] 
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] <- 
+            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] 
 
 df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")] <- 
             p.e^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")]
+
+df.IOT2014.dom.q[4,"Output"]       <- sum(df.IOT2014.dom.q[4,c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories")])
 
 #sum(df.IOT2014.dom.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
   
 df.IOT2014.imp.q <- df.IOT2014.imp
 
-df.IOT2014.imp.q[4, colnames(df.IOT2014.imp.q) %in% c(Order,"Household","Changes.in.inventories","Exports","Imports")] <- 
-            p.e^(-1)   * df.IOT2014.imp.q[4,colnames(df.IOT2014.imp.q) %in% c(Order,"Household","Changes.in.inventories","Exports","Imports")]
+df.IOT2014.imp.q[4, colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")] <- 
+            p.e^(-1)   * df.IOT2014.imp.q[4,colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")]
 
 #sum(df.IOT2014.imp.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
 
 df.IOT2014.q                              <- df.IOT2014
-df.IOT2014.q[4,1:50+2]                    <- df.IOT2014.dom.q[4,1:50+3] + df.IOT2014.imp.q[4,1:50+3]
-df.IOT2014.q[4,"Total.Industry"]          <- sum(df.IOT2014.q[4,1:50+2])
+df.IOT2014.q[4,Order]                    <- df.IOT2014.dom.q[4,Order] + df.IOT2014.imp.q[4,Order]
+df.IOT2014.q[4,"Total.Industry"]          <- sum(df.IOT2014.q[4,Order])
 df.IOT2014.q[4,"Household"]               <- df.IOT2014.dom.q[4,"Household"] + df.IOT2014.imp.q[4,"Household"] 
 df.IOT2014.q[4,"Exports"]                 <- df.IOT2014.dom.q[4,"Exports"] + df.IOT2014.imp.q[4,"Exports"] 
 df.IOT2014.q[4,"Imports"]                 <- - df.IOT2014.imp.q[4,"Imports"] 
 df.IOT2014.q[4,"Changes.in.inventories"]  <- df.IOT2014.dom.q[4,"Changes.in.inventories"] + df.IOT2014.imp.q[4,"Changes.in.inventories"]
-df.IOT2014.q[4,"Output"]                  <- sum(df.IOT2014.q[4,c("Total.Industry","Household","Exports","Imports","Changes.in.inventories")])
+df.IOT2014.q[4,"Capital.formation"]       <- df.IOT2014.dom.q[4,"Capital.formation"] + df.IOT2014.imp.q[4,"Capital.formation"]
+df.IOT2014.q[4,"General.Government"]  <- df.IOT2014.dom.q[4,"General.Government"] + df.IOT2014.imp.q[4,"General.Government"]
+df.IOT2014.q[4,"Output"]                  <- sum(df.IOT2014.q[4,c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")])
 
 #the direct requirement matrices (m&d) (=the A matrices) with tons for coal  
 

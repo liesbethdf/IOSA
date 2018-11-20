@@ -62,15 +62,15 @@ setwd(dir.ANALYSIS)
 
 ############ Graph of coal export data
 
-df.plot         <- df.CPI %>% filter(!df.CPI$Unit=="mt") %>% select(-Var, -Unit) %>% spread(Variable, Value)
+df.plot         <- df.CPI %>% filter(df.CPI$Unit %in% c("mt","USD/t")) %>% select(-Var, -Var.type, -Unit) %>% spread(Variable, Value)
 df.plot$"Value" <- df.plot$`Export Price` * df.plot$`Export Volumes`
-df.plot         <- df.plot %>% gather(Variable, Value, -Case, -Year)
+df.plot         <- df.plot %>% gather(Variable, Value, -Case, -Year, -Market)
 #df.plot         <- df.plot %>% filter(!df.plot$Variable=="Value")
 df.plot$Case    <- factor(df.plot$Case, levels =c("BAU","2Deg"))
 df.plot         <- df.plot[order(df.plot$Case),]
 
 levels.Var      <- c("Export Volumes", "Export Price", "Value")
-labels.Var      <- c("Exported volumes, mtce", "Export price, USD/mtce", "Revenue from coal export, USD")
+labels.Var      <- c("Exported volumes, mt", "Export price, USD/t", "Revenue from coal export, USD")
 
 df.plot$Variable <- factor(df.plot$Variable, levels=levels.Var, labels=labels.Var)
 df.plot          <- df.plot[order(df.plot$Variable),]
@@ -114,17 +114,17 @@ df.CPI.domestic <- data.frame(read_excel(data,
 df.CPI.domestic <- df.CPI.domestic %>% gather(Year, Value, -Case, -Plants, -Variable, -Unit)
 
 df.CPI.domestic$Year      <- as.numeric(substr(df.CPI.domestic$Year, 2,5))
-unique(df.CPI.domestic$Variable)
+#unique(df.CPI.domestic$Variable)
 
-df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal costs", "Variable"]        <- "Total cost"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal costs", "Variable"]             <- "Total cost"
-df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal consumption", "Variable"]  <- "Total volume consumed"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal consumption", "Variable"]       <- "Total volume consumed"
-df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal price", "Variable"]        <- "Price"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Variable"]             <- "Price"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal costs", "Variable"]        <- "Total cost, ZAR"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal costs", "Variable"]             <- "Total cost, ZAR"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal consumption", "Variable"]  <- "Total volume consumed, mt"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal consumption", "Variable"]       <- "Total volume consumed, mt"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal price", "Variable"]        <- "Price, ZAR/t"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Variable"]             <- "Price, ZAR/t"
 
 df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable)
-levelsDomestic            <- c("Total volume consumed", "Price", "Total cost")
+levelsDomestic            <- c("Total volume consumed, mt", "Price, ZAR/t", "Total cost, ZAR")
 df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable, levels=levelsDomestic)
 df.CPI.domestic           <- df.CPI.domestic %>% filter(!df.CPI.domestic$Unit=="index" & df.CPI.domestic$Plant=="All") 
 
@@ -155,7 +155,7 @@ setwd(dir.ANALYSIS)
 df.CPI.total            <- df.CPI.domestic %>% select(-Plants)
 df.CPI.total$Market     <- "Domestic"
 df.CPI.total$Var.type   <- df.CPI.total$Variable
-df.CPI.total$Var.type   <- factor(df.CPI.total$Var.type, levels=c("Total volume consumed", "Price", "Total cost"), labels=c("Volume","Price","Value"))
+df.CPI.total$Var.type   <- factor(df.CPI.total$Var.type, levels=c("Total volume consumed, mt", "Price, ZAR/t", "Total cost, ZAR"), labels=c("Volume","Price","Value"))
 
 
 df.CPI.total$Var[!df.CPI.total$Var.type=="Value"] <- substr(df.CPI.total$Var.type[!df.CPI.total$Var.type=="Value"],1,1)

@@ -331,3 +331,4 @@ setwd(dir.PLOTS)
 fileName.graph <- paste("ECdecomposition-avg-PQ-indirect",yearHere, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
+setwd(dir.ANALYSIS)

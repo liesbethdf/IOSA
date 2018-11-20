@@ -5,7 +5,7 @@
 ############################################
 #df.finalDemand.scenario <- df.domDemand.coal.input.v2
 #df.finalDemand.scenario <- df.domesticDemand.coal.export
-finaldemandDecomposition <- function(df.finalDemand.scenario)
+finaldemandDecomposition.q <- function(df.finalDemand.scenario)
 {
   colnamesHere.di             <- c(Order,"Industry","Year","Var","Case")
   colnamesHere.finDemand      <- c("Final.demand.imp","Industry","Year","Var","Case") 
@@ -249,7 +249,7 @@ finaldemandDecomposition <- function(df.finalDemand.scenario)
                   list("Other taxes",TO.di),                              #5
                   list("Net taxes on production",TP.di),                  #6
                   list("Gross operating surplus",OS.di),                  #7
-                  list("Domestically produced inputs",D.int),             #8
+                  list("Domestically produced inputs",DI.di),             #8
                   list("Imported inputs",MI.di),                          #9
               #    list("Imported inputs, detailed, volume",M.int),        #10
                   list("Number of employees",NE.di),                      #10

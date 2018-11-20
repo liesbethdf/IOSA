@@ -19,12 +19,14 @@ source("modelParameters.R")
 
 # Demand scenarios
 
-source("demandScenarios.R") # need to amend (16/11) because df.CPI has changed
+source("demandScenarios.R")
+source("demandScenarios_v2.R")
 
 # Analysis
 
 source("employmentContent_DomImp.R")
-source("finaldemandDecomposition-function.R")
+source("finaldemandDecomposition-function.R")       # 2014 prices calibrated to one and constant
+source("finaldemandDecomposition-function-quant.R") # not 2014 prices but coal in million tons
 #source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
 source("employmentContent_atRisk.R")
 source("employmentCoal_ExportDomestic.R")
@@ -32,8 +34,8 @@ source("employmentCoal_ExportDomestic.R")
 # Generating graphs
 
 #source("demandDecomposition_Stats.R")
-source("employmentDecomposition_Graphs.R")
-source("demandDecomposition_Graphs.R")
+source("employmentDecomposition_Graphs.R") # Verification needed
+source("demandDecomposition_Graphs.R")     # Verification needed
 
 
 # Below not sure if useful
