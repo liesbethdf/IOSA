@@ -73,9 +73,9 @@ domesticDemand.coal <- function(df.scen, market)
 {
 #  market              <- "Domestic"
 #  fileName                <- paste("df.domesticDemand.coal", market,sep=".")
-  df.domesticDemand.coal  <- domesticDemand.coal.zeros(df.scen, yearHere=2018,market=market )
+  df.domesticDemand.coal  <- domesticDemand.coal.zeros(df.scen, yearHere=2018, market=market )
   
-  for (yearHere in unique(df.scen$Year)[2:18])
+  for (yearHere in yearsCPI[2:18])
     #for (yearHere in c(2025))
   {
     temp <- domesticDemand.coal.zeros(df.scen, yearHere=yearHere, market=market )

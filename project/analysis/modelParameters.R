@@ -158,14 +158,14 @@ df.IOT2014.imp.q[4, colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household
 #sum(df.IOT2014.imp.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
 
 df.IOT2014.q                              <- df.IOT2014
-df.IOT2014.q[4,Order]                    <- df.IOT2014.dom.q[4,Order] + df.IOT2014.imp.q[4,Order]
+df.IOT2014.q[4,Order]                     <- df.IOT2014.dom.q[4,Order] + df.IOT2014.imp.q[4,Order]
 df.IOT2014.q[4,"Total.Industry"]          <- sum(df.IOT2014.q[4,Order])
 df.IOT2014.q[4,"Household"]               <- df.IOT2014.dom.q[4,"Household"] + df.IOT2014.imp.q[4,"Household"] 
 df.IOT2014.q[4,"Exports"]                 <- df.IOT2014.dom.q[4,"Exports"] + df.IOT2014.imp.q[4,"Exports"] 
 df.IOT2014.q[4,"Imports"]                 <- - df.IOT2014.imp.q[4,"Imports"] 
 df.IOT2014.q[4,"Changes.in.inventories"]  <- df.IOT2014.dom.q[4,"Changes.in.inventories"] + df.IOT2014.imp.q[4,"Changes.in.inventories"]
 df.IOT2014.q[4,"Capital.formation"]       <- df.IOT2014.dom.q[4,"Capital.formation"] + df.IOT2014.imp.q[4,"Capital.formation"]
-df.IOT2014.q[4,"General.Government"]  <- df.IOT2014.dom.q[4,"General.Government"] + df.IOT2014.imp.q[4,"General.Government"]
+df.IOT2014.q[4,"General.Government"]      <- df.IOT2014.dom.q[4,"General.Government"] + df.IOT2014.imp.q[4,"General.Government"]
 df.IOT2014.q[4,"Output"]                  <- sum(df.IOT2014.q[4,c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")])
 
 #the direct requirement matrices (m&d) (=the A matrices) with tons for coal  

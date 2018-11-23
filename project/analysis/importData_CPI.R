@@ -21,7 +21,7 @@ colnames(df.conversion) <- colnames(df.CPI)
 df.conversion$Case      <- c("BAU","2Deg")
 df.conversion$Variable  <- "Exchange rate"
 df.conversion$Unit      <- "ZAR/USD"
-df.conversion[,1:17+3]  <- 14
+df.conversion[,1:18+3]  <- 14
 
 df.CPI                  <- bind_rows(df.CPI,df.conversion)
 
@@ -30,8 +30,8 @@ colnames(df.priceZAR)   <- colnames(df.CPI)
 df.priceZAR$Case        <- c("BAU","2Deg")
 df.priceZAR$Variable    <- "Export Price"
 df.priceZAR$Unit        <- "ZAR/t"
-df.priceZAR[1,1:17+3]   <- df.CPI[7,1:17+3] * df.CPI[9,1:17+3]
-df.priceZAR[2,1:17+3]   <- df.CPI[8,1:17+3] * df.CPI[10,1:17+3]
+df.priceZAR[1,1:18+3]   <- df.CPI[7,1:18+3] * df.CPI[9,1:18+3]
+df.priceZAR[2,1:18+3]   <- df.CPI[8,1:18+3] * df.CPI[10,1:18+3]
 
 df.CPI                  <- bind_rows(df.CPI,df.priceZAR)
 
@@ -40,8 +40,8 @@ colnames(df.valExport)   <- colnames(df.CPI)
 df.valExport$Case        <- c("BAU","2Deg")
 df.valExport$Variable    <- "Export Value"
 df.valExport$Unit        <- "ZAR m"
-df.valExport[1,1:17+3]   <- df.CPI[3,1:17+3] * df.CPI[11,1:17+3]
-df.valExport[2,1:17+3]   <- df.CPI[4,1:17+3] * df.CPI[12,1:17+3]
+df.valExport[1,1:18+3]   <- df.CPI[3,1:18+3] * df.CPI[11,1:18+3]
+df.valExport[2,1:18+3]   <- df.CPI[4,1:18+3] * df.CPI[12,1:18+3]
 
 df.CPI                  <- bind_rows(df.CPI, df.valExport)
 

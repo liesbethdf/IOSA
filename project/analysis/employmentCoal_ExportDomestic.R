@@ -69,11 +69,15 @@ levels.Var <- rev(c("Imports.I4", "Imports.Inot4",
                 "Taxes.Inot4", "Wages.Total.Inot4", "Gross.op.surplus.Inot4"))
 
 labels.Var <- rev(c("Imports by coal", "Imports by rest of industry", 
-                "Taxes, coal", "Wages, coal",   "Operating surplus, coal, exports", "Operating surplus, coal, domestic sales",
+                "Taxes, coal", "Wages, coal", "Operating surplus, coal, domestic sales",  "Operating surplus, coal, exports", 
                 "Taxes, rest of industry", "Wages, rest of industry",   "Operating surplus, rest of industry"))
 
 df.plot$Variable  <- factor(df.plot$Variable, levels=levels.Var, labels=labels.Var)
 df.plot           <- df.plot[order(df.plot$Variable),]
+
+df.plot$Scenario  <- factor(df.plot$Scenario, levels=c("BAU","2Deg"))
+df.plot           <- df.plot[order(df.plot$Scenario),]
+
 
 colours <- c("#3498db","#85c1e9",  "#2874a6", "#f1c40f", "#d4ac0d","#f7dc6f", "#b7950b", "#cb4335", "#d98880")    
 
@@ -85,12 +89,13 @@ p <- df.plot  %>% ggplot(aes(x=Year, y=Value, fill=Variable)) +
                   #scale_y_continuous(limits = c(0, 100000)) +
                   #coord_flip() +
                   scale_fill_manual(values=colours) +
-                  labs(fill="Export revenue decomposition :") 
+                  facet_wrap( ~ Scenario, scales="fixed", ncol=2) +
+                  labs(fill="Coal revenue decomposition :") 
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ExportRevenue_Decomposition",scenarioHere, sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=22, height=10, units="cm", dpi=300)
+fileName.graph <- paste("ExportDomesticRevenue_Decomposition","BAU_2Deg", sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
 
 
 

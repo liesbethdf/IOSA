@@ -82,13 +82,13 @@ plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colour
 
 ############ graph for employment distributed over sectors
 
-colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e")    
+colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e")
 p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=resultsNemployees.CE, colours=colours, label.y.axis="number of jobs")[[1]]
 
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("NumberEmployees_Sector","Coal-Export","BAU_2Deg", sep="_")
+fileName.graph <- paste("NumberEmployees_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
 ############ graph for value added distributed over sectors
@@ -101,7 +101,7 @@ p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=value
 plot(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Sector","Coal-Export","BAU_2Deg", sep="_")
+fileName.graph <- paste("ValueAdded_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
 ############ bargraph with employment and value added distributed over sectors, for 2018 2Deg and BAU, 2035 BAU, 2035 2Deg
@@ -151,37 +151,23 @@ p2  <-  df.plot %>% ggplot(aes(x=CaseYear, y=Value, fill=Industry)) +
 print(p2)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Export","BAU_2Deg", sep="_")
+fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=24, height=11, units="cm", dpi=300)
 
 
 
-p1 <- df.plot %>% ggplot(aes(x=Var, y=Value, fill=Industry)) +
-  geom_bar(stat="identity") +
-  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  #labs(x = "Year", y=label.y.axis) +
-  #scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
-  #scale_y_continuous(limits = c(0, 100000)) +
-  #coord_flip() +
-  scale_fill_manual(values=colours) +
-  facet_wrap( ~ CaseYear, scales="fixed", ncol=3) +
-  labs(fill="Sector :") 
-
-print(p)
+# p1 <- df.plot %>% ggplot(aes(x=Var, y=Value, fill=Industry)) +
+#   geom_bar(stat="identity") +
+#   scale_fill_manual(values=colours) +
+#   facet_wrap( ~ CaseYear, scales="fixed", ncol=3) +
+#   labs(fill="Sector :") 
+# 
+# print(p1)
 
 
 
 
 ############ graph for number of jobs in the coal industry, sustained by export and by domestic demand
-
-resultsNemployees.All <- resultsHereAll[[10]][[2]]
-
-scenarioReference <- "BAU"
-detail <- 10
-df.resultsHere <- resultsNemployees.All
-
-df.plot <- df.resultsHere  %>% filter(df.resultsHere$Industry=="I4") 
-
 
 
 

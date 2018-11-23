@@ -4,7 +4,7 @@
 ############ + Employment effect
 ############################################
 #df.finalDemand.scenario <- df.domDemand.coal.input.v2
-#df.finalDemand.scenario <- df.domesticDemand.coal.export
+df.finalDemand.scenario <- df.domesticDemand.coalExport 
 finaldemandDecomposition.q <- function(df.finalDemand.scenario)
 {
   colnamesHere.di             <- c(Order,"Industry","Year","Var","Case")
@@ -44,10 +44,10 @@ finaldemandDecomposition.q <- function(df.finalDemand.scenario)
     #  for(scenarioHere in c("Vol.BAU"))
     for(scenarioHere in c("BAU","2Deg"))
     {
-      # yearHere <- 2018
-      # scenarioHere <- "BAU"
-      # market <- "Export"
-      # 
+        # yearHere <- 2035
+        # scenarioHere <- "BAU"
+        # market <- "Export"
+ 
       vect.outputDecompHere <- initiate.outputDecomp
       
       demand.d.scen     <- df.finalDemand.scenario[df.finalDemand.scenario$Year==yearHere &
@@ -85,7 +85,7 @@ finaldemandDecomposition.q <- function(df.finalDemand.scenario)
  
       WS.diHere   <-  diag(WS.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
-      WS.per.production.q <- WS.per.production.q * output.vectHere / output.vectHere.val 
+      WS.per.productionHere <- WS.per.production.q * output.vectHere / output.vectHere.val
       
       rest                <- rowSums(Xpq.diHere) - rowSums(WS.diHere) - colSums(DI.per.production.matrix) - colSums(MI.per.production.matrix)
       
@@ -93,12 +93,12 @@ finaldemandDecomposition.q <- function(df.finalDemand.scenario)
       TP.per.production.q <- TP.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
       TO.per.production.q <- TO.per.production/(OS.per.production + TP.per.production + TO.per.production) * rest/output.vectHere.val 
       
-      WS.per.production.q[is.na(WS.per.production.q)] <- 0
+     # WS.per.production.q[is.na(WS.per.production.q)] <- 0
       OS.per.production.q[is.na(OS.per.production.q)] <- 0
       TP.per.production.q[is.na(TP.per.production.q)] <- 0
       TO.per.production.q[is.na(TO.per.production.q)] <- 0
       
-      VA.per.production.q <- OS.per.production.q + TO.per.production.q + WS.per.production.q
+      VA.per.production.q <- OS.per.production.q + TO.per.production.q + WS.per.productionHere
       VA.per.production.q[is.na(VA.per.production.q)] <- 0
       
       VA.diHere   <-  diag(VA.per.production.q)   %*% Xpq.diHere 
@@ -107,7 +107,7 @@ finaldemandDecomposition.q <- function(df.finalDemand.scenario)
       OS.diHere   <-  diag(OS.per.production.q)   %*% Xpq.diHere 
       DI.diHere   <-  diag(DI.per.production.q)   %*% Xpq.diHere 
       MI.diHere   <-  diag(MI.per.production.q)   %*% Xpq.diHere 
-      NE.diHere   <-  diag(employment.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
+      NE.diHere   <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.d.scen)
       
 #      X.val.diHere<-  LI.d.q %*% diag(demand.d.scen) - diag(demand.d.scen) + diag(demand.d.scen.val)
       
