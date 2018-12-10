@@ -145,5 +145,27 @@ sum(NE.demandDomestic.2Deg.2035[,4])
 
 NE.demandDomestic.2Deg.2035[4,4]
 
-
 sum(NE.demandExport[NE.demandExport$Year=="2025" & NE.demandExport$Case=="BAU", 4 ])
+
+##################################### GDP loss because of lost wages
+
+df.temp <- results.demandTotal.summ[results.demandTotal.summ$Year=="2035", c("Industry","Wages","Scenario","Market")] 
+
+df.temp <- df.temp %>% spread(Market, Wages)
+
+df.temp$Total <- df.temp$Export + df.temp$Domestic
+
+df.temp <- df.temp %>% gather(Market, Wages, -Industry, -Scenario) 
+
+df.temp <- df.temp[df.temp$Market=="Total",]
+  
+df.temp <- df.temp %>% spread(Industry, Wages)
+
+df.temp$AllInd <- rowSums(df.temp[,1:50+2])
+  
+lostWages <- df.temp[df.temp$Scenario=="BAU", "AllInd"] - df.temp[df.temp$Scenario=="2Deg", "AllInd"]
+  
+  
+lostWages/sum(df.IOT2014$Household[1:50]) #0.3 % of GDP lost due to reduced consumption 
+
+setwd(dir.ANALYSIS)

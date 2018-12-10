@@ -20,7 +20,7 @@ source("modelParameters.R")
 
 # Demand scenarios
 
-source("demandScenarios.R")
+#source("demandScenarios.R")
 source("demandScenarios_v2.R")
 
 # Analysis
