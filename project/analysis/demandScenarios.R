@@ -4,7 +4,7 @@
 
 ## Coal scenarios from CPI
 
-df.scen <- df.CPI %>% filter(!df.CPI$Unit=="mtce") %>% select(-Unit, -Variable, -Case) %>% spread(Var, Value)
+df.scen <- df.CPI %>% filter(!df.CPI$Unit=="mtce" & !df.CPI$Unit=="USD/tce" & !df.CPI$Unit=="USD/t") %>% select(-Unit, -Variable, -Case, -Var.type) %>% spread(Var, Value)
 
 df.scen <- df.scen[,c(1,5,4,3,2)]
 

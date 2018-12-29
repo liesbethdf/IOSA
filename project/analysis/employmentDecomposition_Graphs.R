@@ -47,7 +47,7 @@ plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colour
   df.plot <-  df.plot[,reorder.select] %>% gather(Industry, Value, - Year, -Var, -Case, factor_key = TRUE)
   
   
-  ###### graph with BAU and 2Deg
+  ###### graph with BAU and 2DS
   
   
 #  levels.Industry <- colnames(df.plot)[1:10+3]#c("I4", "I38", "I36",  "I46",  "I28",  "I40",  "I27",  "I42",  "I18",  "I50",  "Other.sectors")
@@ -57,7 +57,7 @@ plot.decompSectors <- function(scenarioReference, detail, df.resultsHere, colour
   df.plot$Industry <- factor(df.plot$Industry, levels=levels.Industry, labels=labels.Industry)
   df.plot          <- df.plot[order(df.plot$Industry),]
   
-  df.plot$Case <- factor(df.plot$Case, levels=c("BAU","2Deg"))
+  df.plot$Case <- factor(df.plot$Case, levels=c("BAU","2DS"))
   df.plot          <- df.plot[order(df.plot$Case),]
   
   
@@ -88,7 +88,7 @@ p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=resul
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("NumberEmployees_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
+fileName.graph <- paste("NumberEmployees_Sector","Coal-Export","BAU_2DS_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
 ############ graph for value added distributed over sectors
@@ -101,10 +101,10 @@ p <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=value
 plot(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
+fileName.graph <- paste("ValueAdded_Sector","Coal-Export","BAU_2DS_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=28, height=9, units="cm", dpi=300)
 
-############ bargraph with employment and value added distributed over sectors, for 2018 2Deg and BAU, 2035 BAU, 2035 2Deg
+############ bargraph with employment and value added distributed over sectors, for 2018 2DS and BAU, 2035 BAU, 2035 2DS
 
 df.plot1 <- plot.decompSectors(scenarioReference="BAU", detail=10, df.resultsHere=resultsNemployees.CE, colours=colours, label.y.axis="number of jobs")[[2]]
 
@@ -123,9 +123,9 @@ df.plot <- bind_rows(df.plot1, df.plot2)
 
 df.plot$CaseYear <- paste(df.plot$Case, df.plot$Year, sep=" ")
 
-df.plot <- df.plot %>% filter(!df.plot$CaseYear=="2Deg, 2018")
-levelsHere <- c("BAU, 2018", "BAU, 2035", "2Deg, 2035")
-labelsHere <- c("BAU & 2Deg, 2018", "BAU, 2035", "2Deg, 2035")
+df.plot <- df.plot %>% filter(!df.plot$CaseYear=="2DS, 2018")
+levelsHere <- c("BAU, 2018", "BAU, 2035", "2DS, 2035")
+labelsHere <- c("BAU & 2DS, 2018", "BAU, 2035", "2DS, 2035")
 df.plot$CaseYear <- factor(df.plot$CaseYear, levels=levelsHere, labels=labelsHere )
 
 df.plot[df.plot$Var=="Employment", "Var"] <- "Employment, number of people" 
@@ -151,7 +151,7 @@ p2  <-  df.plot %>% ggplot(aes(x=CaseYear, y=Value, fill=Industry)) +
 print(p2)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Export","BAU_2Deg_v2", sep="_")
+fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Export","BAU_2DS_v2", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=24, height=11, units="cm", dpi=300)
 
 

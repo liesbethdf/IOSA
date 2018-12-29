@@ -31,6 +31,8 @@ source("finaldemandDecomposition-function-quant.R") # not 2014 prices but coal i
 #source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
 source("employmentContent_atRisk.R")
 source("employmentCoal_ExportDomestic.R")
+source("impactonGDP.R")
+source("Oil.R")
 
 # Generating graphs
 

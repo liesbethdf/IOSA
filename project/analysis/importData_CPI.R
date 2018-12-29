@@ -51,6 +51,7 @@ df.CPI$Year   <- as.numeric(df.CPI$Year)
 df.CPI$Var      <- df.CPI$Variable
 df.CPI$Var.type <- df.CPI$Variable
 df.CPI$Var      <- substr(df.CPI$Var,8,8)
+df.CPI[df.CPI$Var.type=="Export Value","Var"]      <- "Val"
 df.CPI$Var      <- paste(df.CPI$Var,df.CPI$Case,sep="." )
 df.CPI$Market   <- "Export"
 df.CPI$Var.type[df.CPI$Var.type=="Export Volumes"] <- "Volume"
@@ -66,7 +67,7 @@ df.plot         <- df.CPI %>% filter(df.CPI$Unit %in% c("mt","USD/t")) %>% selec
 df.plot$"Value" <- df.plot$`Export Price` * df.plot$`Export Volumes`
 df.plot         <- df.plot %>% gather(Variable, Value, -Case, -Year, -Market)
 #df.plot         <- df.plot %>% filter(!df.plot$Variable=="Value")
-df.plot$Case    <- factor(df.plot$Case, levels =c("BAU","2Deg"))
+df.plot$Case    <- factor(df.plot$Case, levels =c("BAU","2Deg"), labels=c("BAU","2DS"))
 df.plot         <- df.plot[order(df.plot$Case),]
 
 levels.Var      <- c("Export Volumes", "Export Price", "Value")
@@ -128,7 +129,11 @@ levelsDomestic            <- c("Total volume consumed, mt", "Price, ZAR/t", "Tot
 df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable, levels=levelsDomestic)
 df.CPI.domestic           <- df.CPI.domestic %>% filter(!df.CPI.domestic$Unit=="index" & df.CPI.domestic$Plant=="All") 
 
-df.plot <- df.CPI.domestic
+df.plot         <- df.CPI.domestic
+
+df.plot$Case    <- factor(df.plot$Case, levels =c("BAU","2Deg"), labels=c("BAU","2DS"))
+df.plot         <- df.plot[order(df.plot$Case),]
+
 
 colours <- c("#5d6d7e", "#dc7633")
 #facet.labels <- list('Export Price'="Export price, USD", 'Export Volumes'="Exported volumes, mtce", 'Value'="Revenue from coal export, USD")
@@ -188,17 +193,54 @@ df.CPI.total <- bind_rows(df.CPI.total, df.CPI.temp)
 
 setwd(dir.ANALYSIS)
 
+############################################
+############ Import CPI coal domestic data + graphs
+############################################
 
+fileName.list <- c("CPI_oil.xlsx")
 
+i <- 1
+data <- paste(dir.DATA, fileName.list[i], sep = sep)
 
+df.CPI.oil <- data.frame(read_excel(data, 
+                                sheet=1, 
+                                range = cell_limits(ul = c(1,1), lr = c(7, 22))))
 
+colnames(df.CPI.oil) <- c("Case", "Unit", "Type.oil", "Variable", yearsCPI)
 
+df.CPI.oil           <- df.CPI.oil %>% gather(Year, Value, -Case, -Unit, -Type.oil, -Variable)
+df.CPI.oil$Year      <- as.numeric(df.CPI.oil$Year)
+levels.Var           <- c("NPS", "SDS")
+labels.Var           <- c("BAU", "2DS")
+df.CPI.oil$Case      <- factor(df.CPI.oil$Case, levels=levels.Var, labels=labels.Var)
+df.CPI.oil              <- df.CPI.oil[order(df.CPI.oil$Case),]
 
+############ Graph of oil import data
 
+df.plot         <- df.CPI.oil
+#unique(df.plot$Variable)
+levels.Var      <- c("Volume", "Price", "Value")
+labels.Var      <- c("Imported volumes, mboe", "Import price, USD/bbl", "Import cost, million USD")
 
+df.plot$Variable <- factor(df.plot$Variable, levels=levels.Var, labels=labels.Var)
+df.plot          <- df.plot[order(df.plot$Variable),]
 
+colours <- c("#5d6d7e", "#dc7633")
+#facet.labels <- list('Export Price'="Export price, USD", 'Export Volumes'="Exported volumes, mtce", 'Value'="Revenue from coal export, USD")
+#facet.labels <- c("Export price, USD", "Exported volumes, mtce", "Revenue from coal export, USD")
 
+p <- df.plot %>% ggplot(aes(x=Year, y=Value)) +
+                 geom_line(aes(color=Case), size=0.8) +
+  #              geom_area(aes(fill = Case, group = Case), alpha = 0.5, position = 'identity') +
+                 scale_fill_manual(values = c("#aeb6bf","#dc7633")) +
+  #              scale_color_brewer(palette="Paired") +
+                 ylab("") +
+                 scale_colour_manual(values=colours) +
+                 facet_wrap(~ Variable, nrow=1, scales="free") #, labeller=as_labeller(facet.labels))
+print(p)
 
+setwd(dir.PLOTS)
+fileName.graph <- paste("Oil-Import","CPI_VolPrice","BAU_2DS", sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=6, units="cm", dpi=300)
 
-
-
+setwd(dir.ANALYSIS)
