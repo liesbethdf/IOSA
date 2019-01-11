@@ -1,9 +1,36 @@
 
+
+############################################
+############ Import CPI inflation and exchange rate data
+############################################
+
+fileName.list <- c("CPI_TimeSeriesforEconomist_1901.xlsx")
+
+i <- 1
+data <- paste(dir.DATA, fileName.list[i], sep = sep)
+
+df.CPI.econo <- data.frame(read_excel(data, 
+                                sheet=5, 
+                                range = cell_limits(ul = c(1,1), lr = c(3, 20))))
+
+yearsCPI <- colnames(df.CPI.econo)[2:20]
+yearsCPI <- as.numeric(substr(yearsCPI, 2, 5))
+colnames(df.CPI.econo) <- c("Variable",yearsCPI)
+df.CPI.econo$Variable <- c("Inflation", "Exchange rate")
+df.CPI.econo$Unit     <- c("rate", "ZAR/USD")
+df.CPI.econo$Case     <- c("BAU","BAU") 
+df.CPI.econo          <- df.CPI.econo[,c("Case","Variable","Unit",yearsCPI)]
+df.CPI.econo          <- bind_rows(df.CPI.econo, df.CPI.econo)
+df.CPI.econo$Case     <- c("2Deg","2Deg")
+
+#df.CPI.econo <- df.CPI.econo %>% gather(Year,Value, -Variable)
+
 ############################################
 ############ Import CPI coal export data + graphs
 ############################################
 
-fileName.list <- c("CPI_coal_power.xlsx")
+#fileName.list <- c("CPI_coal_power_18.xlsx")
+fileName.list <- c("CPI_coal_power_0119.xlsx")
 
 i <- 1
 data <- paste(dir.DATA, fileName.list[i], sep = sep)
@@ -12,8 +39,6 @@ df.CPI <- data.frame(read_excel(data,
                                     sheet=1, 
                                     range = cell_limits(ul = c(1,1), lr = c(9, 21))))
 
-yearsCPI <- colnames(df.CPI)[4:21]
-yearsCPI <- as.numeric(substr(yearsCPI, 2, 5))
 colnames(df.CPI)[4:21] <- yearsCPI
 
 df.conversion           <- data.frame(matrix(rep(0,42),ncol=21))
@@ -57,7 +82,6 @@ df.CPI$Market   <- "Export"
 df.CPI$Var.type[df.CPI$Var.type=="Export Volumes"] <- "Volume"
 df.CPI$Var.type[df.CPI$Var.type=="Export Price"] <- "Price"
 df.CPI$Var.type[df.CPI$Var.type=="Export Value"] <- "Value"
-
   
 setwd(dir.ANALYSIS)
 
@@ -104,7 +128,7 @@ setwd(dir.ANALYSIS)
 ############ Import CPI coal domestic data + graphs
 ############################################
 
-fileName.list <- c("CPI_coal_power.xlsx")
+fileName.list <- c("CPI_coal_power_0119.xlsx")
 
 i <- 1
 data <- paste(dir.DATA, fileName.list[i], sep = sep)

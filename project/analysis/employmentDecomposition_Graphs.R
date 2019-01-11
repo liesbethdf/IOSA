@@ -166,7 +166,6 @@ ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=24, height=11, un
 
 
 
-
 ############ graph for number of jobs in the coal industry, sustained by export and by domestic demand
 
 

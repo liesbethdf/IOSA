@@ -1,15 +1,15 @@
 
 ############ Estimate industry use of coal over period / assume 2% growth,  (3% growth as in NDC Burton, Caetano seems high ?)
 
-coalUse.industry            <- data.frame(round(t(df.IOT2014.q[4,Order]),8))
-colnames(coalUse.industry)  <- "tons coal"
-coalUse.industry$Industry   <- Industry
-
-order <- order(-coalUse.industry$`tons coal`)
-
-coalUse.industry <- coalUse.industry[order,]
-
-coalUse.others <- sum(coalUse.industry$`tons coal`[-c(1,2,3,4,5)])
+# coalUse.industry            <- data.frame(round(t(df.IOT2014.q[4,Order]),8))
+# colnames(coalUse.industry)  <- "tons coal"
+# coalUse.industry$Industry   <- Industry
+# 
+# order <- order(-coalUse.industry$`tons coal`)
+# 
+# coalUse.industry <- coalUse.industry[order,]
+# 
+# coalUse.others <- sum(coalUse.industry$`tons coal`[-c(1,2,3,4,5)])
 
 ############ 
 
@@ -20,15 +20,15 @@ results.demandExport.summ     <- results.demandExport[[11]][[2]]
 results.demandDomestic.summ   <- results.demandDomestic[[11]][[2]]
 
 results.demandExport.summ$Market      <- "Export"
-results.demandDomestic.summ$Market  <- "Domestic"
+results.demandDomestic.summ$Market    <- "Domestic"
 
 results.demandTotal.summ              <- bind_rows(results.demandExport.summ, results.demandDomestic.summ)
 
 results.demandTotal.summ[is.na(results.demandTotal.summ)] <- 0
 
-temp  <- results.demandTotal.summ %>% gather(Variable, Value, -Year, - Scenario, -Industry, -Market)
-temp <- temp %>% spread(Market, Value)
-temp$Total <- NA
+temp        <- results.demandTotal.summ %>% gather(Variable, Value, -Year, - Scenario, -Industry, -Market)
+temp        <- temp %>% spread(Market, Value)
+temp$Total  <- NA
 temp[!temp$Variable %in% c("Price.export","Price.domestic"),"Total"] <- temp[!temp$Variable %in% c("Price.export","Price.domestic"),"Domestic"] + temp[!temp$Variable %in% c("Price.export","Price.domestic"),"Export"] 
 
 temp            <- temp %>% gather(Market, Value, -Year, -Scenario, -Industry, -Variable)
@@ -104,30 +104,43 @@ ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, un
 NE.demandExport               <- results.demandExport[[10]][[2]]
 NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
 
+NE.demandExport.BAU.2018      <- NE.demandExport[NE.demandExport$Year=="2018" & NE.demandExport$Case=="BAU", ]
+NE.demandDomestic.BAU.2018    <- NE.demandDomestic[NE.demandDomestic$Year=="2018" & NE.demandDomestic$Case=="BAU", ]
+
 NE.demandExport.BAU.2035      <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="BAU", ]
 NE.demandExport.2Deg.2035     <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="2Deg", ]
 
 NE.demandDomestic.BAU.2035    <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="BAU", ]
 NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="2Deg", ]
 
-sum(NE.demandExport.BAU.2035[,4])
-sum(NE.demandExport.2Deg.2035[,4])
+sum(NE.demandExport.BAU.2018[,4])   # 48884.23
+sum(NE.demandDomestic.BAU.2018[,4]) # 86856.7
 
-sum(NE.demandExport.BAU.2035[4,4])
-sum(NE.demandExport.2Deg.2035[4,4])
+sum(NE.demandExport.BAU.2018[4,4])  # 23214.59
+sum(NE.demandDomestic.BAU.2018[4,4])# 41247.31
 
-sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])
+sum(NE.demandExport.BAU.2035[,4])   # 46044
+sum(NE.demandExport.2Deg.2035[,4])  # 16362
 
-sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])
+sum(NE.demandExport.BAU.2035[4,4])  # 21866
+sum(NE.demandExport.2Deg.2035[4,4]) #  7770
 
-sum(NE.demandExport.BAU.2035[28,4])  # General Machinery
-sum(NE.demandExport.2Deg.2035[28,4]) # General Machinery
-sum(NE.demandExport.BAU.2035[36,4])  # Trade
-sum(NE.demandExport.2Deg.2035[36,4]) # Trade
-sum(NE.demandExport.BAU.2035[38,4])  # Transport
-sum(NE.demandExport.2Deg.2035[38,4]) # Transport
-sum(NE.demandExport.BAU.2035[46,4])  # Computer
-sum(NE.demandExport.2Deg.2035[46,4]) # Computer
+sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])  # 24178
+
+sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])# 8592
+
+sum(NE.demandExport.BAU.2035[16,4])  # CTL, coke oven       # 170
+sum(NE.demandExport.2Deg.2035[16,4]) # CTL, coke oven       # 60
+sum(NE.demandExport.BAU.2035[28,4])  # General Machinery    # 863
+sum(NE.demandExport.2Deg.2035[28,4]) # General Machinery    # 307
+sum(NE.demandExport.BAU.2035[33,4])  # Elec                 # 401
+sum(NE.demandExport.2Deg.2035[33,4]) # Elec                 # 143
+sum(NE.demandExport.BAU.2035[36,4])  # Trade                # 5829
+sum(NE.demandExport.2Deg.2035[36,4]) # Trade                # 2071
+sum(NE.demandExport.BAU.2035[38,4])  # Transport            # 8178
+sum(NE.demandExport.2Deg.2035[38,4]) # Transport            # 2906
+sum(NE.demandExport.BAU.2035[46,4])  # Computer             # 2686
+sum(NE.demandExport.2Deg.2035[46,4]) # Computer             # 954
 
 sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[c(4,28,36,38,46),4])
 sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[c(4,28,36,38,46),4])

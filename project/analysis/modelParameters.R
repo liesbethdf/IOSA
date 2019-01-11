@@ -135,27 +135,44 @@ coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 ######## Construction of IOT with the coal row in volume
 
-p.d <- 50648.51 / 184.416
-p.e <- 63581.9 / 75.823
-
 df.IOT2014.dom.q <- df.IOT2014.dom
 
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] <- 
-            p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] 
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"]              <- 260.239
+df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="I16"]                 <- 31
+df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"]             <- 75.823
+#df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Imports"]    <- p.e^(-1) * df.IOT2014.dom[4,colnames(df.IOT2014.dom)=="Imports"]
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Household"]           <- 2
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="General.Government"]  <- 0
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Capital.formation"]   <- 0
 
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")] <- 
-            p.e^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")]
+p.e <- df.IOT2014.dom[4,colnames(df.IOT2014.dom) =="Exports"]   / df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"]  
 
-df.IOT2014.dom.q[4,"Output"]       <- sum(df.IOT2014.dom.q[4,c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories")])
+Ind.notCTLelec      <- c("Order","SIC.code","Industry.description","Changes.in.inventories","Output","I16","I33","Exports","Household","General.Government","Capital.formation")
+tons.ind.notCTLelec <- 16
+df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec] <- df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec] * tons.ind.notCTLelec/sum(df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec])
 
-#sum(df.IOT2014.dom.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
-  
+remaining.tons <-    df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"] -
+                     tons.ind.notCTLelec -  
+                     sum(df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("I16","Exports","Household","General.Government","Capital.formation")])
+
+remaining.val  <-    df.IOT2014.dom[4, colnames(df.IOT2014.dom)=="I33"] + df.IOT2014.dom[4, colnames(df.IOT2014.dom)=="Changes.in.inventories"]
+
+df.IOT2014.dom.q[4, "I33"]                    <- remaining.tons/remaining.val * df.IOT2014.dom[4, "I33"]
+df.IOT2014.dom.q[4, "Changes.in.inventories"] <- remaining.tons/remaining.val * df.IOT2014.dom[4, "Changes.in.inventories"]
+
+
+# df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] <- 
+#             p.d^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] 
+# 
+# df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")] <- 
+#             p.e^(-1)   * df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) %in% c("Exports","Imports")]
+# 
+# df.IOT2014.dom.q[4,"Output"]       <- sum(df.IOT2014.dom.q[4,c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories")])
+# 
 df.IOT2014.imp.q <- df.IOT2014.imp
-
+ 
 df.IOT2014.imp.q[4, colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")] <- 
-            p.e^(-1)   * df.IOT2014.imp.q[4,colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")]
-
-#sum(df.IOT2014.imp.q[4,c(Order,"Household","Changes.in.inventories","Exports")])
+             p.e^(-1)   * df.IOT2014.imp.q[4,colnames(df.IOT2014.imp.q) %in% c(Order,"Exports","Household","General.Government","Capital.formation","Changes.in.inventories","Imports")]
 
 df.IOT2014.q                              <- df.IOT2014
 df.IOT2014.q[4,Order]                     <- df.IOT2014.dom.q[4,Order] + df.IOT2014.imp.q[4,Order]
@@ -178,7 +195,7 @@ A.q     <- t(t(Z.q)   / df.IOT2014.q$Output[1:n])
 A.d.q   <- t(t(Z.d.q) / df.IOT2014.q$Output[1:n])
 A.m.q   <- t(t(Z.m.q) / df.IOT2014.q$Output[1:n])
 
-# the total requirment matrices (d)     (=the Leontief inverse)
+# the total requirement matrices (d)     (=the Leontief inverse)
 
 L.q     <- diag(x = 1, nrow=n, ncol = n) - A.q
 L.d.q   <- diag(x = 1, nrow=n, ncol = n) - A.d.q
@@ -214,6 +231,9 @@ WS.per.production.q <- wages.per.production.q
 # TI.per.production <- totalInputs.per.production
 # DI.per.production <- domesticInputs.per.production
 # MI.per.production <- importedInputs.per.production
+
+#Average over last four years according to Minerals Council South Africa numbers (2014-2017) 
+NE.per.production.q[4] <- 317
 
 
 

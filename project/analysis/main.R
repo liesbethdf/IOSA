@@ -45,6 +45,6 @@ source("demandDecomposition_Graphs.R")     # Verification needed
 
 #source("employmentContent.R") # Archived, not relevant anymore ; was based on not knowing IOT dom and imp
 
-source("sector-description.R")
-source("plots.R")
-source("scenarios.R")
+#source("sector-description.R")
+#source("plots.R")
+#source("scenarios.R")
