@@ -1,17 +1,7 @@
 
-############ Estimate industry use of coal over period / assume 2% growth,  (3% growth as in NDC Burton, Caetano seems high ?)
-
-# coalUse.industry            <- data.frame(round(t(df.IOT2014.q[4,Order]),8))
-# colnames(coalUse.industry)  <- "tons coal"
-# coalUse.industry$Industry   <- Industry
-# 
-# order <- order(-coalUse.industry$`tons coal`)
-# 
-# coalUse.industry <- coalUse.industry[order,]
-# 
-# coalUse.others <- sum(coalUse.industry$`tons coal`[-c(1,2,3,4,5)])
-
-############ 
+############################################
+############ Run model for domestic and export demand
+############################################
 
 results.demandExport    <- finaldemandDecomposition.q(df.domesticDemand.coalExport)
 results.demandDomestic  <- finaldemandDecomposition.q(df.domesticDemand.coalDomestic)
@@ -93,9 +83,9 @@ p <- df.plot  %>% ggplot(aes(x=Year, y=Value, fill=Variable)) +
                   labs(fill="Coal revenue decomposition :") 
 print(p)
 
-setwd(dir.PLOTS)
-fileName.graph <- paste("ExportDomesticRevenue_Decomposition","BAU_2Deg", sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
+# setwd(dir.PLOTS)
+# fileName.graph <- paste("ExportDomesticRevenue_Decomposition","BAU_2Deg", sep="_")
+# ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
 
 
 
