@@ -32,7 +32,7 @@ df.plot1 <- temp %>% filter(temp$VarMarket %in% c("Value.demand.dom.Total", "Val
 df.plot <- df.plot1 %>% filter(df.plot1$VarMarket %in% c("Value.demand.imp.Total", "Imp.inputs.Total", 
                                                      "Wages.Total", "Taxes.other.Total", "Gross.op.surplus.Export", "Gross.op.surplus.Domestic", 
                                                      "Taxes.prod.Total"))  %>% select(-Variable, -Market) %>% spread(VarMarket, Value)
-
+rm(df.plot1)
 df.plot$Taxes   <- df.plot$Taxes.other.Total + df.plot$Taxes.prod.Total
 df.plot$Imports <- df.plot$Imp.inputs.Total + df.plot$Value.demand.imp.Total
 
@@ -137,6 +137,60 @@ setwd(dir.PLOTS)
 fileName.graph <- paste("ExportDomesticRevenue_Decomposition_nominal","BAU_2Deg", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
 
+############ Table with net present values (NPV)
+
+df.table.NPV          <- df.plot2   #%>% spread(Variable, Value)
+df.table.NPV$Var      <- paste(df.table.NPV$Scenario, df.table.NPV$Variable, sep=".")
+df.table.NPV          <- df.table.NPV[,!colnames(df.table.NPV) %in% c("Scenario", "Variable")] %>% spread(Var, Value)
+df.table.NPV$Discount <- rep(1/1.08,18)**seq(0,17)
+
+variables.indices <- seq(1:(dim(df.table.NPV)[2]-2))+1
+
+df.temp                           <- df.table.NPV  %>% transmute_at(funs(.*Discount), .vars = variables.indices)
+df.table.NPV[,variables.indices]  <- df.temp
+df.table.NPV$Currency             <- rep("ZAR m, nominal", dim(df.table.NPV)[1])
+ex.rate                           <- df.CPI.econo[1,1:18+4]
+df.temp.USD                       <- df.temp %>% transmute_all(funs(./t(ex.rate)))
+df.table.NPV.USD                  <- df.table.NPV
+df.table.NPV.USD[,variables.indices]  <- df.temp.USD
+df.table.NPV.USD$Currency         <- rep("USD m, nominal", dim(df.table.NPV)[1])
+rm(df.temp, df.temp.USD)
+
+df.NPV <- df.table.NPV[1,-(dim(df.table.NPV)[2]-1)]
+df.NPV[,variables.indices] <- colSums(df.table.NPV[,variables.indices])
+df.NPV$Year <- "2018-2035"
+df.NPV      <- df.NPV %>% gather(Variable,Net.Present.Value, -Year, -Currency)
+
+df.NPV.USD <- df.table.NPV.USD[1,-(dim(df.table.NPV.USD)[2]-1)]
+df.NPV.USD[,variables.indices] <- colSums(df.table.NPV.USD[,variables.indices])
+df.NPV.USD$Year <- "2018-2035"
+df.NPV.USD      <- df.NPV.USD %>% gather(Variable,Net.Present.Value, -Year, -Currency)
+
+split       <- strsplit(df.NPV$Variable,split='.', fixed=TRUE)
+part1       <- unlist(split)[2*(1:length(split))-1]
+part2       <- unlist(split)[2*(1:length(split))]
+
+df.NPV$Scenario <- part1
+df.NPV$Variable <- part2
+
+split       <- strsplit(df.NPV.USD$Variable,split='.', fixed=TRUE)
+part1       <- unlist(split)[2*(1:length(split))-1]
+part2       <- unlist(split)[2*(1:length(split))]
+
+df.NPV.USD$Scenario <- part1
+df.NPV.USD$Variable <- part2
+rm(split, part1, part2)
+df.NPV      <- df.NPV %>% spread(Scenario, Net.Present.Value)
+df.NPV      <- df.NPV[,c(seq(1,dim(df.NPV)[2]-2),dim(df.NPV)[2],dim(df.NPV)[2]-1) ]
+df.NPV$Risk <- df.NPV$BAU - df.NPV$'2DS'
+
+df.NPV.USD      <- df.NPV.USD %>% spread(Scenario, Net.Present.Value)
+df.NPV.USD      <- df.NPV.USD[,c(seq(1,dim(df.NPV.USD)[2]-2),dim(df.NPV.USD)[2],dim(df.NPV.USD)[2]-1) ]
+df.NPV.USD$Risk <- df.NPV.USD$BAU - df.NPV.USD$'2DS'
+
+df.NPV$Industry <- "Rest of Industry"
+df.NPV[grepl("coal", df.NPV$Variable)=="TRUE", "Industry"]  <- "Coal"
+df.NPV          <- df.NPV[order(df.NPV$Industry),] 
 
 ############ 
 
