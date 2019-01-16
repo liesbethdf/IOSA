@@ -65,7 +65,7 @@ labels.Var <- rev(c("Imports by coal", "Imports by rest of industry",
 df.plot$Variable  <- factor(df.plot$Variable, levels=levels.Var, labels=labels.Var)
 df.plot           <- df.plot[order(df.plot$Variable),]
 
-df.plot$Scenario  <- factor(df.plot$Scenario, levels=c("BAU","2Deg"))
+df.plot$Scenario  <- factor(df.plot$Scenario, levels=c("BAU","2DS"))
 df.plot           <- df.plot[order(df.plot$Scenario),]
 
 
@@ -74,7 +74,7 @@ colours <- c("#3498db","#85c1e9",  "#2874a6", "#f1c40f", "#d4ac0d","#f7dc6f", "#
 p <- df.plot  %>% ggplot(aes(x=Year, y=Value, fill=Variable)) +
                   geom_bar(stat="identity") +
                   #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-                  labs(x = "Year", y="million Rand (constant 2014)") +
+                  labs(x = "Year", y="million Rand (constant 2018)") +
                   #scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   #scale_y_continuous(limits = c(0, 100000)) +
                   #coord_flip() +
@@ -83,10 +83,59 @@ p <- df.plot  %>% ggplot(aes(x=Year, y=Value, fill=Variable)) +
                   labs(fill="Coal revenue decomposition :") 
 print(p)
 
-# setwd(dir.PLOTS)
-# fileName.graph <- paste("ExportDomesticRevenue_Decomposition","BAU_2Deg", sep="_")
-# ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
+setwd(dir.PLOTS)
+fileName.graph <- paste("ExportDomesticRevenue_Decomposition_constant2018","BAU_2Deg", sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
 
+############ Plot with nominal data, plus add net present values with 8% discount rate
+
+df.plot.nominal <- df.plot %>% spread(Variable, Value)
+
+df.CPI.econo.t  <- df.CPI.econo[df.CPI.econo$Variable=="Deflator",!colnames(df.CPI.econo)=='2017']
+df.CPI.econo.t  <- df.CPI.econo.t %>% gather(Year, Value, -Case, -Variable, -Unit) %>% select(-Unit)
+df.CPI.econo.t  <- df.CPI.econo.t %>% spread(Variable, Value)
+df.CPI.econo.t$Year <- as.integer(df.CPI.econo.t$Year)
+df.CPI.econo.t$Case <- factor(df.CPI.econo.t$Case, levels=c("BAU","2DS"))
+colnames(df.CPI.econo.t)[colnames(df.CPI.econo.t)=="Case"]      <- "Scenario"
+colnames(df.CPI.econo.t)[colnames(df.CPI.econo.t)=="Deflator"]  <- "Deflator"
+
+df.plot.nominal <- full_join(df.plot.nominal, df.CPI.econo.t, by = c("Scenario","Year"))
+
+df.plot2 <- df.plot.nominal  %>% transmute_at(funs(./Deflator), .vars = seq(3:11)+2)
+df.plot2$Year     <- df.plot.nominal$Year
+df.plot2$Scenario <- df.plot.nominal$Scenario
+#df.plot2$Deflator <- df.plot.nominal$Deflator
+
+df.plot2 <- df.plot2 %>% gather(Variable, Value, -Year, -Scenario)
+
+levels.Var <- rev(c("Imports by coal", "Imports by rest of industry", 
+                    "Taxes, coal", "Wages, coal", "Operating surplus, coal, domestic sales",  "Operating surplus, coal, exports", 
+                    "Taxes, rest of industry", "Wages, rest of industry",   "Operating surplus, rest of industry"))
+
+df.plot2$Variable  <- factor(df.plot2$Variable, levels=levels.Var)
+df.plot2           <- df.plot2[order(df.plot2$Variable),]
+
+df.plot2$Scenario  <- factor(df.plot2$Scenario, levels=c("BAU","2DS"))
+df.plot2           <- df.plot2[order(df.plot2$Scenario),]
+
+
+colours <- c("#3498db","#85c1e9",  "#2874a6", "#f1c40f", "#d4ac0d","#f7dc6f", "#b7950b", "#cb4335", "#d98880")    
+
+p <- df.plot2  %>% ggplot(aes(x=Year, y=Value, fill=Variable)) +
+  geom_bar(stat="identity") +
+  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(x = "Year", y="million Rand (nominal)") +
+  #scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
+  #scale_y_continuous(limits = c(0, 100000)) +
+  #coord_flip() +
+  scale_fill_manual(values=colours) +
+  facet_wrap( ~ Scenario, scales="fixed", ncol=2) +
+  labs(fill="Coal revenue decomposition :") 
+print(p)
+
+setwd(dir.PLOTS)
+fileName.graph <- paste("ExportDomesticRevenue_Decomposition_nominal","BAU_2Deg", sep="_")
+ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=30, height=10, units="cm", dpi=300)
 
 
 ############ 
@@ -98,10 +147,10 @@ NE.demandExport.BAU.2018      <- NE.demandExport[NE.demandExport$Year=="2018" & 
 NE.demandDomestic.BAU.2018    <- NE.demandDomestic[NE.demandDomestic$Year=="2018" & NE.demandDomestic$Case=="BAU", ]
 
 NE.demandExport.BAU.2035      <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="BAU", ]
-NE.demandExport.2Deg.2035     <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="2Deg", ]
+NE.demandExport.2Deg.2035     <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="2DS", ]
 
 NE.demandDomestic.BAU.2035    <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="BAU", ]
-NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="2Deg", ]
+NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="2DS", ]
 
 sum(NE.demandExport.BAU.2018[,4])   # 48884.23
 sum(NE.demandDomestic.BAU.2018[,4]) # 86856.7

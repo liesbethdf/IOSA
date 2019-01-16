@@ -4,11 +4,11 @@
 
 ## Coal scenarios from CPI
 
-df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m","mt","ZAR/t"))
+df.scen <- df.CPI.total %>% filter(df.CPI.total$Unit %in% c("ZAR m, constant2018","mt","ZAR/t, constant2018"))
 
 ############ function for demand scenarios with coal demand from CPI, the others sectors 0
 
-domesticDemand.coal.zeros <- function(df.scen,yearHere, market)
+domesticDemand.coal.zeros <- function(df.scen, yearHere, market)
 {
   df.dD              <- data.frame(Industry)
   colnames(df.dD)    <- "Industry"
@@ -26,43 +26,43 @@ domesticDemand.coal.zeros <- function(df.scen,yearHere, market)
   priceHere               <- rep(1,50)
   priceHere[4]            <- df.scen[df.scen$Year==yearHere & 
                                        df.scen$Case=="BAU" &
-                                       df.scen$Var.type=="Price" &
+                                       df.scen$Var.type=="Price.c" &
                                        df.scen$Market==market,"Value"]
   df.dD$Price.e.BAU       <- priceHere
 
   priceHere               <- rep(1,50)
   priceHere[4]            <- df.scen[df.scen$Year==yearHere & 
                                      df.scen$Case=="BAU" &
-                                     df.scen$Var.type=="Price" &
+                                     df.scen$Var.type=="Price.c" &
                                      df.scen$Market=="Domestic","Value"]
   df.dD$Price.d.BAU       <- priceHere
     
   demandHere              <- rep(0,50)
   demandHere[4]           <- df.scen[df.scen$Year==yearHere & 
-                                       df.scen$Case=="2Deg" &
+                                       df.scen$Case=="2DS" &
                                        df.scen$Var.type=="Volume" &
                                        df.scen$Market==market,"Value"]
-  df.dD$Vol.demandD.2Deg  <- diag(s.d.exp)  %*% demandHere
-  df.dD$Vol.demandM.2Deg  <- diag(s.m.exp)  %*% demandHere
+  df.dD$Vol.demandD.2DS   <- diag(s.d.exp)  %*% demandHere
+  df.dD$Vol.demandM.2DS   <- diag(s.m.exp)  %*% demandHere
   
   priceHere               <- rep(1,50)
   priceHere[4]            <- df.scen[df.scen$Year==yearHere & 
-                                       df.scen$Case=="2Deg" &
-                                       df.scen$Var.type=="Price" &
+                                       df.scen$Case=="2DS" &
+                                       df.scen$Var.type=="Price.c" &
                                        df.scen$Market==market,"Value"]
-  df.dD$Price.e.2Deg      <- priceHere
+  df.dD$Price.e.2DS       <- priceHere
 
   priceHere               <- rep(1,50)
   priceHere[4]            <- df.scen[df.scen$Year==yearHere & 
-                                       df.scen$Case=="2Deg" &
-                                       df.scen$Var.type=="Price" &
+                                       df.scen$Case=="2DS" &
+                                       df.scen$Var.type=="Price.c" &
                                        df.scen$Market=="Domestic","Value"]
-  df.dD$Price.d.2Deg      <- priceHere
+  df.dD$Price.d.2DS      <- priceHere
     
   df.dD$Value.demandD.BAU    <- df.dD$Vol.demandD.BAU  * df.dD$Price.e.BAU
-  df.dD$Value.demandD.2Deg   <- df.dD$Vol.demandD.2Deg * df.dD$Price.e.2Deg
+  df.dD$Value.demandD.2DS    <- df.dD$Vol.demandD.2DS  * df.dD$Price.e.2DS
   df.dD$Value.demandM.BAU    <- df.dD$Vol.demandM.BAU  * df.dD$Price.e.BAU
-  df.dD$Value.demandM.2Deg   <- df.dD$Vol.demandM.2Deg * df.dD$Price.e.2Deg
+  df.dD$Value.demandM.2DS    <- df.dD$Vol.demandM.2DS  * df.dD$Price.e.2DS
   
   return(df.dD)
 }

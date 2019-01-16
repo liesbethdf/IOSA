@@ -42,7 +42,7 @@ finaldemandDecomposition.q <- function(df.finalDemand.scenario)
   for (yearHere in 2018:2035)
   {
     #  for(scenarioHere in c("Vol.BAU"))
-    for(scenarioHere in c("BAU","2Deg"))
+    for(scenarioHere in c("BAU","2DS"))
     {
         # yearHere <- 2035
         # scenarioHere <- "BAU"

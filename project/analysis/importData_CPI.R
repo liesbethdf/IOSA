@@ -79,7 +79,7 @@ df.priceZAR[4,1:19+3]   <- df.CPI[df.CPI$Variable=="Export Price"  & df.CPI$Case
 
 df.CPI                   <- bind_rows(df.CPI,df.priceZAR)
 
-rm(df.CPI.priceZAR)
+rm(df.priceZAR)
 
 df.valExport             <- data.frame(matrix(rep(0,88),ncol=22))
 colnames(df.valExport)   <- colnames(df.CPI)
@@ -165,18 +165,23 @@ data <- paste(dir.DATA, fileName.list[i], sep = sep)
 
 df.CPI.domestic <- data.frame(read_excel(data, 
                                          sheet=2, 
-                                         range = cell_limits(ul = c(1,1), lr = c(17, 22))))
+                                         range = cell_limits(ul = c(1,1), lr = c(13, 22))))
 df.CPI.domestic <- df.CPI.domestic %>% gather(Year, Value, -Case, -Plants, -Variable, -Unit)
 
-df.CPI.domestic$Year      <- as.numeric(substr(df.CPI.domestic$Year, 2,5))
-#unique(df.CPI.domestic$Variable)
+df.CPI.domestic$Year      <- as.numeric(substr(df.CPI.domestic$Year, 2, 5))
 
-df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal costs", "Variable"]        <- "Total cost, ZAR m"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal costs", "Variable"]             <- "Total cost, ZAR m"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal costs", "Unit"]            <- "ZAR m, nominal"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal costs", "Unit"]                 <- "ZAR m, nominal"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal price", "Unit"]            <- "ZAR/t, nominal"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Unit"]                 <- "ZAR/t, nominal"
+
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal costs", "Variable"]        <- "Total cost, ZAR m, nominal"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal costs", "Variable"]             <- "Eskom cost, ZAR m, nominal"
 df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal consumption", "Variable"]  <- "Total volume consumed, mt"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal consumption", "Variable"]       <- "Total volume consumed, mt"
-df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal price", "Variable"]        <- "Price, ZAR/t"
-df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Variable"]             <- "Price, ZAR/t"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal consumption", "Variable"]       <- "Eskom volume consumed, mt"
+df.CPI.domestic[df.CPI.domestic$Variable=="All plants coal price", "Variable"]        <- "Price, ZAR/t, nominal"
+df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Variable"]             <- "Eskom Price, ZAR/t, nominal"
+
 
 # df.CPI.domestic.test <- df.CPI.domestic %>% spread(Variable, Value)
 # 
@@ -187,26 +192,31 @@ df.CPI.domestic[df.CPI.domestic$Variable=="Eskom coal price", "Variable"]       
 # 
 # df.CPI.domestic.test <- df.CPI.domestic.test %>% gather(Variable, Value, -Case, -Plants, -Unit, -Year)
 
+df.CPI.domestic           <- df.CPI.domestic[!df.CPI.domestic$Plants=="Eskom",]
+df.CPI.domestic           <- droplevels(df.CPI.domestic)
+
 df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable)
-levelsDomestic            <- c("Total volume consumed, mt", "Price, ZAR/t", "Total cost, ZAR m")
-labelsDomestic            <- c("Total volume consumed, mt", "Price, ZAR/t, nominal", "Total cost, ZAR m, nominal")
-df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable, levels=levelsDomestic, labels=labelsDomestic)
-df.CPI.domestic           <- df.CPI.domestic %>% filter(!df.CPI.domestic$Unit=="index" & df.CPI.domestic$Plant=="All") 
+levelsDomestic            <- c("Total volume consumed, mt", "Price, ZAR/t, nominal", "Total cost, ZAR m, nominal")
+df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable, levels=levelsDomestic)
 
 df.CPI.domestic           <- df.CPI.domestic %>% spread(Year, Value)
+df.CPI.domestic$Case      <- factor(df.CPI.domestic$Case, levels =c("BAU","2Deg"), labels=c("BAU","2DS"))
+df.CPI.domestic           <- df.CPI.domestic[order(df.CPI.domestic$Case),]
+
 df.CPI.domestic.temp      <- df.CPI.domestic[-c(1,4),]
 
 levels(df.CPI.domestic.temp$Variable) <- c("Total volume consumed, mt", "Price, ZAR/t, constant2018", "Total cost, ZAR m, constant2018")
+df.CPI.domestic.temp$Unit             <- c("ZAR/t, constant2018", "ZAR m, constant2018", "ZAR/t, constant2018", "ZAR m, constant2018")
 
 df.CPI.domestic.temp[df.CPI.domestic.temp$Variable=="Price, ZAR/t, constant2018"  ,1:18+4] <- df.CPI.econo[df.CPI.econo$Variable=="Deflator",1:18+4] * df.CPI.domestic[df.CPI.domestic$Variable=="Price, ZAR/t, nominal",1:18+4]
 df.CPI.domestic.temp[df.CPI.domestic.temp$Variable=="Total cost, ZAR m, constant2018",1:18+4] <- df.CPI.econo[df.CPI.econo$Variable=="Deflator",1:18+4] * df.CPI.domestic[df.CPI.domestic$Variable=="Total cost, ZAR m, nominal",1:18+4]
 
 df.CPI.domestic           <- bind_rows(df.CPI.domestic, df.CPI.domestic.temp)
 
-rm(df.CPI.domestic.temp, df.CPI.econo, df.valExport)
+rm(df.CPI.domestic.temp, df.valExport)
 
 df.CPI.domestic$Variable  <- factor(df.CPI.domestic$Variable)
-df.CPI.domestic$Case      <- factor(df.CPI.domestic$Case, levels =c("BAU","2Deg"), labels=c("BAU","2DS"))
+df.CPI.domestic$Case      <- factor(df.CPI.domestic$Case, levels =c("BAU","2DS"))
 df.CPI.domestic           <- df.CPI.domestic[order(df.CPI.domestic$Case),]
 
 df.plot           <- df.CPI.domestic[df.CPI.domestic$Variable %in% c("Total volume consumed, mt", "Price, ZAR/t, nominal"  ,"Total cost, ZAR m, nominal"),]
