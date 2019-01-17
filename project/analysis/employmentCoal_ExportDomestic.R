@@ -192,8 +192,22 @@ df.NPV$Industry <- "Rest of Industry"
 df.NPV[grepl("coal", df.NPV$Variable)=="TRUE", "Industry"]  <- "Coal"
 df.NPV          <- df.NPV[order(df.NPV$Industry),] 
 
-############ 
+############ Table with employment numbers sur to export and domestic demand, in the coal sector and in other sectors
 
+# Employment numbers from export demand and demand by the electricity sector
+NE.demandExport               <- results.demandExport[[10]][[2]]
+NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
+
+# Employment numbers from CTL and other industry (than Elec and CTL) and consumers
+# CTL  31 m tons constant over 2018 - 2035
+# Other industry, 16 m tons and final consumers 2 m tons, for a total of 18 m tons
+
+demand.CTL   <- c(rep(0,3), 31, rep(0,46)) 
+demand.other <- c(rep(0,3), 18, rep(0,46))
+
+employment.CTL    <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL) 
+employment.other  <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL)
+  
 NE.demandExport               <- results.demandExport[[10]][[2]]
 NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
 
@@ -215,23 +229,20 @@ sum(NE.demandDomestic.BAU.2018[4,4])# 41247.31
 sum(NE.demandExport.BAU.2035[,4])   # 46044
 sum(NE.demandExport.2Deg.2035[,4])  # 16362
 
-sum(NE.demandExport.BAU.2035[4,4])  # 21866
-sum(NE.demandExport.2Deg.2035[4,4]) #  7770
+sum(NE.demandExport.BAU.2035[4,4])  # 21979
+sum(NE.demandExport.2Deg.2035[4,4]) #  7810
 
-sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])  # 24178
+sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])  # 24201
+sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])#  8599
 
-sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])# 8592
-
-sum(NE.demandExport.BAU.2035[16,4])  # CTL, coke oven       # 170
-sum(NE.demandExport.2Deg.2035[16,4]) # CTL, coke oven       # 60
 sum(NE.demandExport.BAU.2035[28,4])  # General Machinery    # 863
 sum(NE.demandExport.2Deg.2035[28,4]) # General Machinery    # 307
-sum(NE.demandExport.BAU.2035[33,4])  # Elec                 # 401
-sum(NE.demandExport.2Deg.2035[33,4]) # Elec                 # 143
+# sum(NE.demandExport.BAU.2035[33,4])  # Elec                 # 401
+# sum(NE.demandExport.2Deg.2035[33,4]) # Elec                 # 143
 sum(NE.demandExport.BAU.2035[36,4])  # Trade                # 5829
 sum(NE.demandExport.2Deg.2035[36,4]) # Trade                # 2071
-sum(NE.demandExport.BAU.2035[38,4])  # Transport            # 8178
-sum(NE.demandExport.2Deg.2035[38,4]) # Transport            # 2906
+sum(NE.demandExport.BAU.2035[38,4])  # Transport            # 8186
+sum(NE.demandExport.2Deg.2035[38,4]) # Transport            # 2909
 sum(NE.demandExport.BAU.2035[46,4])  # Computer             # 2686
 sum(NE.demandExport.2Deg.2035[46,4]) # Computer             # 954
 

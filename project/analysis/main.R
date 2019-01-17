@@ -31,14 +31,14 @@ source("finaldemandDecomposition-function-quant.R") # not 2014 prices but coal i
 #source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
 source("employmentContent_atRisk.R")
 source("employmentCoal_ExportDomestic.R")
-source("impactonGDP.R")
+source("impactonGDP.R") # Check : Error in LI.d %*% diag(demand.diff) : non-conformable arguments
 source("Oil.R")
 
 # Generating graphs
 
 #source("demandDecomposition_Stats.R")
-source("employmentDecomposition_Graphs.R") # Verification needed
-source("demandDecomposition_Graphs.R")     # Verification needed
+source("employmentDecomposition_Graphs.R") ok
+#source("demandDecomposition_Graphs.R")     # Verification needed
 
 
 # Below not sure if useful
