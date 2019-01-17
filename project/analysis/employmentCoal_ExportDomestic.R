@@ -192,6 +192,26 @@ df.NPV$Industry <- "Rest of Industry"
 df.NPV[grepl("coal", df.NPV$Variable)=="TRUE", "Industry"]  <- "Coal"
 df.NPV          <- df.NPV[order(df.NPV$Industry),] 
 
+df.NPV$Risk.share <- df.NPV$Risk / sum(df.NPV$Risk) * 100
+df.NPV.USD$Risk.share <- df.NPV.USD$Risk / sum(df.NPV.USD$Risk) * 100
+df.NPV.USD$BAU.share <- df.NPV.USD$BAU / sum(df.NPV.USD$BAU) * 100
+
+df.2035.USD <- df.table.NPV.USD[dim(df.table.NPV.USD)[1],]
+df.2035.USD <- df.2035.USD %>% gather(Variable, Value, -Year, - Discount, -Currency)
+split       <- strsplit(df.2035.USD$Variable,split='.', fixed=TRUE)
+part1       <- unlist(split)[2*(1:length(split))-1]
+part2       <- unlist(split)[2*(1:length(split))]
+
+df.2035.USD$Scenario <- part1
+df.2035.USD$Variable <- part2
+rm(split, part1, part2)
+
+df.2035.USD <- df.2035.USD %>% spread(Scenario, Value)
+df.2035.USD$Risk <- df.2035.USD$BAU - df.2035.USD$'2DS'
+df.2035.USD$Risk.share <- df.2035.USD$Risk/ sum(df.2035.USD$Risk) *100
+
+(df.2035.USD[1,1:9+10] - df.2035.USD[1,1:9+1])/sum(df.2035.USD[1,1:9+10] - df.2035.USD[1,1:9+1])*100
+
 ############ Table with employment numbers sur to export and domestic demand, in the coal sector and in other sectors
 
 # Employment numbers from export demand and demand by the electricity sector
@@ -206,7 +226,7 @@ demand.CTL   <- c(rep(0,3), 31, rep(0,46))
 demand.other <- c(rep(0,3), 18, rep(0,46))
 
 employment.CTL    <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL) 
-employment.other  <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL)
+employment.other  <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.other)
   
 NE.demandExport               <- results.demandExport[[10]][[2]]
 NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
@@ -223,8 +243,8 @@ NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035
 sum(NE.demandExport.BAU.2018[,4])   # 48884.23
 sum(NE.demandDomestic.BAU.2018[,4]) # 86856.7
 
-sum(NE.demandExport.BAU.2018[4,4])  # 23214.59
-sum(NE.demandDomestic.BAU.2018[4,4])# 41247.31
+sum(NE.demandExport.BAU.2018[4,4])  # 23335
+sum(NE.demandDomestic.BAU.2018[4,4])# 41461
 
 sum(NE.demandExport.BAU.2035[,4])   # 46044
 sum(NE.demandExport.2Deg.2035[,4])  # 16362
