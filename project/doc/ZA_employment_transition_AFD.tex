@@ -79,6 +79,7 @@
 \defcitealias{MineralsCouncil2010Facts}{MinCo, 2010}
 \defcitealias{british2018bpcoal}{BP, 2018}
 \defcitealias{ChamberofMines2018Strategy}{Chamber of Mines, 2018}
+\defcitealias{CPI2019SA}{CPI, 2019}
 
 \newcommand{\STAB}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
 
@@ -134,7 +135,7 @@ as well as the petroleum sector.
 %The CPI analysis makes detailed assessments of how the transition risk is spread over individual companies, mines and assets and on how this risk might be ultimately transferred to other agents, in particular the State. However, whereas it does provide an assessment of the risk to some infrastructure that supports export/import activity --- such as the Richard's Bay Coal line, asset owned by Transnet --- the methodology used is not equipped to make an estimate of how
 %different export-demand trajectories impact the economy as a whole in a systematic manner. In addition, the simple macroeconomic IO model allows to make projections of how risk to final demand might impact jobs, household income, consumption, investment and GDP.
 
-This study is a complement to the study on transition risk in South Africa conducted by Climate Policy Initiative (CPI) \citep{CPI2019SA}.
+This study is a complement to the study on transition risk in South Africa conducted by Climate Policy Initiative (CPI) \citepalias{CPI2019SA}.
 The CPI study takes a sectoral-, firm- and, when necessary, asset-level approach. %It focuses on the coal, oil, transport, and metals sectors. 
 It focuses on the sectors directly affected by different demand trajectories under 2DS versus BAU, such as coal. However, the revenue initially received by the coal sector becomes also revenue for other sectors via the interdependencies between all industrial sectors via buyer and seller relationships. It follows that the risk stemming from different coal scenarios spreads over many sectors throughout the economy. CPI also provides an assessment of the risk to infrastructure that supports export/import activity --- such as the Richard's Bay Coal line, asset owned by Transnet. However, the methodology used is not equipped to make an estimate of how different export-demand trajectories impact the economy as a whole in a systematic manner. The present analysis adopts a macroeconomic perspective and uses a simple input-output model to assess how the risk spreads throughout the economy. % and, to some extent, between actors. %analysis stems from the difference in the methodologies adopted.
 %The present study builds on results from the CPI-study. 
@@ -552,7 +553,7 @@ Next, to compare the employment content of each sector and their decompositions 
 \ref{ECdecomp_ventil}. The definitions of the means are given in appendix \ref{ECmean}. The matrix of which the columns sums are the mean employment contents of the economy (all column sums are thus equal) $\bar{EC}$ has elements $\bar{ec}_{ij}$ defined as : 
 \begin{align}
 %ec_{ij} &= (v_{ij}^{1/4} \ t_i) \ (v_{ij}^{1/4}ls_i) \ (v_{ij}^{1/4}n_i) \ (v_{ij}^{1/4}mi_{ij})  \ s_{jj} \label{ECdecomp_ventil} \\
-\bar{ec}_{ij} &=  \ \bar{t}^v_{ij} \ \bar{ls}^v_{ij} \ \bar{n}^v_{ij} \ \bar{mi}^v_{ij}  \ \bar{s}_{jj} \label{ECdecomp_ventil_mean} \\
+\bar{ec}_{ij} &=  \ \bar{t}^v_{ij} \ \bar{ls}^v_{ij} \ \bar{n}^v_{ij} \ \bar{mi}^v_{ij}  \ \bar{s} \label{ECdecomp_ventil_mean}
 %v_{ij} &= b_{ij} \frac{va_i}{x_i} 
 \end{align}
 The diagonal and the non-diagonal elements of $\bar{EC}$ are different, all the diagonal elements are equal to one another as are all the non-diagonal elements. The diagonal elements represent the average number of jobs created by demand addressed to sector $j$ within the same sector. The non-diagonal elements represent the the average number of jobs in a sector by demand coming from a different sector. 
@@ -570,7 +571,7 @@ ec_j - \bar{ec} &= \sum_i \big( ec_{ij} - \bar{ec}_{ij} \big) \nonumber \\
 &= \sum_i \frac{ec_{ij} - \bar{ec}_{ij}}{log(\frac{ec_{ij}}{\bar{ec}_{ij}})}\ \Bigg( log\bigg(\frac{t^v_{ij}}{\bar{t}^v_{ij}}\bigg) +\ log\bigg(\frac{ls^v_{ij}}{\bar{ls}^v_{ij}}\bigg) +\ log\bigg(\frac{n^v_{ij}}{\bar{n}^v_{ij}} \bigg) +\ log\bigg(\frac{mi^v_{ij}}{\bar{mi}^v_{ij}}\bigg)  +\ log\bigg(\frac{s_{jj}}{\bar{s}_{jj}}\bigg) \Bigg)  \label{ECdecomp_ventil_final}
 %v_{ij} &= b_{ij} \frac{va_i}{x_i} 
 \end{align}
-To obtain detailed information on the type of employment created by final demand addressed to a specific sector $j$, one can both look at the decomposition of the difference between the total employment $ec_j$ and the mean $\bar{ec}$ as well as to the decomposition of the individual terms of equation \ref{ECdecomp_ventil_final}, i.e. before summing over $i$. There are several reasons for this. A first reason is that the total requirements coefficients on the diagonal $b_{jj}$ are typically much larger than off-diagonal $b_{ij, i\neq j}$. Thus, in the sum over $i$, the diagonal elements will tend to dominate the off-diagonal elements. In addition, the sum over $i$ off the off-diagonal elements will do exactly what an average does, it is average out. For example when, on average, the labour share of the jobs created throughout the economy by final demand for product $j$ is close to the mean, this can be due to the fact that this is true for all the sectors in which jobs are sustained, or it can be due to a situation where part of the jobs are in sectors with an above average labour share and part with a below average labour share. This effect will further contribute to the dominance of the diagonal over the off-diagonal elements. %Hence, summing provides a correction to the masks the type of jobs created by demand for product $j$ throughout the economy by the jobs sustained in sector $j$ itself.  
+To obtain detailed information on the type of employment created by final demand addressed to a specific sector $j$, one can both look at the decomposition of the difference between the total employment $ec_j$ and the mean $\bar{ec}$ as well as to the decomposition of the individual terms of equation \ref{ECdecomp_ventil_final}, i.e. before summing over $i$. There are several reasons for this. A first reason is that the total requirements coefficients on the diagonal $b_{jj}$ are typically much larger than off-diagonal $b_{ij, i\neq j}$. Thus, in the sum over $i$, the diagonal elements will tend to dominate the off-diagonal elements. In addition, the sum over $i$ off the off-diagonal elements will do exactly what an average does, it is average out. For example when, on average, the labour share of the jobs created throughout the economy by final demand for product $j$ is close to the mean, this can be due to the fact that this is true for all the sectors in which jobs are sustained, or it can be due to a situation where part of the jobs are in sectors with an above average labour share and part with a below average labour share. This effect will further contribute to the dominance of the diagonal over the off-diagonal elements.
 To characterize what types of jobs are created throughout the economy, when applying the above decomposition to the South African economy, we will provide separately the decomposition of firstly the jobs created within the sector to which final demand is addressed, $ec_{jj} - \bar{ec}_{jj}$ and secondly and thirdly of all the jobs in sectors with above and below average $ec_{ij}$, i.e. for $i\neq j$, $\sum_i (ec_{ij} - \bar{ec}_{ij})$, with $ec_{ij} - \bar{ec}_{ij} >0$ and with $ec_{ij} - \bar{ec}_{ij} <0$.
 
 %\subsection{Cost-push model}\label{section_cost-push}
@@ -605,15 +606,19 @@ To characterize what types of jobs are created throughout the economy, when appl
 
 \section{Datasources}
 
-The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. The latter are in itself based on the data collected by Stat SA. The latter offer additional information because of the treatments data underwent (aggregation, seasonal adjustment).
+The data used for the present study are obtained from Statistics South Africa (Stat SA), the South African national statistical agency, and from the OECD. %The latter are in itself based on the data collected by Stat SA. The latter offer additional information because of the treatments data underwent (aggregation, seasonal adjustment).
 
 \subsection{IOT}	
 
 To take into account that the demand for imported goods does not create value or give rise to jobs domestically through their production, separate IOTs for domestic output and imported goods are needed. The most recent input output table available from Stat SA is for the year 2014. The level of detail is at 50 sectors. However, no table is available that specifies uses of imports versus uses of domestic production. Such a table is provided by the OECD, at a detail of 35 sectors ; the most recent one is for 2011 at the time of writing.
 
-To construct a separate IOT for domestic production and for imports, the 2011 OECD tables were used to estimate such tables at the 50-sector level for the year 2014. This was done using an optimization procedure, detailed in appendix \ref{IOTopti}.
+To construct a separate IOT for domestic production and for imports, the 2011 OECD tables were used to estimate such tables at the 50-sector level for the year 2014. This was done using an optimization procedure.%, detailed in appendix \ref{IOTopti}.
 
 %\footnote{The OECD provides such tables at a level of detail of 35 sectors, the most recent one for the year 2011. The South African statistical agency provides a table with a level of detail of 50 sectors, the most recent for the year 2014, but that does not distinguish the use of imports.}. 
+
+%\subsusbsection{Coal in tons in the input-output table}
+The inputs used for the production of coal, including labour, are assumed proportional to the tons produced. Because the export and domestic price of coal differ by a factor two or more, the data for coal in value are not appropriate for the analysis. To estimate the use of coal in tons by all industrial sectors and final consumers, data are used from the South African Coal Sector Report from the SA Department of Energy \citep{coal2013DoE} and the Minerals Council Facts and figures \citepalias{MineralsCouncil2018Facts}. Demand by final consumers is estimated at 2 million tons (mt), by industry other than the power sector (I33 or SIC41) and coal to liquids (I16) is estimated at 16 mt. Coal to liquids is estimated to use 31 mt annually. Coal export in 2014 is 75.8 mt and total sales equals 269.2 mt. From these figures it is estimated that the power sector used 123.3 mt in 2014.
+
 
 \subsection{Employment data}
 Employment data of the same sectoral aggregation as the 50-sector IOT were constructed on the basis of two sources of employment data provided by the South African statistics agency. In addition more detailed data for certain sectors, all collected by and available from Stat SA, were used.
@@ -958,51 +963,53 @@ These figures are specific for the year 2014, with 2014 export and domestic coal
 	\caption{\label{Coal-Domestic_CPI_VolPrice_BAU_2DS}\small Projections for the period 2018-2035 of the volume of coal domestically consumed in South Africa in million tons (mt), the domestic average price in m Rand/mt and the total value of exports in m Rand under CPI's business as usual (BAU) scenario and 2 degrees (2DS) scenario. Source : CPI.}
 \end{figure}
 
-In a world economy developing in a way that is compatible with average global warming limited to 2°C degrees, global demand for coal will be drastically lower. Over the period 2018-2035, South Africa is estimated by CPI's models to export about half the volume of coal under the 2DS versus a under the BAU scenario (left graph of figure \ref{Coal-Export_CPI_VolPrice_BAU_2DS}). %CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume under BAU, with considerably lower export demand 
-Towards 2035, the volume of exported coal drops below 10 million tons in the 2DS scenario which is about 85\% lower than under BAU. Moreover, the price on the global market is expected to be lower under 2DS, resulting in the lower profitability of the sector. %on average and in pressure %  first instance in a lower profitability of the sector in general and in particular in the %on the financial sustainability of mines with access to the export market. % and their possible closing \citep{CPI2019SA}. 
-The projected export trajectories under both scenarios are presented in figure \ref{Coal-Export_CPI_VolPrice_BAU_2DS}. The area between the two lines of the graph on the right represents the revenue from coal exports at risk under the 2DS scenario. %The low price fetched for coal on the export market exacerbates the effect of the revenue loss from low demand under 2DS. 
+In the case of a low-carbon transition aligned with average global warming limited to 2°C degrees, global demand for coal will be drastically lower. Over the period 2018-2035, South Africa is estimated by CPI's models to export about half the volume of coal under the 2DS versus a under the BAU scenario (left graph of figure \ref{Coal-Export_CPI_VolPrice_BAU_2DS}). %CPI's models estimate that the volume of coal exported by South Africa over the period 2018-2035 under a 2DS is about half the volume under BAU, with considerably lower export demand 
+Towards 2035, the volume of exported coal drops to about 20 million tons in the 2DS scenario which is 70\% lower than under BAU. Moreover, the price on the global market is expected to be lower under 2DS, resulting in the lower profitability of the sector \citepalias{CPI2019SA}. %on average and in pressure %  first instance in a lower profitability of the sector in general and in particular in the %on the financial sustainability of mines with access to the export market. % and their possible closing \citepalias{CPI2019SA}. 
+The projected export trajectories under both scenarios are presented in figure \ref{Coal-Export_CPI_VolPrice_BAU_2DS}. The area between the two lines of the graph on the right represents the revenue from coal exports at risk.
 
-%The risk assessed in the CPI and the present study is the external transition risk, due to the difference in demand for steam coal on the international market under a 2DS versus a BAU scenario.
-The domestic coal demand and price scenarios are represented in figure \ref{Coal-Domestic_CPI_VolPrice_BAU_2DS}. The lower export-revenues under 2DS do not lead to a higher domestic price for coal under 2DS versus BAU in CPI's domestic 2018-2035 scenarios, contrary to historical dynamics (cf. section \ref{DomesticExport}). %The dynamics on the international coal market do not influence the volume of coal consumed domestically 
-The reason for this is that the assumptions on the formation of the domestic coal-price lead to a higher price under 2DS for the coal mined in Limpopo but a lower price for the coal mined in Mpumalanga\footnote{Source :  communication with CPI.}. Upwards pressure on the domestic price is due to the loss of export revenues to pay fixed costs, which are now only paid by the domestic market. This is the reason for the higher price under 2DS in Limpopo. In Mpumalanga, this effect is dominated by increased competition  on the domestic spot market, which lowers the price. Indeed, it is assumed that the coal which is not exported, enters the domestic spot market. Part of the supply to power plants is secured through contracts and is not affected by export dynamics. The remaining part (34\% in 2018 under BAU/2DS) is acquired on the domestic spot market, where competition increases under 2DS. In Mpumalanga, the increased competition under 2DS (50\% of demanded volume is acquired on the sport-market by 2030) on the domestic spot market lowers the price. 
+Domestically, coal is mainly used for electricity production. %, for the production of liquid fuels (Sasol), by the metals (and other) industries and by end-consumers. 
+The use of coal for coal-to-liquids, for metals production and by end-consumers is estimated at respectively 31 mt, 16 mt and 2 mt, by hypothesis constant throughout the period and the same under BAU and 2DS scenarios. For the power sector, the scenarios for the domestic coal price and volume used are, as for export, provided by CPI (figure \ref{Coal-Domestic_CPI_VolPrice_BAU_2DS}).  The total volume consumed is considered not to be affected by the low-carbon transition. It peaks under both scenarios in the early 2020's and declines thereafter. This is due to coal plants reaching end-of-life and going of the grid. 
 
-The volume of domestic coal consumption is determined by the installed capacity and lifetime of coal power plants, as well as by demand from industry and from CTL in particular.  the price the electricity producer pays for coal does depend on whether there is competition between the export market and the domestic market.  
-%the profits the mines that produce both for the domestic and the international market make through exports. The domestic price is determined by contracts between mines and Eskom. Long-term contracts guarantee a low and stable price for the electricity producer. The remaining share is bought on the spot-market, where prices are higher on average and more volatile. Under 2DS, the loss of revenue from exports, market on which the price is much higher than on the domestic market, translates into higher domestic prices to sustain the profitability of the active mines. (comment on that they impose their price?) 
-The projected volume and price trajectories by CPI are given in figure \ref{Coal-Domestic_CPI_VolPrice_BAU_2DS}. Both under BAU and 2DS scenarios, the domestic price increases and becomes more volatile. This is because long term contracts between Eskom and mines come to an end and more coal will be exchanged on the spot market. The projected domestic coal price trajectories are not significantly different between both scenarios ; the average annual increase under BAU is 5.6\% and under 2DS 5.7\%. The total volume consumed peaks under both scenarios in the early 2020's and declines thereafter. This is due to coal plants reaching end-of-life and going of the grid.
-
-The difference in export volume and revenue between the BAU and the 2DS scenarios impacts firstly the coal sector itself and secondly, to varying degrees, the rest of the economy. As set out above, this is because part of the revenue obtained from coal exports is spent on domestically produced inputs, necessary for mining coal, and becomes revenue for the suppliers. The domestic price and volume trajectories are broadly the same under both scenarios. %coal price trajectories are not significantly different between both scenarios ; the average annual increase under BAU is 5.6\% and under 2DS 5.7\%. 
-The projected increase in the cost of coal for power producers is an additional factor in the rising cost of power production that has been going on for years and will put further pressure on the electricity price as briefly discussed in section \ref{elec} \citep{}. We here address the effect on GDP and on employment of possible loss of coal exports.
+Both under BAU and 2DS scenarios, the domestic price increases and becomes more volatile. This is because long term contracts between Eskom and mines come to an end and more coal will be exchanged on the spot market. The lower export-revenues under 2DS do not lead to a much higher domestic price for coal, contrary to historical dynamics (cf. section \ref{DomesticExport}). The average annual increase (in nominal terms) under BAU is 5.5\% and under 2DS 6.2\%. The reason for this is that the assumptions on the formation of the domestic coal-price lead to a higher price under 2DS for the coal mined in the Limpopo region, but a lower price for the coal mined in the Mpumalanga region\footnote{Source :  private communication with CPI.}. Upwards pressure on the domestic price is due to the loss of export revenues to pay fixed costs, which are now only paid by the domestic market. This is the reason for the higher price under 2DS in Limpopo. In Mpumalanga, this effect is dominated by increased competition  on the domestic spot market, which lowers the price. Indeed, it is assumed that the coal which is not exported, enters the domestic spot market. Part of the supply to power plants is secured through contracts and is not affected by export dynamics. The remaining part (34\% in 2018) is acquired on the domestic spot market, where competition increases under 2DS. In Mpumalanga, the increased competition under 2DS (50\% of demanded volume is acquired on the sport-market by 2030) on the domestic spot market lowers the price. 
 
 %Thus, the risk posed under a 2DS by the lower revenue obtained from coal exports is not only a risk for the sector itself, but also for other parts of the economy. Furthermore, because the coal sector's suppliers themselves spent part of their sales revenue (obtained from the coal sector who obtained its revenue from export) on inputs, the coal export revenue spreads throughout the economy as value added of (almost) all sectors. Value added is here defined in a broad sense, i.e. as output, which is taken to be the same as total sales revenue from domestic final goods, minus the cost of inputs. It thus includes, referring to the IOT in table \ref{IOT_importsUses}, net taxes on products, other taxes, wages and gross operating surplus. In addition, part of the revenue is spent on imports. The value added of each sector thus flows to government via taxes, to workers in the form of wages and a part of gross operating surplus remunerates investors in the form of debt payments or dividends. 
 %the value created throughout the economy by the export of coal benefits different actors in the economy. For each sector, what is left over from sales revenue after paying suppliers splits into three parts : payment to workers, payment of taxes to different layers of government and a remaining share labeled gross operating surplus. This last part is used for investments and exceptional maintenance costs of the production infrastructure and is distributed to its investors, who are the de factor owners of the production infrastructure, in the form of debt payments, payments of dividends to shareholders. %This is the part that is mostly distributed to the owners of the fixed capital of the sector, i.e. to the economic actors that invested in the sector's production infrastructure and expect a return on their investment. 
 
-%\begin{figure}[!b]
-%	%	\centering
-%	\hspace{-10pt}\includegraphics[width=1.1\textwidth]{../graphs/ExportRevenue_Decomposition_BAU_2Deg.pdf}
-%	\caption{\label{ExportRevenue_Decomposition_Diff}\small The graph shows the revenue from the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2DS) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the price changes of the exported coal impact tax revenue and gross operating surplus. All other domestic prices and wages stay constant over the whole period.  }
-%\end{figure}
-
-As laid out in section \ref{Section_decomposition}, the input-output methodology allows the decomposition of export revenue in imports and in value added over all sectors of the economy. Figure \ref{ExportRevenue_Decomposition_Diff} shows the decomposition of the export revenue trajectories over the period 2018-2035, for both scenarios, in imports (in red), taxes and value added (in yellow for the coal sector and blue for the other sectors). The estimates are based on the simplifying assumption that the structure of the economy remains very close throughout the modeling period as it is in 2014. It is assumed that for every sector, the amount of inputs per unit of output remains constant, as do the shares of taxes, value added and its components. All prices are by hypothesis constant throughout the modeling period, including the unitary wage, except for the domestic and export price of coal. The coal export price affects only taxes and gross operating surplus of the coal mining sector.%, such that the sum of its value added and input costs equals its sales revenue. This assumption is maintained both under BAU with sustained prices as in the 2DS scenario with low prices. 
-
-In 2018, 13.2\% of export revenue is spent on imported inputs, 28.9 \% goes to the payment of workers (17.9\% in the coal sector and 10.9\% in other sectors of the economy), 55.2\% becomes gross operating surplus (41.5\% in the coal sector and 13.7\% in other sectors) and 2.6\% taxes (1.5\% paid by the coal sector and 1.1\% by the rest of the economy). %The share of revenue accruing to jobs throughout the economy is only slightly more than half the capital share and is within the coal sector less than half the capital share. This is the main reason why less jobs are created per unit of final demand addressed to the coal sector than the economy's average per unit of final demand, as illustrated in figure \ref{Decomposition_PQ_within} and discussed in section \ref{ec_results}.
-
-Towards 2035, these shares change because of the effect of the coal export price on taxes and gross operating surplus. Under BAU, %the exported volume is approximately equal to the volume at the beginning of the period in 2018. However, 
-the price on the international market is projected to be by up to 30\% higher in the 2030's, making the sector much more profitable than today. Assuming real input costs stay constant, the share of the coal sector's value added thus rises from 60.6\% of the total export revenue in the beginning of the period to 72.3\% towards 2035. In this scenario, the higher profitability might have a positive effect on wages. Under 2DS, the opposite effect takes place. %The projected exported volume is in 2035 a tenth of today's. This implies that few mines will be sustained by export demand. Additionally, 
-Low prices mean that exporting mines will generate less profit \textit{via} exports : value added in the mining sector captures only 54.8\% of export revenue in 2035 under 2DS because gross operating surplus is squeezed.
-
-
 \begin{figure}[!t]
-	\centering
-%	\hspace{-10pt}\includegraphics[width=\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg.pdf}
-	\hspace{-10pt}\includegraphics[width=0.7\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Domestic-Export_nominal_atRisk2035.pdf}
-	\caption{\label{ValueAdded_Employment_Sector_Coal-Export_BAU_2DS}\small The graph shows the revenue from the export of coal in constant Rand (2018), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2DS) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except }
+	%	\centering
+	\hspace{-10pt}\includegraphics[width=1.1\textwidth]{../graphs/ExportDomesticRevenue_Decomposition_nominal_BAU_2Deg.pdf}
+	\caption{\label{ExportDomesticRevenue_Decomposition_BAU_2DS}\small The graph shows the revenue from both domestic sales (for electricity only) and the export of coal in constant Rand (nominal), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2DS) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that price changes impact tax revenue and gross operating surplus. All domestic prices and wages stay constant  over the whole period in real terms (i.e. nominally they increase at general inflation), except for the domestic and export coal price. Source : CPI and own calculations. }
 \end{figure}
+
+
+The difference in export volume and revenue between the BAU and the 2DS scenarios impacts firstly the coal sector itself and secondly, to varying degrees, the rest of the economy. As set out above, this is because part of the revenue from coal exports is spent on domestically produced inputs, necessary for mining coal, and becomes revenue for the suppliers. %The domestic price and volume trajectories are broadly the same under both scenarios.
+%The projected increase in the cost of coal for power producers is an additional factor in the rising cost of power production that has been going on for years and will put further pressure on the electricity price as briefly discussed in section \ref{elec} \citep{}. We here address the effect on GDP and on employment of possible loss of coal exports.
+As laid out in section \ref{Section_decomposition}, the input-output methodology allows the exact decomposition of revenue in imports, wages, gross operating surplus and taxes\footnote{Taxes include taxes on products and other taxes. Wages, gross operating surplus and taxes on products paid by a sector make up that sector's value added. Other taxes are not part of value added.} over all sectors of the economy. Figure \ref{ExportDomesticRevenue_Decomposition_BAU_2DS} shows the decomposition of the domestic and export revenue trajectories over the period 2018-2035, for both scenarios, in imports (in red), taxes and value added (in yellow for the coal sector and blue for the other sectors). The estimates are based on the simplifying assumption that the structure of the economy remains very close throughout the modeling period as it is in 2014. It is assumed that for every sector, the amount of inputs per unit of output remains constant, as do the shares of taxes, value added and its components. All prices are by hypothesis constant throughout the period, including the unitary wage, except for the domestic and export price of coal. The coal export price affects only taxes and gross operating surplus of the coal mining sector. %CPI projects that the cost of transport of exported coal by rail, as well as the costs relating to Richard's Bay export port increases by 2-3 \% over the period. This is because ... In addition, the cost of transport by truck of coal for domestic use is estimated to increase by 17\% annually on average. (Because moe and more coal will be mined from mines that do not have access to the railway network ?) These effects are not taken into account here.
+
+The decomposition of coal revenue under both scenarios allows to determine a first distribution of risk over investors (as a homogeneous group) and workers in all sectors, and government. The risk distribution is calculated as the difference between the BAU and 2DS export revenue decompositions. This difference can be visualized as the differences between the areas of equal nature (colour) in the BAU and 2DS graphs of figure \ref{ExportDomesticRevenue_Decomposition_BAU_2DS}. Then, for every term of the decomposition, the net present value (NPV) is calculated with a discount rate of 8\%, as used by CPI. According to this method, 80\% of risk falls on investors in the coal industry, 4\% on investors in other industries, 3\% on the government because of reduced tax revenue, 8\% on workers because of unpaid wages. Of the total net present value of the coal revenue that has not been received under 2DS, 4\% would have been spent on imports and left the country. This share is an attenuating factor for the total risk. 
+
+The reason the large majority of risk falls on investors in the coal industry is to be found in the stark increase in the export price in the reference (BAU) scenario. This price increase affects by hypothesis the sector's operating surplus ; real input costs are estimated to remain constant.
+
+In 2018, 11\% of coal revenue is spent on imported inputs, 24 \% goes to the payment of workers (15\% in the coal sector and 9\% in other sectors of the economy), 62\% becomes gross operating surplus (51\% in the coal sector and 11\% in other sectors) and 2.8\% taxes. %The share of revenue accruing to jobs throughout the economy is only slightly more than half the capital share and is within the coal sector less than half the capital share. This is the main reason why less jobs are created per unit of final demand addressed to the coal sector than the economy's average per unit of final demand, as illustrated in figure \ref{Decomposition_PQ_within} and discussed in section \ref{ec_results}.
+Most of the operating surplus in the coal sector (80\%) stems from exports. Export is thus important for the sector's profitability. Under the BAU scenario, exporting coal becomes even more profitable. 
+
+%Towards 2035, these shares change because of the effect of the coal export price on taxes and gross operating surplus. Under BAU, 
+%the price on the international market is projected to be by up to 30\% higher in the 2030's, making the sector much more profitable than today. Assuming real input costs stay constant, the share of the coal sector's value added thus rises from 60.6\% of the total export revenue in the beginning of the period to 72.3\% towards 2035. In this scenario, the higher profitability might have a positive effect on wages. Under 2DS, the opposite effect takes place.
+%Low prices mean that exporting mines will generate less profit \textit{via} exports : value added in the mining sector captures only 54.8\% of export revenue in 2035 under 2DS because gross operating surplus is squeezed.
 
 The difference in the areas between the BAU and the 2DS panels of figure \ref{ExportRevenue_Decomposition_Diff} represents the possible loss in revenue. As a measure for this possible loss, we take the difference between the BAU and 2DS value added figures at the end of the modeling period in 2035, and compare this difference with South Africa's 2017 GDP. % for each of the components of value added. This loss in revenue poses a risk when the economic agent that would receive the revenue is highly dependent on the revenue source in question.
 The right panel of figure \ref{ValueAdded_Employment_Sector_Coal-Export_BAU_2DS} shows value added stemming from coal export in 2018 and in 2035 under BAU and under 2DS in million Rand. %To get an idea of the impact on GDP, these numbers are compared to South Africa's 2014 GDP. 
 The projected value added generated by coal export in 2018 would have been 1.52\% of 2017 GDP, of which the majority of the contribution would stem from coal with 1.06\% and the remaining 0.47\% from the rest of the economy. In 2035, under BAU, coal export would attain 2.11\% of 2014 GDP and under 2DS only 0.18\% of GDP. Thus, between both scenarios, towards the end of the period, the difference in value added to the economy between both scenarios would be close to 2\% of 2017 GDP. Over two thirds of this loss would be situated in the coal sector itself ; of the remaining lost value, about a third is situated in the transport sector. This is because a big cost to the coal sector is the transport of mined coal destined for export by truck and rail. 
 
 %Figure \ref{ValueAdded_Employment_Sector_Coal-Export_BAU_2DS} compares both value added and employment throughout all sectors in 2035 under BAU and 2DS with the (current) situation in 2018. Whereas in terms of value added, two thirds is concentrated in the coal sector itself and 10\% in the Transport sector. In terms of employment, about half the jobs sustained by coal export are situated within the coal sector and the other half in the other sectors of the economy. Notably, the Transport sector counts for 17.8\% of the total number of jobs sustained by coal export, Trade for 12.7\% and Computer activities for 5.8\%. The number of workers per ton of coal mined and wages are by hypothesis constant throughout the period. Table \ref{NE_Sector_Coal-Export_BAU_2DS_table} lists how many jobs are sustained, in each of the different sectors, by the export of coal and the number of jobs at risk under a 2DS scenario.
+
+\begin{figure}[!t]
+	\centering
+	%	\hspace{-10pt}\includegraphics[width=\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Export_BAU_2Deg.pdf}
+	\hspace{-10pt}\includegraphics[width=0.7\textwidth]{../graphs/ValueAdded_Employment_Sector_Coal-Domestic-Export_nominal_atRisk2035.pdf}
+	\caption{\label{ValueAdded_Employment_Sector_Coal-Export_BAU_2DS}\small The graph shows the revenue from the export of coal and of domestic sales for power production in million Rand (nominal), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2DS) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that the prices changes of the exported coal impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period.}
+\end{figure}
+
 
 \begin{table}[!t]
 	\centering
@@ -1064,11 +1071,6 @@ In 2035, about 39,674 jobs less would be sustained by coal export under a 2DS sc
 
 The total number of jobs possibly lost represents about 0.3\% of the number of persons employed in 2014. However, these possible projected job losses in the mining sector are regionally concentrated in Mpumalanga. Likely, many of the jobs at risk in the rest of the economy are located in the same region.
 
-\begin{figure}[!t]
-	%	\centering
-	\hspace{-10pt}\includegraphics[width=1.1\textwidth]{../graphs/ExportDomesticRevenue_Decomposition_nominal_BAU_2Deg.pdf}
-	\caption{\label{ExportDomesticRevenue_Decomposition_BAU_2DS}\small The graph shows the revenue from both domestic sales (for electricity only) and the export of coal in constant Rand (2014), over the period 2018-2035, under the business as usual scenario (BAU) on the left and under the 2°degrees (2DS) scenario on the right. The export revenue is decomposed into importation costs of intermediate goods (red), taxes, wages and gross operating surplus, for the coal sector (yellow) and for the rest of the economy (blue). Is is assumed that prices changes impact tax revenue and gross operating surplus. All domestic prices and wages stay constant over the whole period, except for the domestic and export coal price. Source : CPI and own calculations. }
-\end{figure}
 
 In addition, the lost jobs in 2035 under 2DS versus BAU represent lost wages and thus lost consumption, which further impacts GDP. This effect would lower 2017 GDP with another 0.25\%, in addition to the 1.93\% directly lost due to coal exports. This effect is to be taken as a general indication. Under 2DS, the 39,674 jobs would disappear over a period of 18 years. Aided by accompanying policies, new economic activity and jobs can be created throughout this period. Consumption would likely be less depressed than the figure here estimated, which is a worst case scenario. Reduced export demand under BAU also leads to lower demand for investment goods. Assuming that the share of investment in output is constant and the same as in 2014, lower investment demand under 2DS would reduce 2017 with 0.03\%. This figure is relatively low because more than half of investment demand generated by demand for coal is imported and does not contribute to GDP. Overall, the value lost to reduced coal exports under 2DS and the indirect effects of diminished consumption and investment represent 2.2\% of 2017 GDP.
 
@@ -1127,7 +1129,7 @@ Table \ref{coalExport_BAUvs2DS_2035} shows the total number of jobs in the coal 
 %The impact on employment between the two scenarios can be found in table \ref{coalExport_BAUvs2DS_2035}. The top part of the table shows that the number of jobs in the coal sector under 2DS is about half that under BAU. The IO-model projects about 39 600 jobs in the coal sector under 2DS, which is in the same ballpark as CPI's estimate. Of this total number of jobs in coal mining, 15\% is generated by export and some consumption by households. The biggest share, 85\%, is generated by demand from other sectors. 
 
 
-%The input-output methodology does not provide information on who are the holders of the fixed capital of each sector. This aspect of the external transition risk for South Africa is covered by the finance-based, sector and asset-level study performed by CPI \citep{CPI2019SA}. 
+%The input-output methodology does not provide information on who are the holders of the fixed capital of each sector. This aspect of the external transition risk for South Africa is covered by the finance-based, sector and asset-level study performed by CPI \citepalias{CPI2019SA}. 
 
 
 %\begin{table}[ht]
@@ -1366,7 +1368,25 @@ The IO-model estimates that in addition to the about xxxx number of jobs lost in
 
 \section{Mean employment content} \label{ECmean}
 
-%\section{What is in the data ?}
+The mean employment content is defined as :
+\begin{align}
+\bar{ec}_{ij} &=  \ \bar{t}^v_{ij} \ \bar{ls}^v_{ij} \ \bar{n}^v_{ij} \ \bar{mi}^v_{ij}  \ \bar{s} \nonumber
+\end{align}
+with $\bar{t}^v_{ij}$, $\bar{ls}^v_{ij}$, $\bar{n}^v_{ij}$, $\bar{mi}^v_{ij}$ and $\bar{s}$ defined as follows :
+
+\begin{align*}
+\bar{v}_{ii} &= b_{ii} \  \frac{\sum_i (w_{ii} + gs_{ii} + ot_{ii} + t_{ii})}{\sum_i y_{ii}}\\
+\bar{v}_{ij} &= b_{ij} \ \frac{\sum_i (w_{ii} + gs_{ii} + ot_{ii} + t_{ii})}{\sum_i y_{ii}}, i\neq j \\
+\bar{t}^v_{ij} &= (\bar{v}_{ij})^{1/4} \ \frac{\sum_i (w_{ii} + gs_{ii})}{\sum_i (w_{ii} + gs_{ii} + ot_{ii} + t_{ii})} \\ 
+\bar{ls}^v_{ij} &=  (\bar{v}_{ij})^{1/4} \ \frac{\sum_i w_{ii}}{\sum_i (w_{ii} + gs_{ii})} \\ 
+\bar{n}^v_{ij} &=  (\bar{v}_{ij})^{1/4} \ \frac{\sum_i ne_{ii}}{\sum_i w^d_{ii}} \\ 
+\bar{mi}^v_{ii} &= (\bar{v_{ii}})^{1/4} \  \frac{\sum_i b^d_{ii}}{\sum_i b_{ii}} \\ 
+\bar{mi}^v_{ij} &= (\bar{v_{ij}})^{1/4} \ \frac{\sum_{i,j} b^d_{ij}}{\sum_{i,j} b_{ij}}, i\neq j \\ 
+\bar{s} &= \frac{\sum_i y^d_{ii}}{\sum_i (y^d_{ii} + y^m_{ii})}
+%\bar{s}_{jj} &= frac{\sum_i}{}
+\end{align*}
+
+
 
 \section{Correspondence tables}
 
@@ -1457,89 +1477,7 @@ The IO-model estimates that in addition to the about xxxx number of jobs lost in
 \end{table}
 
 \clearpage
-\section{Estimation of separate domestic and import IOTs}\label{IOTopti}
-
-
-%\section{Decomposition}
-%
-%Equation \label{allUSes} can be rewritten as :
-%\begin{equation}
-%%y_i + m_i - d_i^m= \sum_j \Bigg(\frac{z_{ij}^d}{y_i + m_i-d_i} + \frac{z_{ij}^m}{y_i + m_i-d_i} \Bigg) (y_i + m_i) + d_i^d
-%y_i + m_i - d_i^m= \sum_j \big(z_{ij}^d + z_{ij}^m \big) + d_i^d, 
-%\end{equation}
-%where $d^r = c^r_i + g_i^r + i_i^r + inv_i^r + x_i^r$ , $r\in\{d,m\}$ denote final demand for domestically produced goods and services and for imported goods. The aggregates $m_i - d_i^m$ are the imports used as intermediate inputs, or differently put, the importation needed for domestic production.
-%
-%We are interested in, given a final demand vector for domestically produced goods $\boldsymbol{d}^d$, not only how much domestic production this entails, but also how much importation this generates because of the use of imported goods as intermediate inputs. To this end, we define modified matrices of technical coefficients $\tilde{A}^r$ as the matrices with elements $\tilde{a}^r_{ij}$ : 
-%\begin{align}
-%\tilde{a}^r_{ij} = \frac{z_{ij}^r}{y_i + m_i - d_i^m} \label{defAtilde}
-%\end{align}
-%These matrices tell us how much intermediary inputs, respectively of domestic and of imported origin, are needed per unit of domestic output and imported intermediate goods. Additionally, we define the technical coefficients matrix $\tilde{A}= \tilde{A}^d + \tilde{A}^m$ that states the total intermediary inputs, of any origin, per unit of imports + domestic output.
-%
-%%We then define the matrices $Y$ and $M_{int}$ such that :
-%
-%Given $D^d$ the matrix with demand $d^d$ on the diagonal and 0's elsewher, we then define the matrix $\mli{YM}$ as :
-%\begin{equation}
-%\mli{YM} = (\mathbb{I} - \tilde{A})^{-1} \, D^d \label{YM}
-%\end{equation}
-%The element $ym_{ij}$ of $\mli{YM}$ is the sum of domestic production and imported intermediate goods of sector $i$ needed to satisfy final demand by sector j $d_j^d$.
-%
-%\li{The column sums of $M_{int}$ are the same as the column sums of $Z^m$, but are the two matrices the same ?}
-%
-%We now want to split matrix $\mli{YM}$ up into domestic output and intermediate inputs that were imported.
-%
-%For this we will decompose the factor that is analogous to the Leontief inverse :
-%
-%\begin{align}
-%(\mathbb{I} - \tilde{A})^{-1} &= (\mathbb{I} - \tilde{A}^d - \tilde{A}^m)^{-1} \nonumber \\
-%&= (\mathbb{I} - \tilde{A}^d)^{-1} + (\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} + rest \label{decomp1}
-%\end{align}
-%
-%The first term on the right hand side measures domestic output necessary to satisfy demand $D^d$. We take a closer look at the second and third terms at the right-hand side of  \ref{decomp1} by developing the power series : 
-%\begin{equation}
-%(\mathbb{I} - \tilde{A}^m)^{-1} - \mathbb{I} = \sum_{k=1}^{+\infty}  (\tilde{A}^m)^k  \label{importedInputsneeded}
-%\end{equation}
-%Whereas the significance of $\tilde{A}^m D^d$ is quite clear --- it determines the imported intermediate inputs needed to satisfy domestically produced final demand, the meaning of the following terms $(\tilde{A}^m)^k D^d$ with $k>1$ seems nebulous when interpreted along the same line. This line of interpretation looks at the matrix $\tilde{A}^m D^d$ row-wise : we seek an answer to the question how much output from each sector is needed to satisfy the demanded production from other sectors. In this case, the "output from each sector needed" are imported goods. The term $\tilde{A}^m \tilde{A}^m D^d$ does not make sense in this interpretation : what are the import needed to generate the imports ? Rather, one can think of $\tilde{A}^m D^d$ column-wise and interpret each element $a^m_{ij}\,d^d_j$as a contribution to the cost of producing a good $j$, or a contribution to the value of the good $j$ by using the intermediate input $i$, obtained through importation. Then, $\tilde{A}^m \tilde{A}^m D^d$ also takes on a clear significance : it represents the value generated indirectly by using imported intermediate inputs to %generate value by 
-%produce output that was produced with imported inputs. 
-%%Instead of thinking in terms of the output of sector $i$ needed to satisfy demand from sector $j$, think of it vice-versa : it is the value of output of sector $j$ originating from using input $i$. Of course, a single input cannot produce a good. This is why the former sentence contains "value of". Using input $i$ contributes to the cost of production or to the value of good $j$. 
-%
-%Why would one determine how much imported goods are needed to import goods ? 
-%
-%To able to create the value generated by using imported inputs, a certain amount of imported inputs are needed, etc.
-%Beware, is is using the imported inputs that creates value domestically ; producing obviously doesn't.
-%
-%It is now clear that the terms \ref{importedInputsneeded} contribute to the amount of imported goods needed to satisfy domestically produced final demand. The terms in the $rest$ term contain both $\tilde{A}^d$ and $\tilde{A}^m$ factors. For example $\tilde{A}^m \tilde{A}^d D^d$ represents the value generated by using imported goods to produce the intermediate inputs necessary for the production of the intermediate inputs $\tilde{A}^d D^d$, where this last term can be worded as the value created by using locally produced inputs to produce demand $D^d$.
-%
-%The rest term is known, given by $$ rest =(\mathbb{I} - \tilde{A})^{-1} - (\mathbb{I} - \tilde{A}^d)^{-1} - (\mathbb{I} - \tilde{A}^m)^{-1} + \mathbb{I}.$$
-%It contains both value created by using imported and domestically produced inputs and will her be roughly split up according to the last step in the production process :
-%$$
-%rest = \tilde{A}^d (\tilde{A}^m + T) + \tilde{A}^m(\tilde{A}^d + T)
-%$$
-%The first term on the right-hand side is counted as domestic production and the second term as imports. (The second term are all the imports needed/used to produce the intermediary inputs --- direct inputs and the chain of indirect inputs --- that have been produced using both imported and domestic inputs.)
-%
-%The unknown tail $T$ is easily determined : $$ T = ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)$$
-%Matrix $\mli{LM}$ as given in eqn. \ref{YM} is then split up as :
-%\begin{align}
-%\tilde{Y} &= (\mathbb{I} - \tilde{A}^d)^{-1} \, D^d + \tilde{A}^d \big(\tilde{A}^m +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d \\
-%\tilde{M} &= (\mathbb{I} - \tilde{A}^m)^{-1} \, D^d - \mathbb{I} + \tilde{A}^m \big(\tilde{A}^d +  ( \tilde{A}^d +  \tilde{A}^m)^{-1}\, ( \tilde{A}^m  \tilde{A}^d +  \tilde{A}^d \tilde{A}^m)\big) \, D^d
-%\end{align}
-%
-%
-%%The value created by producing a product is the value of the product. The value of using the product as intermediate input is 
-%
-%%To resolve this issue, we determine the relationship between $\tilde{A}^m$ and $A^m$, where the latter is the technical coefficients matrix for imported goods, defined as usual. Starting from \ref{defAtilde} in matrix notation :
-%
-%%\begin{align}
-%%\tilde{A}^m &= Z^m \, (diag(\boldsymbol{y + m - d^m}) )^{-1} \nonumber\\
-%%&=  Z^m \, (diag(\boldsymbol{y}))^{-1} \, \big( \mathbb{I} +  (diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})   \big)^{-1} \nonumber\\
-%%&= Z^m \, (diag(\boldsymbol{y}))^{-1} \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k \nonumber\\
-%%&= A^m  \, \sum_{k=0}^{+\infty} \big(-(diag(\boldsymbol{y}))^{-1} \, diag(\boldsymbol{m - d^m})\big)^k
-%%\end{align}
-
-\clearpage
-\section{Coal in tons in the input-output table}
-
-To estimate the use of coal in tons by all industrial sectors and final consumers, data are used from the South African Coal Sector Report from the SA Department of Energy \citep{coal2013DoE} and the Minerals Council Facts and figures \citepalias{MineralsCouncil2018Facts}. Demand by final consumers is estimated at 2 million tons (mt), by industry other than the power sector (I33 or SIC41) and coal to liquids (I16) is estimated at 16 mt. Coal to liquids is estimated to use 31 mt annually. Coal export in 2014 is 75.8 mt and total sales equals 269.2 mt. From these figures it is estimated that the power sector used 123.3 mt in 2014.
-
+%\section{Estimation of separate domestic and import IOTs}\label{IOTopti}
 \section{Note on employment content decomposition}
 
 Illustration of the decomposition of the decomposition of the numbers of jobs created within the sector to which demand is addressed and in all the other sectors.\lies{TODO}

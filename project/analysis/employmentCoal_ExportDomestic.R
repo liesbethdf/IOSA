@@ -195,6 +195,22 @@ df.NPV          <- df.NPV[order(df.NPV$Industry),]
 df.NPV$Risk.share <- df.NPV$Risk / sum(df.NPV$Risk) * 100
 df.NPV.USD$Risk.share <- df.NPV.USD$Risk / sum(df.NPV.USD$Risk) * 100
 df.NPV.USD$BAU.share <- df.NPV.USD$BAU / sum(df.NPV.USD$BAU) * 100
+df.NPV.USD$'2DS.share' <- df.NPV.USD$'2DS' / sum(df.NPV.USD$'2DS') * 100
+
+df.2018.USD <- df.table.NPV.USD[1,]
+df.2018.USD <- df.2035.USD %>% gather(Variable, Value, -Year, - Discount, -Currency)
+split       <- strsplit(df.2018.USD$Variable,split='.', fixed=TRUE)
+part1       <- unlist(split)[2*(1:length(split))-1]
+part2       <- unlist(split)[2*(1:length(split))]
+
+df.2018.USD$Scenario <- part1
+df.2018.USD$Variable <- part2
+rm(split, part1, part2)
+
+df.2018.USD <- df.2018.USD %>% spread(Scenario, Value)
+df.2018.USD$Risk <- df.2018.USD$BAU - df.2018.USD$'2DS'
+df.2018.USD$Risk.share <- df.2018.USD$Risk/ sum(df.2018.USD$Risk) *100
+
 
 df.2035.USD <- df.table.NPV.USD[dim(df.table.NPV.USD)[1],]
 df.2035.USD <- df.2035.USD %>% gather(Variable, Value, -Year, - Discount, -Currency)
