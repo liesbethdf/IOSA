@@ -1,5 +1,4 @@
 
-
 ############################################
 ############ Import CPI inflation and exchange rate data
 ############################################
@@ -267,34 +266,13 @@ df.CPI.total <- df.CPI.total %>% gather(Year, Value, -Case, -Variable, -Unit, -M
 
 df.CPI.total$Year <- as.integer(df.CPI.total$Year)
 
-df.CPI.temp <- df.CPI[,colnames(df.CPI.total)]
-
+df.CPI.temp  <- df.CPI[,colnames(df.CPI.total)]
 df.CPI.total <- bind_rows(df.CPI.total, df.CPI.temp)
-
-#################### volume for determining employment
-
-# df.CPI.temp           <- df.CPI.total %>% filter(df.CPI.total$Var.type=="Volume" & df.CPI.total$Unit=="mt") %>% select(-Variable) %>% spread(Market,Value)
-# df.CPI.temp$CTL       <- 31.079
-# #df.CPI.temp$final     <- 10000
-# df.CPI.temp$otherInd  <- 15.000
-# df.CPI.temp$Total     <- df.CPI.temp$Export + df.CPI.temp$Domestic + df.CPI.temp$CTL + df.CPI.temp$otherInd
-
-# total industry (2014 IOT - electricity)
-# 47357 - 27086 -8533 = 11783
-# 3291 final demand in 2014 other than export
-# total domestic tonnes sold 184416 (mining council)
-
-# 2014 IOT value output
-# 114230.41374
-# price per ton
-# (114230.41374 - 63582) / 184416 = 0.2746422
-
-# tonnes represented by other demand than export + elec : (20271 + 3291)/0.2746422 = 85.791
 
 setwd(dir.ANALYSIS)
 
 ############################################
-############ Import CPI coal domestic data + graphs
+############ Import CPI oil data + graph
 ############################################
 
 fileName.list <- c("CPI_oil.xlsx")

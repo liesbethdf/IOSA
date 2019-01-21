@@ -20,24 +20,18 @@ source("modelParameters.R")
 
 # Demand scenarios
 
-#source("demandScenarios.R")
 source("demandScenarios_v2.R")
 
 # Analysis
 
 source("employmentContent.R")
-#source("finaldemandDecomposition-function.R")       # 2014 prices = one and constant
-source("finaldemandDecomposition-function-quant.R") # not 2014 prices but coal in million tons
+#source("demandDecomposition-function-old.R")       # 2014 prices = one and constant
+source("demandDecomposition-function.R") # not 2014 prices but coal in million tons
 source("employmentContent_3parts.R")
-source("employmentCoal_ExportDomestic.R")
+source("demandDecompostion_coalExportDomestic.R")
+source("demandDecompostion_coalExportDomestic_Graphs.R") 
 source("impactonGDP.R") # Check : Error in LI.d %*% diag(demand.diff) : non-conformable arguments
 source("Oil.R")
-
-# Generating graphs
-
-#source("demandDecomposition_Stats.R")
-source("employmentDecomposition_Graphs.R") 
-#source("demandDecomposition_Graphs.R")     # Verification needed
 
 
 # Below not used

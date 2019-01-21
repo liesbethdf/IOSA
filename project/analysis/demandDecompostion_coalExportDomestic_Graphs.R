@@ -260,3 +260,4 @@ setwd(dir.PLOTS)
 fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Domestic-Export","nominal","atRisk2035", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=16, height=11, units="cm", dpi=300)
 
+setwd(dir.ANALYSIS)

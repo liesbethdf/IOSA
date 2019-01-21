@@ -6,6 +6,9 @@
 results.demandExport    <- finaldemandDecomposition.q(df.domesticDemand.coalExport)
 results.demandDomestic  <- finaldemandDecomposition.q(df.domesticDemand.coalDomestic)
 
+cat("Decomposition of coal export in results.demandExport","\n","\n")
+cat("Decomposition of domestic coal demand in results.demandDomestic","\n","\n")
+
 results.demandExport.summ     <- results.demandExport[[11]][[2]]
 results.demandDomestic.summ   <- results.demandDomestic[[11]][[2]]
 
@@ -182,23 +185,23 @@ df.NPV.USD$Variable <- part2
 rm(split, part1, part2)
 df.NPV      <- df.NPV %>% spread(Scenario, Net.Present.Value)
 df.NPV      <- df.NPV[,c(seq(1,dim(df.NPV)[2]-2),dim(df.NPV)[2],dim(df.NPV)[2]-1) ]
-df.NPV$Risk <- df.NPV$BAU - df.NPV$'2DS'
+df.NPV$Diff <- df.NPV$BAU - df.NPV$'2DS'
 
 df.NPV.USD      <- df.NPV.USD %>% spread(Scenario, Net.Present.Value)
 df.NPV.USD      <- df.NPV.USD[,c(seq(1,dim(df.NPV.USD)[2]-2),dim(df.NPV.USD)[2],dim(df.NPV.USD)[2]-1) ]
-df.NPV.USD$Risk <- df.NPV.USD$BAU - df.NPV.USD$'2DS'
+df.NPV.USD$Diff <- df.NPV.USD$BAU - df.NPV.USD$'2DS'
 
 df.NPV$Industry <- "Rest of Industry"
 df.NPV[grepl("coal", df.NPV$Variable)=="TRUE", "Industry"]  <- "Coal"
 df.NPV          <- df.NPV[order(df.NPV$Industry),] 
 
-df.NPV$Risk.share <- df.NPV$Risk / sum(df.NPV$Risk) * 100
-df.NPV.USD$Risk.share <- df.NPV.USD$Risk / sum(df.NPV.USD$Risk) * 100
+df.NPV$Diff.share <- df.NPV$Diff / sum(df.NPV$Diff) * 100
 df.NPV.USD$BAU.share <- df.NPV.USD$BAU / sum(df.NPV.USD$BAU) * 100
 df.NPV.USD$'2DS.share' <- df.NPV.USD$'2DS' / sum(df.NPV.USD$'2DS') * 100
+df.NPV.USD$Diff.share <- df.NPV.USD$Diff / sum(df.NPV.USD$Diff) * 100
 
 df.2018.USD <- df.table.NPV.USD[1,]
-df.2018.USD <- df.2035.USD %>% gather(Variable, Value, -Year, - Discount, -Currency)
+df.2018.USD <- df.2018.USD %>% gather(Variable, Value, -Year, - Discount, -Currency)
 split       <- strsplit(df.2018.USD$Variable,split='.', fixed=TRUE)
 part1       <- unlist(split)[2*(1:length(split))-1]
 part2       <- unlist(split)[2*(1:length(split))]
@@ -207,9 +210,9 @@ df.2018.USD$Scenario <- part1
 df.2018.USD$Variable <- part2
 rm(split, part1, part2)
 
-df.2018.USD <- df.2018.USD %>% spread(Scenario, Value)
-df.2018.USD$Risk <- df.2018.USD$BAU - df.2018.USD$'2DS'
-df.2018.USD$Risk.share <- df.2018.USD$Risk/ sum(df.2018.USD$Risk) *100
+df.2018.USD             <- df.2018.USD %>% spread(Scenario, Value)
+df.2018.USD$BAU.share   <- df.2018.USD$BAU/ sum(df.2018.USD$BAU) * 100
+df.2018.USD$'2DS.share' <- df.2018.USD$'2DS'/ sum(df.2018.USD$'2DS') * 100
 
 
 df.2035.USD <- df.table.NPV.USD[dim(df.table.NPV.USD)[1],]
@@ -223,102 +226,102 @@ df.2035.USD$Variable <- part2
 rm(split, part1, part2)
 
 df.2035.USD <- df.2035.USD %>% spread(Scenario, Value)
-df.2035.USD$Risk <- df.2035.USD$BAU - df.2035.USD$'2DS'
-df.2035.USD$Risk.share <- df.2035.USD$Risk/ sum(df.2035.USD$Risk) *100
+df.2035.USD$Diff <- df.2035.USD$BAU - df.2035.USD$'2DS'
+df.2035.USD$BAU.share <- df.2035.USD$BAU/ sum(df.2035.USD$BAU) *100
+df.2035.USD$'2DS.share' <- df.2035.USD$'2DS'/ sum(df.2035.USD$'2DS') *100
+df.2035.USD$Diff.share <- df.2035.USD$Diff/ sum(df.2035.USD$Diff) *100
 
-(df.2035.USD[1,1:9+10] - df.2035.USD[1,1:9+1])/sum(df.2035.USD[1,1:9+10] - df.2035.USD[1,1:9+1])*100
+df.2018.USD$Year  <- as.character(df.2018.USD$Year)
+df.2035.USD$Year  <- as.character(df.2035.USD$Year)
+df.riskshares <- bind_rows(df.NPV.USD, df.2018.USD)
+df.riskshares <- bind_rows(df.riskshares, df.2035.USD)
 
+table <- xtable(df.riskshares)
+setwd(dir.TABLES)
+fileName.table <- paste0(paste("riskDistribution", "coal_DomExp",sep="_"),".tex")
+
+print(table, file=fileName.table)
+
+setwd(dir.ANALYSIS)
 ############ Table with employment numbers sur to export and domestic demand, in the coal sector and in other sectors
 
 # Employment numbers from export demand and demand by the electricity sector
-NE.demandExport               <- results.demandExport[[10]][[2]]
-NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
-
-# Employment numbers from CTL and other industry (than Elec and CTL) and consumers
-# CTL  31 m tons constant over 2018 - 2035
-# Other industry, 16 m tons and final consumers 2 m tons, for a total of 18 m tons
-
-demand.CTL   <- c(rep(0,3), 31, rep(0,46)) 
-demand.other <- c(rep(0,3), 18, rep(0,46))
-
-employment.CTL    <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL) 
-employment.other  <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.other)
-  
-NE.demandExport               <- results.demandExport[[10]][[2]]
-NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
-
-NE.demandExport.BAU.2018      <- NE.demandExport[NE.demandExport$Year=="2018" & NE.demandExport$Case=="BAU", ]
-NE.demandDomestic.BAU.2018    <- NE.demandDomestic[NE.demandDomestic$Year=="2018" & NE.demandDomestic$Case=="BAU", ]
-
-NE.demandExport.BAU.2035      <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="BAU", ]
-NE.demandExport.2Deg.2035     <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="2DS", ]
-
-NE.demandDomestic.BAU.2035    <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="BAU", ]
-NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="2DS", ]
-
-sum(NE.demandExport.BAU.2018[,4])   # 48884.23
-sum(NE.demandDomestic.BAU.2018[,4]) # 86856.7
-
-sum(NE.demandExport.BAU.2018[4,4])  # 23335
-sum(NE.demandDomestic.BAU.2018[4,4])# 41461
-
-sum(NE.demandExport.BAU.2035[,4])   # 46044
-sum(NE.demandExport.2Deg.2035[,4])  # 16362
-
-sum(NE.demandExport.BAU.2035[4,4])  # 21979
-sum(NE.demandExport.2Deg.2035[4,4]) #  7810
-
-sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])  # 24201
-sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])#  8599
-
-sum(NE.demandExport.BAU.2035[28,4])  # General Machinery    # 863
-sum(NE.demandExport.2Deg.2035[28,4]) # General Machinery    # 307
-# sum(NE.demandExport.BAU.2035[33,4])  # Elec                 # 401
-# sum(NE.demandExport.2Deg.2035[33,4]) # Elec                 # 143
-sum(NE.demandExport.BAU.2035[36,4])  # Trade                # 5829
-sum(NE.demandExport.2Deg.2035[36,4]) # Trade                # 2071
-sum(NE.demandExport.BAU.2035[38,4])  # Transport            # 8186
-sum(NE.demandExport.2Deg.2035[38,4]) # Transport            # 2909
-sum(NE.demandExport.BAU.2035[46,4])  # Computer             # 2686
-sum(NE.demandExport.2Deg.2035[46,4]) # Computer             # 954
-
-sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[c(4,28,36,38,46),4])
-sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[c(4,28,36,38,46),4])
-
-sum(NE.demandDomestic.BAU.2035[,4])
-NE.coalDomesticDemand.BAU.2035 <- data.frame(NE.demandDomestic.BAU.2035[,4])
-colnames(NE.coalDomesticDemand.BAU.2035) <- "Value"
-NE.coalDomesticDemand.BAU.2035$Industry <- Industry
-
-order <- order(NE.coalDomesticDemand.BAU.2035$Value)
-
-NE.coalDomesticDemand.BAU.2035 <- NE.coalDomesticDemand.BAU.2035[c(4,38),]
-
-sum(NE.demandDomestic.2Deg.2035[,4])
-
-NE.demandDomestic.2Deg.2035[4,4]
-
-sum(NE.demandExport[NE.demandExport$Year=="2025" & NE.demandExport$Case=="BAU", 4 ])
+# NE.demandExport               <- results.demandExport[[10]][[2]]
+# NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
+# 
+# # Employment numbers from CTL and other industry (than Elec and CTL) and consumers
+# # CTL  31 m tons constant over 2018 - 2035
+# # Other industry, 16 m tons and final consumers 2 m tons, for a total of 18 m tons
+# 
+# demand.CTL   <- c(rep(0,3), 31, rep(0,46)) 
+# demand.other <- c(rep(0,3), 18, rep(0,46))
+# 
+# employment.CTL    <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.CTL) 
+# employment.other  <-  diag(NE.per.production.q) %*% LI.d.q %*% diag(demand.other)
+#   
+# NE.demandExport               <- results.demandExport[[10]][[2]]
+# NE.demandDomestic             <- results.demandDomestic[[10]][[2]]
+# 
+# NE.demandExport.BAU.2018      <- NE.demandExport[NE.demandExport$Year=="2018" & NE.demandExport$Case=="BAU", ]
+# NE.demandDomestic.BAU.2018    <- NE.demandDomestic[NE.demandDomestic$Year=="2018" & NE.demandDomestic$Case=="BAU", ]
+# 
+# NE.demandExport.BAU.2035      <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="BAU", ]
+# NE.demandExport.2Deg.2035     <- NE.demandExport[NE.demandExport$Year=="2035" & NE.demandExport$Case=="2DS", ]
+# 
+# NE.demandDomestic.BAU.2035    <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="BAU", ]
+# NE.demandDomestic.2Deg.2035   <- NE.demandDomestic[NE.demandDomestic$Year=="2035" & NE.demandDomestic$Case=="2DS", ]
+# 
+# sum(NE.demandExport.BAU.2018[,4])   # 48884.23
+# sum(NE.demandDomestic.BAU.2018[,4]) # 86856.7
+# 
+# sum(NE.demandExport.BAU.2018[4,4])  # 23335
+# sum(NE.demandDomestic.BAU.2018[4,4])# 41461
+# 
+# sum(NE.demandExport.BAU.2035[,4])   # 46044
+# sum(NE.demandExport.2Deg.2035[,4])  # 16362
+# 
+# sum(NE.demandExport.BAU.2035[4,4])  # 21979
+# sum(NE.demandExport.2Deg.2035[4,4]) #  7810
+# 
+# sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[4,4])  # 24201
+# sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[4,4])#  8599
+# 
+# sum(NE.demandExport.BAU.2035[28,4])  # General Machinery    # 863
+# sum(NE.demandExport.2Deg.2035[28,4]) # General Machinery    # 307
+# sum(NE.demandExport.BAU.2035[36,4])  # Trade                # 5829
+# sum(NE.demandExport.2Deg.2035[36,4]) # Trade                # 2071
+# sum(NE.demandExport.BAU.2035[38,4])  # Transport            # 8186
+# sum(NE.demandExport.2Deg.2035[38,4]) # Transport            # 2909
+# sum(NE.demandExport.BAU.2035[46,4])  # Computer             # 2686
+# sum(NE.demandExport.2Deg.2035[46,4]) # Computer             # 954
+# 
+# sum(NE.demandExport.BAU.2035[,4]) - sum(NE.demandExport.BAU.2035[c(4,28,36,38,46),4])
+# sum(NE.demandExport.2Deg.2035[,4]) - sum(NE.demandExport.2Deg.2035[c(4,28,36,38,46),4])
+# 
+# sum(NE.demandDomestic.BAU.2035[,4])
+# NE.coalDomesticDemand.BAU.2035 <- data.frame(NE.demandDomestic.BAU.2035[,4])
+# colnames(NE.coalDomesticDemand.BAU.2035) <- "Value"
+# NE.coalDomesticDemand.BAU.2035$Industry <- Industry
+# 
+# order <- order(NE.coalDomesticDemand.BAU.2035$Value)
+# 
+# NE.coalDomesticDemand.BAU.2035 <- NE.coalDomesticDemand.BAU.2035[c(4,38),]
+# 
+# sum(NE.demandDomestic.2Deg.2035[,4])
+# 
+# NE.demandDomestic.2Deg.2035[4,4]
+# 
+# sum(NE.demandExport[NE.demandExport$Year=="2025" & NE.demandExport$Case=="BAU", 4 ])
 
 ##################################### GDP loss because of lost wages
 
-df.temp <- results.demandTotal.summ[results.demandTotal.summ$Year=="2035", c("Industry","Wages","Scenario","Market")] 
-
-df.temp <- df.temp %>% spread(Market, Wages)
-
-df.temp$Total <- df.temp$Export + df.temp$Domestic
-
-df.temp <- df.temp %>% gather(Market, Wages, -Industry, -Scenario) 
-
-df.temp <- df.temp[df.temp$Market=="Total",]
-  
-df.temp <- df.temp %>% spread(Industry, Wages)
-
-df.temp$AllInd <- rowSums(df.temp[,1:50+2])
-  
-lostWages <- df.temp[df.temp$Scenario=="BAU", "AllInd"] - df.temp[df.temp$Scenario=="2Deg", "AllInd"]
-  
-  
-lostWages/sum(df.IOT2014$Household[1:50]) #0.3 % of GDP lost due to reduced consumption 
-
+# df.temp <- results.demandTotal.summ[results.demandTotal.summ$Year=="2035", c("Industry","Wages","Scenario","Market")] 
+# df.temp <- df.temp %>% spread(Market, Wages)
+# df.temp$Total <- df.temp$Export + df.temp$Domestic
+# df.temp <- df.temp %>% gather(Market, Wages, -Industry, -Scenario) 
+# df.temp <- df.temp[df.temp$Market=="Total",]
+# df.temp <- df.temp %>% spread(Industry, Wages)
+# df.temp$AllInd <- rowSums(df.temp[,1:50+2])
+# lostWages <- df.temp[df.temp$Scenario=="BAU", "AllInd"] - df.temp[df.temp$Scenario=="2Deg", "AllInd"]
+# lostWages/sum(df.IOT2014$Household[1:50]) #0.3 % of GDP lost due to reduced consumption 
 setwd(dir.ANALYSIS)

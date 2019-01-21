@@ -6,7 +6,7 @@ demand.diff <- df.domesticDemand.coalExport[df.domesticDemand.coalExport$Year=="
                                             df.domesticDemand.coalExport$Case=="BAU","Value"]-
                df.domesticDemand.coalExport[df.domesticDemand.coalExport$Year=="2035" & 
                                             df.domesticDemand.coalExport$Var=="Value.demandD"  & 
-                                            df.domesticDemand.coalExport$Case=="2Deg","Value"]
+                                            df.domesticDemand.coalExport$Case=="2DS","Value"]
 
 output.diff <- LI.d %*% diag(demand.diff)
 
