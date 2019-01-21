@@ -26,8 +26,8 @@ df.CPI.econo          <- df.CPI.econo[c(2,4,1,3),]
 df.CPI.econo          <- bind_rows(df.CPI.econo, df.CPI.econo[1:2 +dim(df.CPI.econo)[1]-2,])
 df.CPI.econo$Variable[1:2 +dim(df.CPI.econo)[1]-2] <- rep("Deflator",2)
 
-df.CPI.econo[df.CPI.econo$Variable=="Deflator" & df.CPI.econo$Case %in% c("BAU","2DS") , colnames(df.CPI.econo) %in% yearsCPI[-1]] <- 
-1/(1+  df.CPI.econo[df.CPI.econo$Variable=="Inflation" & df.CPI.econo$Case %in% c("BAU","2DS") , colnames(df.CPI.econo) %in% yearsCPI[-length(yearsCPI)]])
+df.CPI.econo[df.CPI.econo$Variable=="Deflator" & df.CPI.econo$Case %in% c("BAU","2DS") , colnames(df.CPI.econo) %in% yearsCPI] <- 
+1/(1+  df.CPI.econo[df.CPI.econo$Variable=="Inflation" & df.CPI.econo$Case %in% c("BAU","2DS") , colnames(df.CPI.econo) %in% yearsCPI])
   
 vect <- c(NA,rep(1,length(yearsCPI)-1))
 for(i in 1:17)
