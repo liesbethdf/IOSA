@@ -25,11 +25,10 @@ source("demandScenarios_v2.R")
 
 # Analysis
 
-source("employmentContent_DomImp.R")
-source("finaldemandDecomposition-function.R")       # 2014 prices calibrated to one and constant
+source("employmentContent.R")
+#source("finaldemandDecomposition-function.R")       # 2014 prices = one and constant
 source("finaldemandDecomposition-function-quant.R") # not 2014 prices but coal in million tons
-#source("finaldemandDecomposition.R") # old contains the function above ? Delete? 
-source("employmentContent_atRisk.R")
+source("employmentContent_3parts.R")
 source("employmentCoal_ExportDomestic.R")
 source("impactonGDP.R") # Check : Error in LI.d %*% diag(demand.diff) : non-conformable arguments
 source("Oil.R")
@@ -37,13 +36,11 @@ source("Oil.R")
 # Generating graphs
 
 #source("demandDecomposition_Stats.R")
-source("employmentDecomposition_Graphs.R") ok
+source("employmentDecomposition_Graphs.R") 
 #source("demandDecomposition_Graphs.R")     # Verification needed
 
 
-# Below not sure if useful
-
-#source("employmentContent.R") # Archived, not relevant anymore ; was based on not knowing IOT dom and imp
+# Below not used
 
 #source("sector-description.R")
 #source("plots.R")
