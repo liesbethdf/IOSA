@@ -163,7 +163,8 @@ results <- list(df.results,df.results.ec.matrix)
 ############################################
 
 ######################## Decomposition of difference with average, within sector and other sectors together
-yearHere <- "2014"
+yearHere  <- "2014"
+col       <- "grey"
 
 df.plot <- results[[1]]
 Industry.code <- paste(df.plot$Industry, df.plot$SIC,sep = " ")
@@ -186,7 +187,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                  labs(x = "Industry, SIC code") +
                  scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
   #               scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5)) +
-                 scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5), breaks=c(-2.24,-1.24,-0.24,0,0.76,1.76,2.76)) +
+                 scale_y_continuous(labels = function(x) x + 2.45, limits = c(-2.2, 3.5), breaks=c(-2.45,-1.45,-0.45,0,0.55,1.55,2.55)) +
                  coord_flip() +
                  labs(fill="Decomposition :") +
                  theme(legend.position="bottom") +
@@ -194,12 +195,12 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-avg-PQ",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-avg-PQ",yearHere, col, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
 ######################## Employment content per sector decomposed in direct, indirect.
-## Two graphs : 1. horizontal bargraph, employment content per sector, decomposed into direct/indirect
-##              2. horizontal bargraph, decomposition of difference with average, into direct/indirect
+## Two graphs : 1. horizontal bargraph, employment content per sector, decomposed into within sector/other sectors
+##              2. horizontal bargraph, decomposition of difference with average, into within sector/other sectors
 
 # plot 1
 
@@ -220,15 +221,17 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
                   coord_flip() +
                   labs(fill="Number of jobs :") +
-                  geom_hline(yintercept = c(1.30), linetype="longdash", colour ="#5d6d7e", size=0.6) +
-                  geom_hline(yintercept = c(2.42), linetype="longdash", colour = "#5d6d7e",size=0.6) +
-                  scale_y_continuous(breaks = c(0,1, 1.30,2.42,3,4,5)) +
+                  geom_hline(yintercept = c(1.39), linetype="longdash", colour ="#5d6d7e", size=0.6) +
+                  geom_hline(yintercept = c(2.45), linetype="longdash", colour = "#5d6d7e",size=0.6) +
+                  scale_y_continuous(breaks = c(0,1, 1.39,2.45,3,4,5)) +
                   theme(legend.position="bottom") +
-                  scale_fill_manual(values=c("#f1c40f","#5d6d7e"))
+                  #scale_fill_manual(values=c("#f1c40f","#5d6d7e"))
+                  scale_fill_manual(values=c("grey30","grey75"))
+
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-direct-indirect",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-direct-indirect",yearHere, col, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
 #plot 2
@@ -248,7 +251,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
-                  scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5), breaks=c(-2.24,-1.24,-0.24,0,0.76,1.76,2.76)) +
+                  scale_y_continuous(labels = function(x) x + 2.45, limits = c(-2.2, 3.5), breaks=c(-2.45,-1.45,-0.45,0,0.55,1.55,2.55)) +
                   coord_flip() +
                   labs(fill="Number of jobs :") +
                   theme(legend.position="bottom") +
@@ -256,7 +259,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-avg-direct-indirect",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-avg-direct-indirect",yearHere,  col, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
 
@@ -287,7 +290,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                 labs(x = "Industry, SIC code") +
                 scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
               #  scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5), breaks=c(-2,-1,0,1,2,3)) +
-                scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5), breaks=c(-2.24,-1.24,-0.24,0,0.76,1.76,2.76)) +
+                scale_y_continuous(labels = function(x) x + 2.45, limits = c(-2.2, 3.5), breaks=c(-2.45,-1.45,-0.45,0,0.55,1.55,2.55)) +
                 coord_flip() +
                 labs(fill="Decomposition :") +
                 theme(legend.position="bottom") +
@@ -295,7 +298,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-avg-PQ-direct",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-avg-PQ-direct",yearHere, col, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
 ######################## Decomposition of difference with average, indirect
@@ -320,7 +323,8 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
                   #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Industry, SIC code") +
                   scale_x_discrete(limits = rev(levels(df.plot$Industry.code))) +
-                  scale_y_continuous(labels = function(x) x + 2.24, limits = c(-2.2, 3.5)) +
+                  scale_y_continuous(labels = function(x) x + 2.45, limits = c(-2.2, 3.5), breaks=c(-2.45,-1.45,-0.45,0,0.55,1.55,2.55)) +
+                #  scale_y_continuous(labels = function(x) x + 2.45, limits = c(-2.2, 3.5)) +
                   coord_flip() +
                   labs(fill="Decomposition :") +
                   theme(legend.position="bottom") +
@@ -328,7 +332,7 @@ p <- df.plot %>% ggplot(aes(x=Industry.code, y=Value, fill=Decomposition)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-avg-PQ-indirect",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-avg-PQ-indirect",yearHere,  col, sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=21, height=25, units="cm", dpi=300)
 
 setwd(dir.ANALYSIS)

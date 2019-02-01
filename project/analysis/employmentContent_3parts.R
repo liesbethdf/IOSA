@@ -56,6 +56,12 @@ df.plot <- df.plot %>% gather(Decomposition,Value, ec.dev.decomp.T, ec.dev.decom
 levels(df.plot$Decomposition) <- c("Taxes", "Labour \nshare","1/Wages", "Local demand \nfinal products","Local demand \ninputs")
 df.plot$Decomposition <- factor(df.plot$Decomposition, levels=c("1/Wages","Labour \nshare","Taxes","Local demand \ninputs", "Local demand \nfinal products"))
 
+levelsIndustry <-c("Coal and lignite",
+                   "Manufacturing, \nElec, Services, etc.",
+                   "Transport, Trade, \nComp., Gen. Machinery, \nStruct. Metal, Finance")
+df.plot$Industry <- factor(df.plot$Industry, levels=levelsIndustry)
+df.plot          <- df.plot[order(df.plot$Industry),] 
+
 #coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 p <- df.plot %>% ggplot(aes(x=Industry, y=Value, fill=Decomposition)) +
@@ -73,7 +79,7 @@ p <- df.plot %>% ggplot(aes(x=Industry, y=Value, fill=Decomposition)) +
 print(p)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ECdecomposition-coal",yearHere, sep="_")
+fileName.graph <- paste("ECdecomposition-coal",yearHere, col,sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=20, height=6, units="cm", dpi=300)
 
 setwd(dir.ANALYSIS)

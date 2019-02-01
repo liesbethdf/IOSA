@@ -138,7 +138,7 @@ df.plot <- df.plot[df.plot$Year %in% yearsCPI[-1],]
 
 p <- df.plot %>% ggplot(aes(x=Year, y=Value)) +
 #                 geom_line(aes(color=Case, linetype=Variable)) +
-                 geom_line(aes(color=Case), size=0.8) +
+                 geom_line(aes(linetype=Case), size=0.8) +
                  #geom_area(aes(fill = Case, group = Case), alpha = 0.5, position = 'identity') +
                  scale_fill_manual(values = c("#aeb6bf","#dc7633")) +
                  #scale_color_brewer(palette="Paired") +
@@ -230,7 +230,7 @@ colours <- c("#5d6d7e", "#dc7633")
 #facet.labels <- c("Export price, USD", "Exported volumes, mtce", "Revenue from coal export, USD")
 
 p <- df.plot %>% ggplot(aes(x=Year, y=Value)) +
-                  geom_line(aes(color=Case), size=0.8) +
+                  geom_line(aes(linetype=Case), size=0.8) +
                   scale_fill_manual(values = c("#aeb6bf","#dc7633")) +
                   ylab("") +
                   scale_colour_manual(values=colours) +
@@ -308,7 +308,7 @@ colours <- c("#5d6d7e", "#dc7633")
 #facet.labels <- c("Export price, USD", "Exported volumes, mtce", "Revenue from coal export, USD")
 
 p <- df.plot %>% ggplot(aes(x=Year, y=Value)) +
-                 geom_line(aes(color=Case), size=0.8) +
+                 geom_line(aes(linetype=Case), size=0.8) +
   #              geom_area(aes(fill = Case, group = Case), alpha = 0.5, position = 'identity') +
                  scale_fill_manual(values = c("#aeb6bf","#dc7633")) +
   #              scale_color_brewer(palette="Paired") +

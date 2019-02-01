@@ -55,7 +55,7 @@ WLD.list <- "Rest of the World"
 
 europe.list <-  c( "Albania", "Austria", "Belgium", "Bulgaria", "Bosnia and Herzegovina", "Switzerland", "Germany", "Cyprus", 
                    "Czech Republic", "Denmark", "Spain", "Finland", "France", "United Kingdom", "Georgia", "Gibraltar", "Greece", "Croatia", "Ireland",
-                   "Iceland", "Italy", "Luxembourg", "Malta", "Moldova", "Netherlands", "Norway", "Mayotte", "Poland", "Portugal","Romania",
+                   "Iceland", "Italy", "Luxembourg", "Malta", "Moldova", "Netherlands", "Norway", "Mayotte", "Poland", "Portugal", "Romania",
                    "Serbia and Montenegro", "Réunion", "Serbia", "Slovakia", "Slovenia", "Sweden",  "Ukraine" ,  " British  Virgin Islands")
 
 africa.list <-c("Afghanistan", "Angola",  "Benin","Botswana" , " Democratic Republic of the Congo", "Congo", "Comoros", "Djibouti", "Algeria","Egypt" ,
@@ -98,6 +98,7 @@ df.MIT.export$regions <- factor(df.MIT.export$regions, levels=levels.regions, la
 # There is an error in Rets of the World, huge value for 2015. WLD is eliminated for 2015
 
 df.plot <- df.MIT.export[!(df.MIT.export$year=="2015" & df.MIT.export$country_destination_id=="WLD"),]
+df.plot <- df.plot[!df.plot$regions=="Unclassified",]
 
 df.plot$export_val <- df.plot$export_val / 10^6
 
@@ -131,7 +132,7 @@ coal.export.MC$Mtons          <- c(67.675, 60.631, 60.539, 66.770, 68.807, 76.00
 scaler                        <- sum(df.plot[df.plot$year==yearHere, "export_val"]) / coal.export.MC[coal.export.MC$year==yearHere,"Mtons"]
 coal.export.MC$Mtons.plot     <- scaler* coal.export.MC$Mtons
 
-p <-              ggplot(data=df.plot) +
+p <-              ggplot(data=df.plot[!df.plot$regions=="Unclassified",]) +
                   geom_bar(aes(year, y=export_val, fill=regions), stat="identity") +
                   #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
                   labs(x = "Year", y="million US$ (nominal)") +

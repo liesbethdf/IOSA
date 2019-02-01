@@ -293,8 +293,10 @@ df.plot$Source <- factor(df.plot$Source, levels=c("QES","QLFS","OECD"), labels=c
 
 ## plot
 
-colours <-c("#f5b041", "#27ae60",  "#2e86c1")
-for(yearHere in c("2010","2011","2012","2013","2014"))
+colours.col <-c("#f5b041", "#27ae60",  "#2e86c1")
+colours.grey <-c("grey40", "grey60",  "grey30")
+colours <- colours.grey
+for(yearHere in c("2014"))
 {
   p <- df.plot[df.plot$Year==yearHere,] %>% ggplot(aes(x=ISIC, y=Value, fill=Source)) +
     geom_bar(stat="identity", position=position_dodge()) +

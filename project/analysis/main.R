@@ -30,7 +30,7 @@ source("demandDecomposition-function.R") # not 2014 prices but coal in million t
 source("employmentContent_3parts.R")
 source("demandDecompostion_coalExportDomestic.R")
 source("demandDecompostion_coalExportDomestic_Graphs.R") 
-source("impactonGDP.R") # Check : Error in LI.d %*% diag(demand.diff) : non-conformable arguments
+#source("impactonGDP.R") 
 source("Oil.R")
 
 

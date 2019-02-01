@@ -120,10 +120,10 @@ IndustryOrder1 <- levels(df.plot1$Industry)
 IndustryOrder2 <- levels(df.plot2$Industry)
 IndustryOrder  <- c(IndustryOrder1, IndustryOrder2[!IndustryOrder2 %in% IndustryOrder1])
 
-df.plot1 <- df.plot1 %>% filter(df.plot1$Year %in% c(2018,2035))
-df.plot2 <- df.plot2 %>% filter(df.plot2$Year %in% c(2018,2035))
+df.plot3 <- df.plot1 %>% filter(df.plot1$Year %in% c(2018,2035))
+df.plot4 <- df.plot2 %>% filter(df.plot2$Year %in% c(2018,2035))
 
-df.plot <- bind_rows(df.plot1, df.plot2)
+df.plot <- bind_rows(df.plot3, df.plot4)
 
 df.plot$CaseYear <- paste(df.plot$Case, df.plot$Year, sep=", ")
 
@@ -132,8 +132,8 @@ levelsHere <- c("BAU, 2018", "BAU, 2035", "2DS, 2035")
 labelsHere <- c("BAU & 2DS, 2018", "BAU, 2035", "2DS, 2035")
 df.plot$CaseYear <- factor(df.plot$CaseYear, levels=levelsHere, labels=labelsHere )
 
-df.plot[df.plot$Var=="Employment", "Var"] <- "Employment, number of people" 
-df.plot[df.plot$Var=="Gross value added value", "Var"] <- "Value added, million Rand (constant 2018)" 
+df.plot[df.plot$Var=="Employment", "Var"]               <- "Employment, number of people" 
+df.plot[df.plot$Var=="Gross value added value", "Var"]  <- "Value added, million Rand (constant 2018)" 
 
 levelsHere <- IndustryOrder
 #labelsHere <- IndustryOrder
@@ -174,9 +174,9 @@ IndustryOrder1 <- levels(df.plot1$Industry)
 IndustryOrder2 <- levels(df.plot2$Industry)
 IndustryOrder  <- c(IndustryOrder1, IndustryOrder2[!IndustryOrder2 %in% IndustryOrder1])
 
-df.plot1 <- df.plot1 %>% filter(df.plot1$Year %in% c(2018,2035))
-df.plot2 <- df.plot2 %>% filter(df.plot2$Year %in% c(2018,2035))
-df.plot  <- bind_rows(df.plot1, df.plot2)
+df.plot5 <- df.plot1 %>% filter(df.plot1$Year %in% c(2018,2035))
+df.plot6 <- df.plot2 %>% filter(df.plot2$Year %in% c(2018,2035))
+df.plot  <- bind_rows(df.plot5, df.plot6)
 
 df.plot$CaseYear <- paste(df.plot$Case, df.plot$Year, sep=", ")
 
@@ -191,7 +191,7 @@ df.plot[df.plot$Var=="Gross value added value", "Var"] <- "Value added, million 
 levelsHere <- IndustryOrder
 #labelsHere <- IndustryOrder
 df.plot$Industry <- factor(df.plot$Industry, levels=levelsHere)#, labels=labelsHere )
-df.plot[df.plot$Var=="Gross value added value", "Var"] <- "Value added, million Rand (nominal)" 
+#df.plot[df.plot$Var=="Gross value added value", "Var"] <- "Value added, million Rand (nominal)" 
 
 
 colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e", "#d4e6f1" ,"#1a5276")
@@ -209,41 +209,58 @@ setwd(dir.PLOTS)
 fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Domestic-Export","constant2018","BAU_2DS", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=24, height=11, units="cm", dpi=300)
 
-############ same as above but export and domestic combined, in nominal values for value added
-############ bargraph with employment and value added distributed over sectors, for 2018 2DS and BAU, 2035 BAU, 2035 2DS
-
-deflator.2035 <- df.CPI.econo[df.CPI.econo$Variable=="Deflator" & df.CPI.econo$Case=="BAU","2035"]
-df.plot[df.plot$Year=="2035" & df.plot$Var=="Value added, million Rand (constant 2018)","Value"] <- df.plot[df.plot$Year=="2035" & df.plot$Var=="Value added, million Rand (constant 2018)","Value"] / deflator.2035
-
-colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e", "#d4e6f1" ,"#1a5276")
-
-p4  <-  df.plot %>% ggplot(aes(x=CaseYear, y=Value, fill=Industry)) +
-  geom_bar(stat="identity") +
-  #theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(x = "", y= "" ) +
-  scale_fill_manual(values=colours) +
-  facet_wrap( ~ Var, scales="free", ncol=3) +
-  labs(fill="Sector :") 
-print(p4)
-
-setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Domestic-Export","nominal","BAU_2DS_v2", sep="_")
-ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=24, height=11, units="cm", dpi=300)
 
 ############ same as above but export and domestic combined, in nominal values at show -- jobs and VA at risk, which 2DS - BAU
 ############ bargraph with employment and value added distributed over sectors, for 2018 2DS and BAU, 2035 BAU, 2035 2DS
 
-df.temp <- df.plot[!df.plot$CaseYear=="BAU & 2DS, 2018",] %>% select(-CaseYear) %>% spread(Case, Value)
-df.temp$Value <- df.temp$BAU - df.temp$'2DS'
-df.temp <- df.temp %>% select(-BAU, -'2DS')
+df.plot2            <- df.plot2 %>% spread(Case,Value)
+df.plot2$'BAU-2DS'  <- df.plot2$BAU- df.plot2$'2DS'
+df.plot2 <- df.plot2 %>% select(-BAU, -'2DS') %>% spread(Industry,'BAU-2DS')
+df.plot2$discount   <- 1/(1+0.08)^(df.plot2$Year - df.plot2$Year[1])
+
+df.plot2$Deflator   <- t(df.CPI.econo[df.CPI.econo$Variable=="Deflator" & df.CPI.econo$Case=="BAU", colnames(df.CPI.econo) %in% seq(2018,2035)])
+
+df.plot2[,3:13]     <- df.plot2[,3:13] * df.plot2$discount / df.plot2$Deflator
+
+df.plot2.USD            <- df.plot2 
+df.plot2.USD[,3:13]     <- df.plot2.USD[,3:13] / t(df.CPI.econo[df.CPI.econo$Variable=="Exchange rate" & df.CPI.econo$Case=="BAU", colnames(df.CPI.econo) %in% seq(2018,2035)])
+df.plot2.USD$Var        <- 'Value added, million USD'
+df.plot2.USD            <- df.plot2.USD %>% gather(Industry,Value, -Year, -Var, -discount, -Deflator) %>% select(-discount, -Deflator) %>% spread(Year, Value)
+df.plot2.USD$'Value added, million USD' <- rowSums(df.plot2.USD[,3:20])
+df.plot2.USD            <- df.plot2.USD %>% select(Var, Industry,'Value added, million USD')
+df.plot2.USD$Var        <- "Value added, million USD"
+
+
+df.plot2            <- df.plot2 %>% gather(Industry,Value, -Year, -Var, -discount, -Deflator) %>% select(-discount, -Deflator) %>% spread(Year, Value)
+df.plot2$'Value added, million Rand' <- rowSums(df.plot2[,3:20])
+df.plot2            <- df.plot2 %>% select(Var, Industry,'Value added, million Rand')
+df.plot2$Var        <- "Value added, million Rand"
+
+df.plot <- df.plot[df.plot$Year=="2035" & df.plot$Var=="Employment, number of people",]
+df.plot <- df.plot %>% select(-Case) %>% spread(CaseYear, Value)
+df.plot$'BAU-2DS' <- df.plot$'BAU, 2035' - df.plot$'2DS, 2035'
+df.plot <- df.plot %>% select(-'BAU, 2035', -'2DS, 2035', -Year)
+
+colnames(df.plot2) <- colnames(df.plot)
+df.temp <- bind_rows(df.plot, df.plot2)
+colnames(df.temp)[3] <- "Value"
 df.temp$CaseYear <- "At risk, 2035\n(BAU - 2DS)"
 
-levels.Var <- c("Employment, number of people", "Value added, million Rand (constant 2018)")
-labels.Var <- c("Employment,\nnumber of people", "Value added,\nm Rand")
+levelsHere <- IndustryOrder
+#labelsHere <- IndustryOrder
+df.temp$Industry <- factor(df.temp$Industry, levels=levelsHere)#, labels=labelsHere )
 
-df.temp$Var <- factor(df.temp$Var, levels=levels.Var, labels=labels.Var)
-
-df.plot <- df.temp
+# df.temp <- df.plot[!df.plot$CaseYear=="BAU & 2DS, 2018",] %>% select(-CaseYear) %>% spread(Case, Value)
+# df.temp$Value <- df.temp$BAU - df.temp$'2DS'
+# df.temp <- df.temp %>% select(-BAU, -'2DS')
+# df.temp$CaseYear <- "At risk, 2035\n(BAU - 2DS)"
+# 
+# levels.Var <- c("Employment, number of people", "Value added, million Rand (constant 2018)")
+# labels.Var <- c("Employment,\nnumber of people", "Value added,\nm Rand")
+# 
+# df.temp$Var <- factor(df.temp$Var, levels=levels.Var, labels=labels.Var)
+# 
+# df.plot <- df.temp
 
 colours <-c("#b7950b",rev(c("#d6eaf8",  "#aed6f1", "#85c1e9", "#5dade2", "#3498db", "#2e86c1", "#2874a6", "#21618c", "#1b4f72")), "#5d6d7e", "#d4e6f1" ,"#1a5276")
 
@@ -257,7 +274,18 @@ p4  <-  df.temp %>% ggplot(aes(x=CaseYear, y=Value, fill=Industry)) +
 print(p4)
 
 setwd(dir.PLOTS)
-fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Domestic-Export","nominal","atRisk2035", sep="_")
+fileName.graph <- paste("ValueAdded_Employment_Sector","Coal-Domestic-Export","nominal","PVatRisk2035", sep="_")
 ggsave(filename = paste(fileName.graph, "pdf", sep="."), width=16, height=11, units="cm", dpi=300)
 
 setwd(dir.ANALYSIS)
+
+# tempLies <- results.demandExport.VA[,c(4,51,52,53,54)]
+# tempLies <- tempLies %>% spread(Case, I4)
+# tempLies$diff <- tempLies$BAU - tempLies$`2DS`
+# tempLies <- tempLies %>% select(-'2DS', -BAU)
+# tempLies <- tempLies %>% spread(Industry,diff)
+# tempLies$sum <- rowSums(tempLies[,3:52])
+# discount <- 1/(1+0.08)^(tempLies$Year-2018)
+# tempLies[,3:53] <- tempLies[,3:53]  * discount
+# tempLies$sum <- rowSums(tempLies[,3:52])
+# sum(tempLies$sum)

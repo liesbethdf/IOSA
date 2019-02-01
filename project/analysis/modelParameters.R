@@ -115,9 +115,10 @@ SIC       <- df.NE.50I$SIC.code
 
 # Some colours 
 
-#coloursDecomp <- c("#5d6d7e","#f1c40f","#e74c3c","#2e86c1","#af601a")
-coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
-
+coloursDecomp.colour <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
+#coloursDecomp.BW <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
+coloursDecomp.BW  <- c("gray25","gray80","gray10","gray60","gray40")
+coloursDecomp     <- coloursDecomp.BW
  
 ############################################
 ########## fixing of the parameter values for the demand-pull model, based on the IOT, domestic and import + employment data, version 2
@@ -125,7 +126,7 @@ coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 #################### this is necessary becasue the domestic price is so widely different from the international price
 ############################################
 # source, facts and figures 2018, Minerals Council SA
-# coal production in 10³ tonnes 2014 = 260239 
+# coal production in 10³ tonnes 2014 = 261949 
 # coal domestically sold in 10³ tonnes 2014 = 184416
 # exported coal in 10^3 tonnes 2014 = 75823, total salesrev 51452.471(Mc), 63581.9 (IOT) => price per tonne : 0.6785866 10^6 R (Mc) or 0.83856 (IOT) 
 # imported coal in tonnes, assumed that price is equal to export price :
@@ -137,28 +138,28 @@ coloursDecomp <- c("#5d6d7e","#f1c40f","#3498db","#e74c3c","#af601a")
 
 df.IOT2014.dom.q <- df.IOT2014.dom
 
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"]              <- 260.239
-df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="I16"]                 <- 31
-df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"]             <- 75.823
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"]                   <- 261.949
+df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="I16"]                      <- 31
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="I33"]                      <- 128
+df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"]                  <- 75.823
 #df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Imports"]    <- p.e^(-1) * df.IOT2014.dom[4,colnames(df.IOT2014.dom)=="Imports"]
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Household"]           <- 2
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="General.Government"]  <- 0
-df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Capital.formation"]   <- 0
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Household"]                <- 2
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="General.Government"]       <- 0
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Capital.formation"]        <- 0
+df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Changes.in.inventories"]   <- 2
 
 p.e <- df.IOT2014.dom[4,colnames(df.IOT2014.dom) =="Exports"]   / df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"]  
 
 Ind.notCTLelec      <- c("Order","SIC.code","Industry.description","Changes.in.inventories","Output","I16","I33","Exports","Household","General.Government","Capital.formation")
-tons.ind.notCTLelec <- 16
+tons.ind.notCTLelec <- df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"] -
+                       df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="I16"] -
+                       df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="I33"]  -
+                       df.IOT2014.dom.q[4,colnames(df.IOT2014.dom.q) =="Exports"] -
+                       df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Household"] -
+                       df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Changes.in.inventories"]
+                          
 df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec] <- df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec] * tons.ind.notCTLelec/sum(df.IOT2014.dom.q[4, !colnames(df.IOT2014.dom.q) %in% Ind.notCTLelec])
 
-remaining.tons <-    df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q)=="Output"] -
-                     tons.ind.notCTLelec -  
-                     sum(df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c("I16","Exports","Household","General.Government","Capital.formation")])
-
-remaining.val  <-    df.IOT2014.dom[4, colnames(df.IOT2014.dom)=="I33"] + df.IOT2014.dom[4, colnames(df.IOT2014.dom)=="Changes.in.inventories"]
-
-df.IOT2014.dom.q[4, "I33"]                    <- remaining.tons/remaining.val * df.IOT2014.dom[4, "I33"]
-df.IOT2014.dom.q[4, "Changes.in.inventories"] <- remaining.tons/remaining.val * df.IOT2014.dom[4, "Changes.in.inventories"]
 
 
 # df.IOT2014.dom.q[4, colnames(df.IOT2014.dom.q) %in% c(Order,"Household","General.Government","Capital.formation","Changes.in.inventories")] <- 
